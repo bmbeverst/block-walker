@@ -33,11 +33,15 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	private Sound goalSound;
 	
 	public MainMenu() {
+		// creates the main menu. Ask Decy :)
 		createMenuScene();
+		// Makes it so that the menu scene is overlaid on the current scene and
+		// stops all updates to engine until a item is clicked
 		mScene.setChildScene(mMenuScene, false, true, true);
 		
 	}
 	
+	// Ask Decy
 	private void createMenuScene() {
 		Font mMenuFont = Resources.loadFont("Daville Condensed Slanted.ttf");
 		mMenuScene = new MenuScene(mCamera);
@@ -79,18 +83,21 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		
 	}
 	
+	// THis is where the whole prgram starts and is controlled from.
 	@Override
 	public boolean onMenuItemClicked(final MenuScene pMenuScene,
 			final IMenuItem pMenuItem, final float pMenuItemLocalX,
 			final float pMenuItemLocalY) {
 		switch (pMenuItem.getID()) {
 			case MENU_START:
-
+				// Should be moved to goal
 				goalSound = Resources.loadSound("background.ogg");
-				
+				// Removes the Menu so you can start playing
 				mScene.detachChild(mMenuScene);
+				// Tells the menu to put every thing back
 				mMenuScene.back();
 				if (noPlayer) {
+					// create a new game if there is none.
 					init();
 				}
 				return true;
@@ -98,16 +105,18 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 			case MENU_SAVE:
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
+				// Need to implement this
 				return true;
 				
 			case MENU_LOAD:
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
-				aiTest();
+				// Need to implement this
+				aiTest(); // A test scene Brooks is using remove it when ever.
 				return true;
 				
 			case MENU_QUIT:
-				/* End Activity. */
+				/* End Activity. Nuke it! */
 				Resources.finish();
 				return true;
 			default:
@@ -117,23 +126,24 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	
 	private void init() {
 		
+		// Load the TMX first so it is below the player
 		new TMXMap("stage3.tmx");
+		// Load the palyer and set him up
 		final Player player = new Player(150, 1500, null);
-		
+		// Mkae it so that no other players will be added.
 		noPlayer = false;
+		// SetUp the AI! WOOT!
 		Resources.getmScene().registerUpdateHandler(
 				new TimerHandler(5, new AIupdate()));
+		// Add the random moster so we can complete the homework.
 		Monster temp = new Monster(100, 1500, null);
+		// Probably should be in Monster.
 		AIupdate.addMonster(temp);
-		/* Need to get coords for these monsters
-		temp = new Monster(100, 1500, null);
-		AIupdate.addMonster(temp);
-		temp = new Monster(100, 1500, null);
-		AIupdate.addMonster(temp);
-		temp = new Monster(100, 1500, null);
-		AIupdate.addMonster(temp);
-		temp = new Monster(100, 1500, null);
-		AIupdate.addMonster(temp);*/
+		/*
+		 * Need to get coords for these monsters temp = new Monster(100, 1500,
+		 * null); temp = new Monster(100, 1500, null); temp = new Monster(100,
+		 * 1500, null); temp = new Monster(100, 1500, null);
+		 */
 		
 		/* The actual collision-checking. */
 		mScene.registerUpdateHandler(new IUpdateHandler() {
@@ -144,8 +154,13 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 			public void reset() {
 			}
 			
+			// When ever there is a collision this is called. Shoud optimize.
 			@Override
 			public void onUpdate(final float pSecondsElapsed) {
+				// this is random junk that makes it so that the goal sound will
+				// only play is the play is in one of the goals. I don't know
+				// why it works, only because I did not know why it wasn't
+				// working.
 				LinkedList<Rectangle> goals = Resources.getGoals();
 				if (!playing) {
 					for (index = 0; !playing && index < goals.size(); index++) {
@@ -164,7 +179,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 					playing = false;
 				}
 			}
-			
+			//This was suppose to be a bit of text saying "You Win" but never got around to it.
 			private Scene win() {
 				
 				return mMenuScene;
@@ -172,7 +187,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		});
 		
 	}
-	
+	// The temp scene Brooks is using to test his AI.
 	private void aiTest() {
 		
 		new Borders(800, 400);
@@ -182,7 +197,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		Monster temp = new Monster(200, 100, null);
 		AIupdate.addMonster(temp);
 	}
-	
+	//When ever a key is pressed this is called. Brings up the menu when ever menu is pressed.
 	@Override
 	public boolean onKeyDown(int pKeyCode, KeyEvent pEvent) {
 		boolean handeled = false;

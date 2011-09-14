@@ -13,7 +13,7 @@ import android.view.KeyEvent;
  */
 public interface OnKeyDownListener {
 
-	/**
+	/** Used by Resource to broad cast events
 	 * @param pKeyCode
 	 * @param pEvent
 	 * @return

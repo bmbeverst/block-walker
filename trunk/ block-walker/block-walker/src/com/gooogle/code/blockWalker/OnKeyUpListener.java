@@ -13,10 +13,10 @@ import android.view.KeyEvent;
  */
 public interface OnKeyUpListener {
 
-	/**
+	/** Used by Resource to broad cast events
 	 * @param pKeyCode
 	 * @param pEvent
-	 * @return
+	 * @return treu is handeled
 	 */
 	boolean onKeyUp(int pKeyCode, KeyEvent pEvent);
 }

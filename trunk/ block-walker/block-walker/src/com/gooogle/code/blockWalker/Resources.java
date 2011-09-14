@@ -30,16 +30,19 @@ import android.view.KeyEvent;
  * @author brooks Sep 7, 2011
  */
 public class Resources {
-	
+	//used for loading resources
 	private static BaseGameActivity mBaseGameActivity;
 	private static BoundCamera mCamera;
 	private static FixedStepPhysicsWorld mPhysicsWorld;
 	private static Scene mScene;
 	private static Engine mEngine;
+	//all the listeners for the different events
 	private static LinkedList<OnKeyDownListener> downListeners = new LinkedList<OnKeyDownListener>();
 	private static LinkedList<OnKeyUpListener> upListeners = new LinkedList<OnKeyUpListener>();
+	// all the goals
 	private static LinkedList<Rectangle> goalWatcher = new LinkedList<Rectangle>();
 	
+	//Create the Resouces and set all the needed values
 	Resources(BoundCamera pCamera, FixedStepPhysicsWorld pPhysicsWorld,
 			Scene pScene, BaseGameActivity pBaseGameActivity,
 			Engine pEngine) {
@@ -84,7 +87,7 @@ public class Resources {
 	static final Engine getmEngine() {
 		return mEngine;
 	}
-	
+	// loads a font from assets/font/
 	static Font loadFont(String location) {
 		BitmapTextureAtlas mMenuFontTexture = new BitmapTextureAtlas(256, 256,
 				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
@@ -98,8 +101,9 @@ public class Resources {
 		
 		return mMenuFont;
 	}
-	
-	static TextureRegion loadImage(String location, int sizeX, int sizeY) {
+
+	// loads a texture from assets/gfx/
+	static TextureRegion loadTexture(String location, int sizeX, int sizeY) {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 		
 		BitmapTextureAtlas mBitmapTexture = new BitmapTextureAtlas(sizeX,
@@ -111,16 +115,8 @@ public class Resources {
 		mEngine.getTextureManager().loadTexture(mBitmapTexture);
 		return mTextureRegion;
 	}
-	
-	static void finish() {
-		mCamera = null;
-		mPhysicsWorld = null;
-		mScene = null;
-		mEngine = null;
-		mBaseGameActivity.finish();
-	}
-
-	static TiledTextureRegion loadTiledImage(String location, int sizeX, int sizeY, int tileX, int tileY) {
+	// loads a tiled texture from assets/gfx/ the size values are from 1 not 0.
+	static TiledTextureRegion loadTiledTexture(String location, int sizeX, int sizeY, int tileX, int tileY) {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 		
 		BitmapTextureAtlas mTiledTexture = new BitmapTextureAtlas(sizeX, sizeY,
@@ -132,7 +128,8 @@ public class Resources {
 			mEngine.getTextureManager().loadTextures(mTiledTexture);
 		return mTiledRegion;
 	}
-	
+
+	// loads a TMX map from assets/tmx/
 	static TMXTiledMap loadTMXmap(String location) {
 		TMXTiledMap mTMXTiledMap = null;
 		try {
@@ -144,34 +141,8 @@ public class Resources {
 		}
 		return mTMXTiledMap;
 	}
-	static void addOnKeyDownListener(OnKeyDownListener listener) {
-		downListeners.add(listener);
-	}
-	
-	static boolean onKeyDownEvent(int pKeyCode, KeyEvent pEvent) {
-		
-		boolean handled = false;
-		for(int i = 0; i < downListeners.size() && !handled ; i++) {
-			handled = downListeners.get(i).onKeyDown(pKeyCode, pEvent);
-		}
-		
-		return handled;
-	}
-	
-	static void addOnKeyUpListener(OnKeyUpListener listener) {
-		upListeners.add(listener);
-	}
-	
-	static boolean onKeyUpEvent(int pKeyCode, KeyEvent pEvent) {
-		
-		boolean handled = false;
-		for(int i = 0; i < upListeners.size() && !handled ; i++) {
-			handled = upListeners.get(i).onKeyUp(pKeyCode, pEvent);
-		}
-		
-		return handled;
-	}
 
+	// loads a sound from assets/mfx/
 	static Sound loadSound(String locations) {
 		SoundFactory.setAssetBasePath("mfx/");
 		Sound backgroundSound = null;
@@ -183,11 +154,45 @@ public class Resources {
 		} 
 		return backgroundSound;
 	}
-
+	
+	//manage the various listeners and goals and adding of said items
+	static void addOnKeyDownListener(OnKeyDownListener listener) {
+		downListeners.add(listener);
+	}
+	static boolean onKeyDownEvent(int pKeyCode, KeyEvent pEvent) {
+		boolean handled = false;
+		
+		for(int i = 0; i < downListeners.size() && !handled ; i++) {
+			handled = downListeners.get(i).onKeyDown(pKeyCode, pEvent);
+		}
+		return handled;
+	}
+	static void addOnKeyUpListener(OnKeyUpListener listener) {
+		upListeners.add(listener);
+	}
+	static boolean onKeyUpEvent(int pKeyCode, KeyEvent pEvent) {
+		boolean handled = false;
+		
+		for(int i = 0; i < upListeners.size() && !handled ; i++) {
+			handled = upListeners.get(i).onKeyUp(pKeyCode, pEvent);
+		}
+		return handled;
+	}
 	static void addGoal(Rectangle rect) {
 		goalWatcher.add(rect);
 	}
 	static LinkedList<Rectangle> getGoals() {
 		return goalWatcher;
 	}
+	
+	//Set every thing to null so that the Garbage collector can take it.
+	static void finish() {
+		mCamera = null;
+		mPhysicsWorld = null;
+		mScene = null;
+		mEngine = null;
+		// Nuke the whole thing
+		mBaseGameActivity.finish();
+	}
+
 }

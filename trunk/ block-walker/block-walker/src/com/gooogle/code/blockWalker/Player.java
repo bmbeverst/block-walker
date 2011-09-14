@@ -58,7 +58,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	public Player(float pX, float pY, TiledTextureRegion pTiledTextureRegion) {
 		super(pX, pY, PLAYER_SIZE, PLAYER_SIZE,
 				pTiledTextureRegion = mPlayerTiledRegion = Resources
-						.loadTiledImage("Character.png", 128, 128, 4, 4));
+						.loadTiledTexture("Character.png", 128, 128, 4, 4));
 		ContactListener contactListener = new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {

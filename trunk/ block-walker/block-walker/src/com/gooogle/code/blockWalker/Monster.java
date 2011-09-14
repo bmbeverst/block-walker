@@ -59,7 +59,7 @@ public class Monster extends AnimatedSprite{
 		 */
 		public Monster(float pX, float pY,
 				TiledTextureRegion pTiledTextureRegion) {
-			super(pX, pY, PLAYER_SIZE, PLAYER_SIZE, mPlayerTiledRegion = Resources.loadTiledImage("monsterO.png", 128, 128, 3, 4));
+			super(pX, pY, PLAYER_SIZE, PLAYER_SIZE, mPlayerTiledRegion = Resources.loadTiledTexture("monsterO.png", 128, 128, 3, 4));
 			
 			
 			final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(MASS,

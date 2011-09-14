@@ -17,7 +17,7 @@ public class Goal extends Sprite {
 	
 	
 	public Goal(float pX, float pY) {
-		super(pX, pY, 64, 64, Resources.loadImage("HeroOne.png", 64, 128));
+		super(pX, pY, 64, 64, Resources.loadTexture("HeroOne.png", 64, 128));
 		
 		ContactListener contactListener = new ContactListener(){
             @Override

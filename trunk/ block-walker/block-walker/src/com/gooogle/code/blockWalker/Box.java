@@ -21,7 +21,7 @@ final class Box extends Sprite {
 	
 	// Creates the sprite and registers it with the scene and physicsworld
 	Box(float pX, float pY, float pWidth, float pHeight) {
-		super(pX, pY, pWidth, pHeight, Resources.loadImage("box.png", 32, 32));
+		super(pX, pY, pWidth, pHeight, Resources.loadTexture("box.png", 32, 32));
 		
 		final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(MASS,
 				ELASTICITY, FRICTION);
