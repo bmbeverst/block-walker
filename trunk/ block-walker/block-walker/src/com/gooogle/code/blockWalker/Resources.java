@@ -32,7 +32,6 @@ import android.view.KeyEvent;
 public class Resources {
 	
 	private static BaseGameActivity mBaseGameActivity;
-	private static Scene mBaseScene;
 	private static BoundCamera mCamera;
 	private static FixedStepPhysicsWorld mPhysicsWorld;
 	private static Scene mScene;
@@ -41,10 +40,9 @@ public class Resources {
 	private static LinkedList<OnKeyUpListener> upListeners = new LinkedList<OnKeyUpListener>();
 	private static LinkedList<Rectangle> goalWatcher = new LinkedList<Rectangle>();
 	
-	Resources(Scene pBaseScene, BoundCamera pCamera,
-			FixedStepPhysicsWorld pPhysicsWorld, Scene pScene,
-			BaseGameActivity pBaseGameActivity, Engine pEngine) {
-		mBaseScene = pBaseScene;
+	Resources(BoundCamera pCamera, FixedStepPhysicsWorld pPhysicsWorld,
+			Scene pScene, BaseGameActivity pBaseGameActivity,
+			Engine pEngine) {
 		mCamera = pCamera;
 		mPhysicsWorld = pPhysicsWorld;
 		mScene = pScene;
@@ -57,13 +55,6 @@ public class Resources {
 	 */
 	static final BaseGameActivity getmBaseGameActivity() {
 		return mBaseGameActivity;
-	}
-	
-	/**
-	 * @return the mBaseScene
-	 */
-	static final Scene getmBaseScene() {
-		return mBaseScene;
 	}
 	
 	/**
@@ -122,7 +113,6 @@ public class Resources {
 	}
 	
 	static void finish() {
-		mBaseScene = null;
 		mCamera = null;
 		mPhysicsWorld = null;
 		mScene = null;
