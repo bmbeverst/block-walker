@@ -176,7 +176,7 @@ public class BlockWalker extends BaseGameActivity implements
 		
 		//mCamera.setBounds(0, 10000, 0, 10000);// TODO set to some thing real.
 		//mCamera.setBoundsEnabled(false);
-		new Resources(mScene, mCamera, mPhysicsWorld, mScene, this, mEngine);
+		new Resources(mCamera, mPhysicsWorld, mScene, this, mEngine);
 		mMainLoop = new MainLoop();
 		return mScene;
 	}
