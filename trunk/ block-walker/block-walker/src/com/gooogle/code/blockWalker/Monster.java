@@ -34,10 +34,11 @@ public class Monster extends AnimatedSprite{
 		private static final int JUMPV = -10;
 		private static final float ELASTICITY = 0f;
 		private static final int MASS = 30;
-		private static final float FRICTION = 0.1f;
+		private static final float FRICTION = 0f;
 		
 		private final static float PLAYER_SIZE = 64;
 		private static final long[] ANIMATE_DURATION = new long[]{200, 200, 200};
+		private static final long[] ANIMATE_CHARGE = new long[]{400, 400, 400};
 		private static final long[] ANIMATE_IDLE = new long[]{200, 200};
 		
 		private float movementSpeed = 4f;
@@ -58,7 +59,7 @@ public class Monster extends AnimatedSprite{
 		 */
 		public Monster(float pX, float pY,
 				TiledTextureRegion pTiledTextureRegion) {
-			super(pX, pY, PLAYER_SIZE, PLAYER_SIZE, mPlayerTiledRegion = Resources.loadTiledImage("monster.png", 256, 256, 9, 9));
+			super(pX, pY, PLAYER_SIZE, PLAYER_SIZE, mPlayerTiledRegion = Resources.loadTiledImage("monsterO.png", 128, 128, 3, 4));
 			
 			
 			final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(MASS,
@@ -70,55 +71,36 @@ public class Monster extends AnimatedSprite{
 			idle();
 			mScene.attachChild(this);
 		}
-		
-		private void checkSpeed(Vector2 velocity) {
-			
-			final Vector2 temp = playerBody.getLinearVelocity();
-			velocity.add(temp);
-			if (velocity.x >= movementSpeed) {
-				velocity.x = movementSpeed;
-			}
-			if (velocity.y >= movementSpeed) {
-				velocity.y = movementSpeed;
-			}
-			if (velocity.x <= -movementSpeed) {
-				velocity.x = -movementSpeed;
-			}
-			if (velocity.y <= -movementSpeed) {
-				velocity.y = -movementSpeed;
-			}
-			playerBody.setLinearVelocity(velocity);
-		}
 
 		void up() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			if(!jumping){
 	            jumping = true;
 	            velocity.add(0, JUMPV);
-	            checkSpeed(velocity);
+	            velocity.add(playerBody.getLinearVelocity());
 			}
-			this.animate(ANIMATE_DURATION, 31 ,33, false);
+			this.animate(ANIMATE_DURATION, 9 ,11, false);
 			Vector2Pool.recycle(velocity);
 		}
 		void down() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(0, accelration);
-			checkSpeed(velocity);
-			this.animate(ANIMATE_DURATION,  3, 5, false);
+            velocity.add(playerBody.getLinearVelocity());
+			this.animate(ANIMATE_CHARGE,  0, 2, false);
 			Vector2Pool.recycle(velocity);
 		}
 		void left() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(-accelration, 0);
-			checkSpeed(velocity);
-			this.animate(ANIMATE_DURATION, 12 , 14, false);
+            velocity.add(playerBody.getLinearVelocity());
+			this.animate(ANIMATE_DURATION, 3 , 5, false);
 			Vector2Pool.recycle(velocity);
 		}
 		void right() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(accelration, 0);
-			checkSpeed(velocity);
-			this.animate(ANIMATE_DURATION, 21 , 23, false);
+            velocity.add(playerBody.getLinearVelocity());
+			this.animate(ANIMATE_DURATION, 6 , 8, false);
 			Vector2Pool.recycle(velocity);
 		}
 		void remove() {
