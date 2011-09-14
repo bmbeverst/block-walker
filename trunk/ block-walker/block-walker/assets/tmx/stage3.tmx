@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="60" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="035-Ruins01" tilewidth="32" tileheight="32">
+  <image source="tmx/035-Ruins01.png" width="256" height="896"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="40" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3DQQ0AAAwDodNR/0KnYX9IWDVVVVVVVVVVVVXfDyAR0jKAJQAA
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="40" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3XPQqEMBCG4VzHtfOIFqtYiJ3XsNzjmWJACKOMf5mwvA98kASEMTpiQgAAAAAAeGljvjFdTC/zkgwxo4wnmZeE+u4pvb6PkrfQi/dY6svxHPf8w/55ytmLgIX2Tqap3aqzaQL9hOfwnUYOR9/cI9WFa7DtG8pypQes0jPpImutMn6a5X7SM8tP1gZl7EE7U+3Fw5n6Zoecqc/yL+6ZhhDHrJ8D2F2AJQAA
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1" width="40" height="60">
+  <properties>
+   <property name="wall" value="true"/>
+  </properties>
+  <object x="-1" y="1766" width="1284" height="10"/>
+  <object x="193" y="1609" width="189" height="18"/>
+  <object x="382" y="1448" width="222" height="18"/>
+  <object x="574" y="1319" width="159" height="21"/>
+  <object x="671" y="1160" width="316" height="11"/>
+  <object x="978" y="1185" width="76" height="12"/>
+  <object x="514" y="1029" width="157" height="17"/>
+  <object x="803" y="936" width="88" height="15"/>
+  <object x="927" y="835" width="159" height="14"/>
+  <object x="644" y="1636" width="121" height="19"/>
+  <object x="767" y="1511" width="66" height="11"/>
+  <object x="836" y="1448" width="185" height="20"/>
+  <object x="-4" y="-4" width="10" height="1772"/>
+  <object x="-20" y="-12" width="1324" height="28"/>
+  <object x="1261" y="-68" width="24" height="1847"/>
+ </objectgroup>
+ <objectgroup name="Object Layer 2" width="40" height="60">
+  <properties>
+   <property name="goal" value="true"/>
+  </properties>
+  <object x="555" y="877" width="71" height="144"/>
+  <object x="960" y="680" width="92" height="152"/>
+  <object x="953" y="1611" width="120" height="152"/>
+ </objectgroup>
+ <layer name="Tile Layer 3" width="40" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3WyQrCMBSF4YC4yvM5bBw2DhuHje702T2BBi8XLUQihvp/cGjTlpC2NyEhAAAAAAAAtGfUBcMw/vUA8LE0D2OX3AZa4tcXW6/Av0hrc5oL1D++xe8HSvZ2MbB/KMX3alP+L3a9HcKaa9+rpPYmylSZKfPag6pgoSyVlbKu0N9FuVboJ9soW2Wn7N296I7++qvzm3I37b4afde/dVCOykk59zwH4OkB3qkpVoAlAAA=
+  </data>
+ </layer>
+</map>
