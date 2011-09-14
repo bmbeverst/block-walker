@@ -124,6 +124,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		}
 	}
 	
+	// decy test commit !
 	private void init() {
 		
 		// Load the TMX first so it is below the player
