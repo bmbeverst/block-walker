@@ -4,7 +4,6 @@
 package com.gooogle.code.blockWalker;
 
 import org.anddev.andengine.engine.camera.BoundCamera;
-import org.anddev.andengine.entity.Entity;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
@@ -236,4 +235,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				+ ", moving=" + moving + ", mX=" + mX + ", mY=" + mY + "]";
 	}
 	
+	public void rePosition(){
+		this.setCurrentTileIndex(3, 3);
+	}
 }

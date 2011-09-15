@@ -41,6 +41,7 @@ public class Resources {
 	private static LinkedList<OnKeyUpListener> upListeners = new LinkedList<OnKeyUpListener>();
 	// all the goals
 	private static LinkedList<Rectangle> goalWatcher = new LinkedList<Rectangle>();
+	private static DBManager mDBM;
 	
 	//Create the Resouces and set all the needed values
 	Resources(BoundCamera pCamera, FixedStepPhysicsWorld pPhysicsWorld,
@@ -193,6 +194,15 @@ public class Resources {
 		mEngine = null;
 		// Nuke the whole thing
 		mBaseGameActivity.finish();
+	}
+ 
+
+	public static void setmDBM(DBManager pDBM) {
+		Resources.mDBM = pDBM;
+	}
+
+	public static DBManager getmDBM() {
+		return mDBM;
 	}
 
 }

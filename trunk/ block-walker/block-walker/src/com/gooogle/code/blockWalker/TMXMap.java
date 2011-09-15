@@ -1,8 +1,6 @@
 package com.gooogle.code.blockWalker;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLayer;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObject;
@@ -36,8 +34,13 @@ public class TMXMap {
 	//ArrayList<TMXLayer> layers = new ArrayList<TMXLayer>();
 	ArrayList<Body> walls = new ArrayList<Body>();
 	//ArrayList<Rectangle> rects = new ArrayList<Rectangle>();
-	private Body Body; 
+	private Body Body;
+	private Rectangle exit; 
 	
+	public Rectangle getExit() {
+		return exit;
+	}
+
 	//When a new TMX map is created we load in the map
 	TMXMap(String location) {
 		// Load the TMX map
@@ -105,6 +108,23 @@ public class TMXMap {
 					// add it to the goals
 					Resources.addGoal(rect);
 				}
+			}
+			
+			if (group.getTMXObjectGroupProperties().containsTMXProperty("exit", "true"))
+			{
+				for (final TMXObject object : group.getTMXObjects()) {
+					// Create the rectangle
+					Rectangle rect = new Rectangle(object.getX(),
+							object.getY(), object.getWidth(),
+							object.getHeight());
+					// make it invisible
+					rect.setVisible(false);
+					//add it to the scene
+					mScene.attachChild(rect);
+					exit = rect;
+					
+				}
+				
 			}
 		}
 	}

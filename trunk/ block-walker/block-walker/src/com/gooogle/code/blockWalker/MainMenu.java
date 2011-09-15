@@ -16,8 +16,6 @@ import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.TextMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
 import org.anddev.andengine.opengl.font.Font;
-import org.anddev.andengine.util.Debug;
-
 import android.view.KeyEvent;
 
 public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
@@ -100,7 +98,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				mMenuScene.back();
 				if (noPlayer) {
 					// create a new game if there is none.
-					init();
+					init("level0.tmx");
 				}
 				return true;
 				
@@ -108,15 +106,17 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
 				// Need to implement this
-				// a test by decy to do map change! 
-				mmanager.nextMap(player);
+				Resources.getmDBM().saveMap(mmanager.getCurrentMapNumber());
 				return true;
 				
 			case MENU_LOAD:
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
-				// Need to implement this
-				aiTest(); // A test scene Brooks is using remove it when ever.
+				// cannot click load when in game already ?
+				if(noPlayer){
+				init(Resources.getmDBM().loadMap());
+				}
+				//aiTest(); // A test scene Brooks is using remove it when ever.
 				return true;
 				
 			case MENU_QUIT:
@@ -129,10 +129,10 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	}
 	
 	// decy test commit !
-	private void init() {
+	private void init(String pstring) {
 		
-		mmanager = new MapManager("stage3.tmx");
-		player = new Player(150, 1500, null);
+		mmanager = new MapManager(pstring);
+		player = new Player(150, 150, null);
 		// Mkae it so that no other players will be added.
 		noPlayer = false;
 		// SetUp the AI! WOOT!
@@ -181,6 +181,16 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 					goalSound.stop();
 					playing = false;
 				}
+				
+				
+				if (mmanager.getMap().getExit().collidesWith(player))
+				{
+					// a test by decy to do map change! 
+					mmanager.nextMap(player);
+				}
+				
+				
+				
 			}
 			//This was suppose to be a bit of text saying "You Win" but never got around to it.
 			private Scene win() {
@@ -204,7 +214,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	@Override
 	public boolean onKeyDown(int pKeyCode, KeyEvent pEvent) {
 		boolean handeled = false;
-		
+		 
 		switch (pKeyCode) {
 			case KeyEvent.KEYCODE_MENU:
 				if (pEvent.getAction() == KeyEvent.ACTION_DOWN) {

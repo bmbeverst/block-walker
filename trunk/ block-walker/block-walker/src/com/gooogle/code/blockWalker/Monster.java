@@ -1,7 +1,5 @@
 package com.gooogle.code.blockWalker;
 
-	import org.anddev.andengine.engine.camera.BoundCamera;
-	import org.anddev.andengine.entity.Entity;
 	import org.anddev.andengine.entity.scene.Scene;
 	import org.anddev.andengine.entity.sprite.AnimatedSprite;
 	import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
@@ -10,16 +8,10 @@ package com.gooogle.code.blockWalker;
 	import org.anddev.andengine.extension.physics.box2d.util.Vector2Pool;
 	import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 
-	import android.view.KeyEvent;
-
 	import com.badlogic.gdx.math.Vector2;
 	import com.badlogic.gdx.physics.box2d.Body;
 	import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-	import com.badlogic.gdx.physics.box2d.Contact;
-	import com.badlogic.gdx.physics.box2d.ContactImpulse;
-	import com.badlogic.gdx.physics.box2d.ContactListener;
 	import com.badlogic.gdx.physics.box2d.FixtureDef;
-	import com.badlogic.gdx.physics.box2d.Manifold;
 
 /**
  * @author brooks

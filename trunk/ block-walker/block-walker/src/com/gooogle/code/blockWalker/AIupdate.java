@@ -6,10 +6,6 @@ import java.util.Random;
 
 import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
-import org.anddev.andengine.entity.IEntity;
-import org.anddev.andengine.entity.primitive.Rectangle;
-import org.anddev.andengine.util.Debug;
-
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 

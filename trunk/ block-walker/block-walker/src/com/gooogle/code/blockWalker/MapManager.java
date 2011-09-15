@@ -4,13 +4,24 @@ import java.util.Iterator;
 
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
+import org.anddev.andengine.util.Debug;
 
 import com.badlogic.gdx.physics.box2d.Body;
 
 
 public class MapManager {
 	private String currentMapNumber;
+
 	private TMXMap map;
+	
+	public TMXMap getMap() {
+		return map;
+	}
+
+	public String getCurrentMapNumber() {
+		return currentMapNumber;
+	}
+
 	public MapManager (String startLocation){
 		currentMapNumber = startLocation;
 		map = new TMXMap(startLocation);
@@ -29,10 +40,15 @@ public class MapManager {
         	Body temp = iter.next();
         	if (!temp.equals(playerPhysicsConnector.getBody()))
         	mPhysicsWorld.destroyBody(temp);
+        	else 
+        	{
+        		Debug.d("PLAYER PHYSIC SAVED ! at the end of map " + currentMapNumber);
+        	}
         }
 
         //detach all children
 		Resources.getmScene().detachChildren();
+		//clear goal watcher lists too ? ?? 
         
         System.gc();
 		
@@ -45,6 +61,9 @@ public class MapManager {
 		//create new map and add back player
 		map = new TMXMap(currentMapNumber);
 		Resources.getmScene().attachChild(pplayer);
+		//can't seem to reposition player =(
+		pplayer.rePosition();
+		pplayer.setVisible(true);
 	}
  
 }

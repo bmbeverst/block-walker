@@ -1,48 +1,25 @@
 package com.gooogle.code.blockWalker;
 
-import java.io.IOException;
-
 import javax.microedition.khronos.opengles.GL10;
 
-import org.anddev.andengine.audio.sound.Sound;
-import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.FixedStepEngine;
 import org.anddev.andengine.engine.camera.BoundCamera;
-import org.anddev.andengine.engine.camera.Camera;
-import org.anddev.andengine.engine.handler.timer.ITimerCallback;
-import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
-import org.anddev.andengine.entity.scene.menu.MenuScene;
-import org.anddev.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
-import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
-import org.anddev.andengine.entity.scene.menu.item.TextMenuItem;
-import org.anddev.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
-import org.anddev.andengine.extension.physics.box2d.util.Vector2Pool;
 import org.anddev.andengine.input.touch.TouchEvent;
-import org.anddev.andengine.opengl.font.Font;
-import org.anddev.andengine.opengl.font.FontFactory;
-import org.anddev.andengine.opengl.texture.TextureOptions;
-import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
-import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.util.GLHelper;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
-import org.anddev.andengine.util.Debug;
-
-import android.graphics.Color;
-import android.hardware.SensorManager;
 import android.opengl.GLU;
 import android.view.KeyEvent;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 
 /**
  * @author brooks Aug 31, 2011
@@ -69,6 +46,7 @@ public class BlockWalker extends BaseGameActivity implements
 	
 	// this is the scene that every thing uses
 	private Scene mScene = new Scene();
+	private DBManager mDBM;
 	
 	// ===========================================================
 	// Constructors
@@ -123,6 +101,10 @@ public class BlockWalker extends BaseGameActivity implements
 	
 	@Override
 	public Engine onLoadEngine() {
+		// saving ? decy 
+		this.mDBM = new DBManager(getBaseContext());
+		Resources.setmDBM(mDBM);
+
 		// create the camera. It is not bound or following any thing yet.
 		mCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT) {
 			// Forces the camera to move in integer steps. Helps prevent
