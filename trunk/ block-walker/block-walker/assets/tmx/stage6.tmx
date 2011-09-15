@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="20" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="111" tilewidth="32" tileheight="32">
+  <image source="tmx/111.png" width="512" height="446"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="40" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3L1VIVUABAUUTEFrtFBAMLuwMJUVSwu7u7G7tbUezu7u7uT3J9xRmcuXtmPe6oqEiRIv2vFSGaosRQjFiKU4KSlKI0ZShLOeIoH+CvQEUqUZkqVKUa1alBTWpRmzrEU5eEAH89EkmiPg1oSCOSaUwTmtKM5qTQgpYB/la0pg1taUd7OtCRTnSmC13pRndS6RHgTyOdDDLpSRa96E02fehLP3LIpT8DAvwDGcRghjCUYQxnBCMZxWjGMJZxjGdCgH8ik5jMFKYyjenMYCazmM0c5jKP+SwI8C9kEYtZwlKWsZwVrGQVq1nDWtaxnrwA/wY2sonNbGEr29jODnayi93sYS/72B/gP8BBDnGYI+RzlGMUcJwTnOQUpznD2QD/Oc5zgYtc4jJXuMo1rnODm9ziNne4G+C/x30e8JBHPOYJT3nGc17wkle85g1vA/zveM8HPvKJz3zhK9/4zg9+8ovf/OFvgL+w9w+s1YRsgAwAAA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="40" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2ViQqCQBCGLTXbDuj9XyS7sYMu65n6hR34GXZS6CDCgQ91nXtGTKMoSkEPdEAfOM8QjPy5MPG6mdeV89CZxqnnLsXOKLboDuhdavhzpBOKwflZeYRyrOoeG/lxLP3O6qWuOwaJqovrqGPsr3X5SbwO6YdmNgNzsKArz1PX1WTGOjfLpmucs72cxUon1C+O5agvPA9n+BedQcBvQjbW3tbVpPfQqd7zvcyKY1R5yXdZ7cC7xJrNr4j0hfvzDck9rfym5AayJ6/65n1bvujv36TtTyuflmkU3rMVWIPNE1vrv9p0Z7VeyO4ITuAMLuAKSnAD95ra2Ma6Lxval4bdHhzeiOWvAFuwI53CgPUeuOEoPoAMAAA=
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="40" height="20">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OoQ0AIBTE0O57KzA8Ckew/0L6TG1B0s2aHngIvX+h9y/0/536J0n61QaO5EJkgAwAAA==
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1" width="40" height="20">
+  <properties>
+   <property name="wall" value="true"/>
+  </properties>
+  <object x="-7" y="547" width="1292" height="19"/>
+  <object x="224" y="424" width="157" height="17"/>
+  <object x="480" y="361" width="161" height="17"/>
+  <object x="255" y="264" width="64" height="20"/>
+  <object x="320" y="101" width="159" height="20"/>
+  <object x="573" y="229" width="160" height="21"/>
+  <object x="800" y="167" width="192" height="19"/>
+  <object x="1024" y="327" width="256" height="20"/>
+  <object x="-13" y="-20" width="1307" height="37"/>
+  <object x="-21" y="-23" width="28" height="607"/>
+  <object x="1272" y="-33" width="25" height="633"/>
+ </objectgroup>
+ <objectgroup name="Object Layer 2" width="40" height="20">
+  <properties>
+   <property name="exit" value="true"/>
+  </properties>
+  <object x="1181" y="253" width="33" height="69"/>
+ </objectgroup>
+</map>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="60" height="60" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="035-Ruins01" tilewidth="32" tileheight="32">
+  <image source="tmx/035-Ruins01.png" width="256" height="896"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="60" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3DAQkAAAwEocvx/YOux1Bw1VRVVVVVVVVVVVVVVVXVVw/eobE5QDgAAA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="60" height="60">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3VSQrCMABG4ZzDG6g77+Kwcdg4gFQFl+5cqHQhPbK/YEFqY0hpqinvgwctxLSBNBoDAAAAAAAAAAAAAACAWPQsAW1j2+vsdwCx+HaOlZ1lvuOBNmlq7/ONAdU09R9Vx9xDNVJjNanv1f7WVM3UXC0cY7cBnn9WF3VVtwDzFy3VSq3VxjH2WLjvms/91fd8fqruqqMyz99Wkaid2quDY+zp7fq51oElnzWnr/Jr11nwq2xrzQs1L1FMPQAMDgBxQDgAAA==
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1" width="60" height="60">
+  <properties>
+   <property name="wall" value="true"/>
+  </properties>
+  <object x="348" y="1150" width="194" height="34"/>
+  <object x="572" y="1246" width="226" height="34"/>
+  <object x="766" y="1408" width="258" height="30"/>
+  <object x="1152" y="1408" width="254" height="34"/>
+  <object x="1538" y="1504" width="222" height="34"/>
+  <object x="1309" y="1634" width="258" height="24"/>
+  <object x="224" y="1670" width="160" height="28"/>
+  <object x="450" y="1538" width="220" height="28"/>
+  <object x="2" y="1792" width="1926" height="40"/>
+  <object x="1248" y="1726" width="186" height="38"/>
+  <object x="1216" y="1760" width="58" height="48"/>
+  <object x="1411" y="1759" width="57" height="40"/>
+  <object x="-4" y="852" width="52" height="940"/>
+ </objectgroup>
+ <objectgroup name="Object Layer 2" width="60" height="60">
+  <properties>
+   <property name="goal" value="true"/>
+  </properties>
+  <object x="1850" y="1710" width="48" height="80"/>
+ </objectgroup>
+ <layer name="Tile Layer 3" width="60" height="60">
+  <properties>
+   <property name="col" value="true"/>
+  </properties>
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3OsQ0AIAgAQbbWDkeX0gEMNHfJ9x8BAAAAAAAAAAAAAAAAvFa1pycaZXWmJ4DvLm+EdD9AOAAA
+  </data>
+ </layer>
+</map>
