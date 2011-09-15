@@ -31,6 +31,8 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	private Scene mScene = Resources.getmScene();
 	private boolean noPlayer = true;
 	private Sound goalSound;
+	private MapManager mmanager;
+	private Player player;
 	
 	public MainMenu() {
 		// creates the main menu. Ask Decy :)
@@ -106,6 +108,8 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
 				// Need to implement this
+				// a test by decy to do map change! 
+				mmanager.nextMap(player);
 				return true;
 				
 			case MENU_LOAD:
@@ -127,10 +131,8 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	// decy test commit !
 	private void init() {
 		
-		// Load the TMX first so it is below the player
-		new TMXMap("stage3.tmx");
-		// Load the palyer and set him up
-		final Player player = new Player(150, 1500, null);
+		mmanager = new MapManager("stage3.tmx");
+		player = new Player(150, 1500, null);
 		// Mkae it so that no other players will be added.
 		noPlayer = false;
 		// SetUp the AI! WOOT!

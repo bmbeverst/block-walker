@@ -1,5 +1,8 @@
 package com.gooogle.code.blockWalker;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLayer;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObject;
@@ -10,6 +13,7 @@ import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
@@ -29,6 +33,11 @@ public class TMXMap {
 	private final Scene mScene = Resources.getmScene();
 	private final BoundCamera mCamera = Resources.getmCamera();
 	
+	//ArrayList<TMXLayer> layers = new ArrayList<TMXLayer>();
+	ArrayList<Body> walls = new ArrayList<Body>();
+	//ArrayList<Rectangle> rects = new ArrayList<Rectangle>();
+	private Body Body; 
+	
 	//When a new TMX map is created we load in the map
 	TMXMap(String location) {
 		// Load the TMX map
@@ -39,6 +48,7 @@ public class TMXMap {
 			final TMXLayer layer = mTMXTiledMap.getTMXLayers().get(i);
 			if (!layer.getTMXLayerProperties().containsTMXProperty("wall",
 					"true")) {
+				//layers.add(layer);
 				mScene.attachChild(layer);
 			}
 		}
@@ -69,11 +79,14 @@ public class TMXMap {
 					final FixtureDef boxFixtureDef = PhysicsFactory
 							.createFixtureDef(0, ELASTICITY, FRICTION);
 					//connect the body to the physics engine.
-					PhysicsFactory.createBoxBody(mPhysicsWorld, rect,
+					Body tempbody = PhysicsFactory.createBoxBody(mPhysicsWorld, rect,
 							BodyType.StaticBody, boxFixtureDef);
+					
 					// make it invisible
 					rect.setVisible(false);
 					//add it to the scene
+					walls.add(tempbody);
+					//rects.add(rect);
 					mScene.attachChild(rect);
 				}
 			}
@@ -95,4 +108,7 @@ public class TMXMap {
 			}
 		}
 	}
-}
+
+		
+	}
+
