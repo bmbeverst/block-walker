@@ -35,7 +35,7 @@ public class TMXMap {
 	ArrayList<Body> walls = new ArrayList<Body>();
 	//ArrayList<Rectangle> rects = new ArrayList<Rectangle>();
 	private Body Body;
-	private Rectangle exit; 
+	private Rectangle exit = new Rectangle(0, 0, 0, 0); 
 	
 	public Rectangle getExit() {
 		return exit;

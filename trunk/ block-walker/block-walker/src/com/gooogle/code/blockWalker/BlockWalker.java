@@ -10,10 +10,17 @@ import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
+import org.anddev.andengine.entity.scene.background.AutoParallaxBackground;
 import org.anddev.andengine.entity.scene.background.ColorBackground;
+import org.anddev.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
+import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.anddev.andengine.input.touch.TouchEvent;
+import org.anddev.andengine.opengl.texture.TextureOptions;
+import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.util.GLHelper;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 import android.opengl.GLU;
@@ -47,6 +54,7 @@ public class BlockWalker extends BaseGameActivity implements
 	// this is the scene that every thing uses
 	private Scene mScene = new Scene();
 	private DBManager mDBM;
+	private AutoParallaxBackground autoParallaxBackground;
 	
 	// ===========================================================
 	// Constructors
@@ -143,7 +151,7 @@ public class BlockWalker extends BaseGameActivity implements
 		// else where.
 		mScene.setOnSceneTouchListener(this);
 		// set the back ground color
-		mScene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
+//		mScene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
 		
 		// Default 60, 8 and 8
 		// lol I think we really messed up here. Gravity is StepsPerSecond not
@@ -159,6 +167,29 @@ public class BlockWalker extends BaseGameActivity implements
 		// is any thing you need from this class.
 		new Resources(mCamera, mPhysicsWorld, mScene, this, mEngine);
 		// Start the game!
+		
+		//------------------------------------------------------------------------------------
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+
+		BitmapTextureAtlas parallaxTexture = new BitmapTextureAtlas(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+		BitmapTextureAtlas autoParallaxTexture = new BitmapTextureAtlas(1024, 1024, TextureOptions.DEFAULT);
+
+ 		autoParallaxBackground = new AutoParallaxBackground(0, 0, 0, 5);
+ 		
+ 		TextureRegion mParallaxLayerFront = BitmapTextureAtlasTextureRegionFactory.createFromAsset(autoParallaxTexture, this,  "parallax_background_layer_front.png", 0, 0);
+ 		TextureRegion mParallaxLayerBack = BitmapTextureAtlasTextureRegionFactory.createFromAsset(autoParallaxTexture, this, "parallax_background_layer_back.png",  0, 188);
+ 		TextureRegion mParallaxLayerMid = BitmapTextureAtlasTextureRegionFactory.createFromAsset(autoParallaxTexture, this, "parallax_background_layer_mid.png", 0, 669);
+
+ 		mEngine.getTextureManager().loadTextures(parallaxTexture, autoParallaxTexture);
+
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(0.0f, new Sprite(0, CAMERA_HEIGHT - mParallaxLayerBack.getHeight(), mParallaxLayerBack)));
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-5.0f, new Sprite(0, 80, mParallaxLayerMid)));
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-10.0f, new Sprite(0, CAMERA_HEIGHT - mParallaxLayerFront.getHeight(), mParallaxLayerFront)));
+		mScene.setBackground(autoParallaxBackground);
+		Resources.setBackground(autoParallaxBackground);
+ 
+		
 		new MainMenu();
 		// Engine's scene is set to this behind the scenes. No pun :)
 		return mScene;

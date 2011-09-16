@@ -98,7 +98,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				mMenuScene.back();
 				if (noPlayer) {
 					// create a new game if there is none.
-					init("level0.tmx");
+					init("level4.tmx");
 				}
 				return true;
 				
@@ -110,9 +110,10 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				return true;
 				
 			case MENU_LOAD:
+				goalSound = Resources.loadSound("background.ogg");
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
-				// cannot click load when in game already ?
+				// cannot click load when in game already now
 				if(noPlayer){
 				init(Resources.getmDBM().loadMap());
 				}
@@ -182,12 +183,12 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 					playing = false;
 				}
 				
-				
-				if (mmanager.getMap().getExit().collidesWith(player))
-				{
-					// a test by decy to do map change! 
-					mmanager.nextMap(player);
-				}
+//				
+//				if (mmanager.getMap().getExit().collidesWith(player))
+//				{
+//					// a test by decy to do map change! 
+//					mmanager.nextMap(player);
+//				}
 				
 				
 				

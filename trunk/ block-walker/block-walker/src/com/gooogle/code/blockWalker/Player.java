@@ -133,6 +133,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			checkSpeed(velocity);
 			this.animate(ANIMATE_DURATION, 12, 15, false);
 		}
+		Resources.getMautoParallaxBackground().setParallaxChangePerSecond(0);
+
 		Vector2Pool.recycle(velocity);
 	}
 
@@ -141,6 +143,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		velocity.set(0, accelration);
 		checkSpeed(velocity);
 		this.animate(ANIMATE_CHANRGE, 8, 11, false);
+		Resources.getMautoParallaxBackground().setParallaxChangePerSecond(0);
+
 		Vector2Pool.recycle(velocity);
 		Debug.d(this.toString());
 	}
@@ -157,6 +161,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
 		}
+		Resources.getMautoParallaxBackground().setParallaxChangePerSecond(-2);
+
 		Vector2Pool.recycle(velocity);
 	}
 
@@ -171,7 +177,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		if (moving) {
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
-		}
+		}		
+		Resources.getMautoParallaxBackground().setParallaxChangePerSecond(2);
+
 		Vector2Pool.recycle(velocity);
 	}
 
@@ -222,6 +230,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		if (!moving) {
 			moving = true;
 			this.animate(ANIMATE_IDLE, 0, 1, false);
+			Resources.getMautoParallaxBackground().setParallaxChangePerSecond(0);
 		}
 		return false;
 	}
@@ -234,8 +243,11 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		return "Player [jumping=" + jumping + ", flipped=" + flipped
 				+ ", moving=" + moving + ", mX=" + mX + ", mY=" + mY + "]";
 	}
-	
+
 	public void rePosition(){
-		this.setCurrentTileIndex(3, 3);
-	}
+		final Vector2 currentTransform = playerBody.getTransform().getPosition();
+		final Vector2 currentPos = new Vector2(this.getX(), this.getY());
+		final Vector2 newVector = new Vector2(0.0f,2.0f);
+		newVector.set((newVector.x*currentTransform.x)/currentPos.x, (newVector.y*currentTransform.y)/currentPos.y);                                   
+		playerBody.setTransform(newVector, 0.0f);	}
 }

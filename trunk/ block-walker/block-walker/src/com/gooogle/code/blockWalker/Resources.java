@@ -12,6 +12,7 @@ import org.anddev.andengine.entity.layer.tiled.tmx.TMXTiledMap;
 import org.anddev.andengine.entity.layer.tiled.tmx.util.exception.TMXLoadException;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.scene.background.AutoParallaxBackground;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.opengl.font.FontFactory;
@@ -42,6 +43,11 @@ public class Resources {
 	// all the goals
 	private static LinkedList<Rectangle> goalWatcher = new LinkedList<Rectangle>();
 	private static DBManager mDBM;
+	private static Object mParallaxLayerFront;
+	private static Object mParallaxLayerBack;
+	private static Object mParallaxLayerMid;
+	private static BitmapTextureAtlas autoParallaxTexture;
+	private static AutoParallaxBackground mautoParallaxBackground;
 	
 	//Create the Resouces and set all the needed values
 	Resources(BoundCamera pCamera, FixedStepPhysicsWorld pPhysicsWorld,
@@ -116,6 +122,23 @@ public class Resources {
 		mEngine.getTextureManager().loadTexture(mBitmapTexture);
 		return mTextureRegion;
 	}
+	
+	
+	//test for parallax background
+	static BitmapTextureAtlas loadParallax(String locationfront, String locationback, String locationmid, int sizeX, int sizeY){
+	BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
+
+	BitmapTextureAtlas parallaxTexture = new BitmapTextureAtlas(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+
+	autoParallaxTexture = new BitmapTextureAtlas(1024, 1024, TextureOptions.DEFAULT);
+	return autoParallaxTexture;
+
+
+	}
+	
+	
+	
+	
 	// loads a tiled texture from assets/gfx/ the size values are from 1 not 0.
 	static TiledTextureRegion loadTiledTexture(String location, int sizeX, int sizeY, int tileX, int tileY) {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
@@ -203,6 +226,14 @@ public class Resources {
 
 	public static DBManager getmDBM() {
 		return mDBM;
+	}
+
+	public static void setBackground(AutoParallaxBackground pautoParallaxBackground) {
+		mautoParallaxBackground= pautoParallaxBackground;
+	}
+
+	public static AutoParallaxBackground getMautoParallaxBackground() {
+		return mautoParallaxBackground;
 	}
 
 }
