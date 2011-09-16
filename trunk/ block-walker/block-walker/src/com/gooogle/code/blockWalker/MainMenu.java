@@ -27,7 +27,6 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	private Camera mCamera = Resources.getmCamera();
 	private MenuScene mMenuScene;
 	private Scene mScene = Resources.getmScene();
-	private boolean noPlayer = true;
 	private Sound goalSound;
 	private MapManager mmanager;
 	private Player player;
@@ -96,10 +95,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				mScene.detachChild(mMenuScene);
 				// Tells the menu to put every thing back
 				mMenuScene.back();
-				if (noPlayer) {
-					// create a new game if there is none.
-					init("level4.tmx");
-				}
+				init("test01.tmx");
 				return true;
 				
 			case MENU_SAVE:
@@ -113,10 +109,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				goalSound = Resources.loadSound("background.ogg");
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
-				// cannot click load when in game already now
-				if(noPlayer){
-				init(Resources.getmDBM().loadMap());
-				}
+				mmanager.reloadMap(Resources.getmDBM().loadMap());
 				//aiTest(); // A test scene Brooks is using remove it when ever.
 				return true;
 				
@@ -129,20 +122,20 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		}
 	}
 	
-	// decy test commit !
 	private void init(String pstring) {
 		
 		mmanager = new MapManager(pstring);
-		player = new Player(150, 150, null);
+		Resources.setMapManager(mmanager);
+
+		//player = new Player(150, 150, null);
 		// Mkae it so that no other players will be added.
-		noPlayer = false;
+		//noPlayer = false;
 		// SetUp the AI! WOOT!
-		Resources.getmScene().registerUpdateHandler(
-				new TimerHandler(5, new AIupdate()));
+		Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
 		// Add the random moster so we can complete the homework.
-		Monster temp = new Monster(100, 1500, null);
+		//Monster temp = new Monster(100, 1500, null);
 		// Probably should be in Monster.
-		AIupdate.addMonster(temp);
+		//AIupdate.addMonster(temp);
 		/*
 		 * Need to get coords for these monsters temp = new Monster(100, 1500,
 		 * null); temp = new Monster(100, 1500, null); temp = new Monster(100,
@@ -150,55 +143,55 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		 */
 		
 		/* The actual collision-checking. */
-		mScene.registerUpdateHandler(new IUpdateHandler() {
-			private boolean playing = false;
-			private int index;
-			
-			@Override
-			public void reset() {
-			}
-			
-			// When ever there is a collision this is called. Shoud optimize.
-			@Override
-			public void onUpdate(final float pSecondsElapsed) {
-				// this is random junk that makes it so that the goal sound will
-				// only play is the play is in one of the goals. I don't know
-				// why it works, only because I did not know why it wasn't
-				// working.
-				LinkedList<Rectangle> goals = Resources.getGoals();
-				if (!playing) {
-					for (index = 0; !playing && index < goals.size(); index++) {
-						// Debug.d("GOAL!");
-						if (goals.get(index).collidesWith(player)) {
-							if (!playing) {
-								playing = true;
-								goalSound.play();
-								break; // i KNOW THIS IS BAD BUT IT IS THE ONLY
-										// WAY!
-							}
-						}
-					}
-				} else if (!goals.get(index).collidesWith(player)) {
-					goalSound.stop();
-					playing = false;
-				}
-				
+//		mScene.registerUpdateHandler(new IUpdateHandler() {
+//			private boolean playing = false;
+//			private int index;
+//			
+//			@Override
+//			public void reset() {
+//			}
+//			
+//			// When ever there is a collision this is called. Shoud optimize.
+//			@Override
+//			public void onUpdate(final float pSecondsElapsed) {
+//				// this is random junk that makes it so that the goal sound will
+//				// only play is the play is in one of the goals. I don't know
+//				// why it works, only because I did not know why it wasn't
+//				// working.
+//				LinkedList<Rectangle> goals = Resources.getGoals();
+//				if (!playing) {
+//					for (index = 0; !playing && index < goals.size(); index++) {
+//						// Debug.d("GOAL!");
+//						if (goals.get(index).collidesWith(player)) {
+//							if (!playing) {
+//								playing = true;
+//								goalSound.play();
+//								break; // i KNOW THIS IS BAD BUT IT IS THE ONLY
+//										// WAY!
+//							}
+//						}
+//					}
+//				} else if (!goals.get(index).collidesWith(player)) {
+//					goalSound.stop();
+//					playing = false;
+//				}
+//				
 //				
 //				if (mmanager.getMap().getExit().collidesWith(player))
 //				{
 //					// a test by decy to do map change! 
 //					mmanager.nextMap(player);
 //				}
-				
-				
-				
-			}
+//				
+//				
+//				
+//			}
 			//This was suppose to be a bit of text saying "You Win" but never got around to it.
-			private Scene win() {
-				
-				return mMenuScene;
-			}
-		});
+//			private Scene win() {
+//				
+//				return mMenuScene;
+//			}
+//		});
 		
 	}
 	// The temp scene Brooks is using to test his AI.

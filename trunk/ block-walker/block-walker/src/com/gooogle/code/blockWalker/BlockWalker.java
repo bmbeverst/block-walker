@@ -168,11 +168,12 @@ public class BlockWalker extends BaseGameActivity implements
 		new Resources(mCamera, mPhysicsWorld, mScene, this, mEngine);
 		// Start the game!
 		
+		//parallax background loading ! 
 		//------------------------------------------------------------------------------------
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 
 		BitmapTextureAtlas parallaxTexture = new BitmapTextureAtlas(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-
+ 
 		BitmapTextureAtlas autoParallaxTexture = new BitmapTextureAtlas(1024, 1024, TextureOptions.DEFAULT);
 
  		autoParallaxBackground = new AutoParallaxBackground(0, 0, 0, 5);
@@ -182,10 +183,10 @@ public class BlockWalker extends BaseGameActivity implements
  		TextureRegion mParallaxLayerMid = BitmapTextureAtlasTextureRegionFactory.createFromAsset(autoParallaxTexture, this, "parallax_background_layer_mid.png", 0, 669);
 
  		mEngine.getTextureManager().loadTextures(parallaxTexture, autoParallaxTexture);
-
+   
 		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(0.0f, new Sprite(0, CAMERA_HEIGHT - mParallaxLayerBack.getHeight(), mParallaxLayerBack)));
-		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-5.0f, new Sprite(0, 80, mParallaxLayerMid)));
-		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-10.0f, new Sprite(0, CAMERA_HEIGHT - mParallaxLayerFront.getHeight(), mParallaxLayerFront)));
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-15.0f, new Sprite(0, 20, mParallaxLayerMid)));
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-25.0f, new Sprite(0, 20, mParallaxLayerFront)));
 		mScene.setBackground(autoParallaxBackground);
 		Resources.setBackground(autoParallaxBackground);
  

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="40" height="40" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="035-Ruins01" tilewidth="32" tileheight="32">
+  <image source="tmx/035-Ruins01.png" trans="ff00ff" width="256" height="896"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="40" height="40">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3UQQrAIAwEQN/Th7aeWp/cgGchYMEiM7D3hZAtBQAAvnUkApCR2ROb8m9uBV12z3b4mTNyRerqIgN35Im01UUG9Juj35zd+r32XQc4ABkAAA==
+  </data>
+ </layer>
+ <objectgroup name="wall" width="40" height="40">
+  <properties>
+   <property name="wall" value="true"/>
+  </properties>
+  <object x="288" y="984" width="446" height="40"/>
+  <object x="442" y="832" width="136" height="32"/>
+  <object x="668" y="740" width="324" height="26"/>
+  <object x="808" y="516" width="278" height="26"/>
+  <object x="-42" y="1274" width="1342" height="14"/>
+  <object x="-16" y="-22" width="22" height="1336"/>
+  <object x="1270" y="-18" width="30" height="1318"/>
+ </objectgroup>
+ <objectgroup name="player" width="40" height="40">
+  <properties>
+   <property name="spawn" value="true"/>
+  </properties>
+  <object gid="151" x="132" y="1228"/>
+ </objectgroup>
+ <objectgroup name="exit" width="40" height="40">
+  <properties>
+   <property name="exit" value="true"/>
+  </properties>
+  <object x="896" y="1032" width="96" height="248"/>
+ </objectgroup>
+</map>

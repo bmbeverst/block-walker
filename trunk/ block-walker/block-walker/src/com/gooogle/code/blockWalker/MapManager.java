@@ -25,26 +25,29 @@ public class MapManager {
 	public MapManager (String startLocation){
 		currentMapNumber = startLocation;
 		map = new TMXMap(startLocation);
-
 	}
 	
-	public void nextMap(Player pplayer){ 
+	public void nextMap(){ 
+ 
 
-		//detach all physic bodies EXCEPT PLAYER
+		//detach all physic bodies  
 		PhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
+		mPhysicsWorld.clearPhysicsConnectors();
+		Debug.d("!! PHYSIC  !! at the end of map " + currentMapNumber);
 
-        Iterator<Body> iter = mPhysicsWorld.getBodies();
-        final PhysicsConnector playerPhysicsConnector = mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(pplayer);
+		
+         Iterator<Body> iter = mPhysicsWorld.getBodies();
+     //   final PhysicsConnector playerPhysicsConnector = mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(pplayer);
         while (iter.hasNext())
         {
         	Body temp = iter.next();
-        	if (!temp.equals(playerPhysicsConnector.getBody()))
+        	//if (!temp.equals(playerPhysicsConnector.getBody()))
         	mPhysicsWorld.destroyBody(temp);
-        	else 
-        	{
-        		Debug.d("PLAYER PHYSIC SAVED ! at the end of map " + currentMapNumber);
-        	}
-        }
+//        	else 
+//        	{
+//        		Debug.d("PLAYER PHYSIC SAVED ! at the end of map " + currentMapNumber);
+//        	}
+        } 
 
         //detach all children
 		Resources.getmScene().detachChildren();
@@ -58,12 +61,21 @@ public class MapManager {
 		i++;
 		currentMapNumber = currentMapNumber.substring(0,5) + i + ".tmx";
 		
-		//create new map and add back player
+		//create new map and map will create new player ! 
 		map = new TMXMap(currentMapNumber);
-		Resources.getmScene().attachChild(pplayer);
-		//can't seem to reposition player =(
-		pplayer.rePosition();
-		pplayer.setVisible(true);
+		//Resources.getmScene().attachChild(pplayer);
+		//pplayer.rePosition();
+		//pplayer.setVisible(true);
+	}
+
+	public void reloadMap(String pMap) {
+		PhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
+		mPhysicsWorld.clearPhysicsConnectors();
+		Resources.getmScene().detachChildren();
+        System.gc();
+        currentMapNumber=pMap;
+		map = new TMXMap(currentMapNumber);
+		
 	}
  
 }

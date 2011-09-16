@@ -3,7 +3,11 @@
  */
 package com.gooogle.code.blockWalker;
 
+
+//Turn into a siglton test feild if not null new player else attach.
+
 import org.anddev.andengine.engine.camera.BoundCamera;
+import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
@@ -28,7 +32,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
  * @author brooks Sep 5, 2011
  */
 public class Player extends AnimatedSprite implements OnKeyDownListener,
-		OnKeyUpListener {
+		OnKeyUpListener, IUpdateHandler {
 
 	private static final float JUMPV = -10f;
 	private static final float ELASTICITY = 0f;
@@ -48,7 +52,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private Scene mScene = Resources.getmScene();
 	private Body playerBody;
 
-	private boolean jumping = true;
+	private boolean jumping = false;
 	private boolean flipped = false;
 	private boolean moving = true;
 
@@ -97,9 +101,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				mCamera.updateChaseEntity();
 			}
 		});
-		
+
 		playerBody.setLinearDamping(1);
-		//playerBody.setAngularDamping(10);
+		// playerBody.setAngularDamping(10);
 		mCamera.setChaseEntity(this);
 		mScene.attachChild(this);
 		Resources.addOnKeyDownListener(this);
@@ -119,7 +123,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		if (velocity.x <= -movementSpeed) {
 			velocity.x = -movementSpeed;
 		}
-		if (velocity.y <= -movementSpeed) {//-2.5f
+		if (velocity.y <= -movementSpeed) {// -2.5f
 			velocity.y = -movementSpeed;
 		}
 		playerBody.setLinearVelocity(velocity);
@@ -177,7 +181,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		if (moving) {
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
-		}		
+		}
 		Resources.getMautoParallaxBackground().setParallaxChangePerSecond(2);
 
 		Vector2Pool.recycle(velocity);
@@ -185,6 +189,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 
 	void remove() {
 		mScene.detachChild(this);
+		Resources.removePlayer(this);
 	}
 
 	@Override
@@ -193,6 +198,10 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 
 		switch (pKeyCode) {
 		case KeyEvent.KEYCODE_DPAD_UP:
+			up();
+			handeled = true;
+			break;
+		case KeyEvent.KEYCODE_SPACE:
 			up();
 			handeled = true;
 			break;
@@ -230,12 +239,15 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		if (!moving) {
 			moving = true;
 			this.animate(ANIMATE_IDLE, 0, 1, false);
-			Resources.getMautoParallaxBackground().setParallaxChangePerSecond(0);
+			Resources.getMautoParallaxBackground()
+					.setParallaxChangePerSecond(0);
 		}
 		return false;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -244,10 +256,24 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				+ ", moving=" + moving + ", mX=" + mX + ", mY=" + mY + "]";
 	}
 
-	public void rePosition(){
-		final Vector2 currentTransform = playerBody.getTransform().getPosition();
+	public void rePosition() {
+		final Vector2 currentTransform = playerBody.getTransform()
+				.getPosition();
 		final Vector2 currentPos = new Vector2(this.getX(), this.getY());
-		final Vector2 newVector = new Vector2(0.0f,2.0f);
-		newVector.set((newVector.x*currentTransform.x)/currentPos.x, (newVector.y*currentTransform.y)/currentPos.y);                                   
-		playerBody.setTransform(newVector, 0.0f);	}
+		final Vector2 newVector = new Vector2(0.0f, 2.0f);
+		newVector.set((newVector.x * currentTransform.x) / currentPos.x,
+				(newVector.y * currentTransform.y) / currentPos.y);
+		playerBody.setTransform(newVector, 0.0f);
+	}
+
+	// When ever there is a collision this is called. optimize.
+	@Override
+	public void onManagedUpdate(final float pSecondsElapsed) {
+ 		if (Resources.getExit().collidesWith(this)) {
+			mScene.unregisterUpdateHandler(this);
+			(Resources.getMapManger()).nextMap();
+		}
+
+	}
+
 }

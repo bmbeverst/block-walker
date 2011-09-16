@@ -48,7 +48,17 @@ public class Resources {
 	private static Object mParallaxLayerMid;
 	private static BitmapTextureAtlas autoParallaxTexture;
 	private static AutoParallaxBackground mautoParallaxBackground;
+	private static MapManager mMapManager;
+	private static Rectangle mexit;
 	
+	public static Rectangle getExit() {
+		return mexit;
+	}
+
+	public static void setExit(Rectangle pexit) {
+		mexit = pexit;
+	}
+
 	//Create the Resouces and set all the needed values
 	Resources(BoundCamera pCamera, FixedStepPhysicsWorld pPhysicsWorld,
 			Scene pScene, BaseGameActivity pBaseGameActivity,
@@ -202,6 +212,11 @@ public class Resources {
 		}
 		return handled;
 	}
+	
+	static void removePlayer(Player p) {
+		upListeners.remove(p);
+		downListeners.remove(p);
+	}
 	static void addGoal(Rectangle rect) {
 		goalWatcher.add(rect);
 	}
@@ -235,5 +250,15 @@ public class Resources {
 	public static AutoParallaxBackground getMautoParallaxBackground() {
 		return mautoParallaxBackground;
 	}
+
+	public static void setMapManager(MapManager pmapManager) {
+		mMapManager = pmapManager;
+	}
+
+	public static MapManager getMapManger() {
+		return mMapManager;
+	}
+ 
+ 
 
 }
