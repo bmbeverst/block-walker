@@ -6,8 +6,11 @@ package com.gooogle.code.blockWalker;
 
 //Turn into a siglton test feild if not null new player else attach.
 
+import java.util.LinkedList;
+
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
+import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
@@ -108,6 +111,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		mScene.attachChild(this);
 		Resources.addOnKeyDownListener(this);
 		Resources.addOnKeyUpListener(this);
+		Resources.setmPlayer(this);
+		updatePlayer();
 	}
 
 	private void checkSpeed(Vector2 velocity) {
@@ -137,8 +142,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			checkSpeed(velocity);
 			this.animate(ANIMATE_DURATION, 12, 15, false);
 		}
-		Resources.getMautoParallaxBackground().setParallaxChangePerSecond(0);
-
+ 
 		Vector2Pool.recycle(velocity);
 	}
 
@@ -147,8 +151,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		velocity.set(0, accelration);
 		checkSpeed(velocity);
 		this.animate(ANIMATE_CHANRGE, 8, 11, false);
-		Resources.getMautoParallaxBackground().setParallaxChangePerSecond(0);
-
+ 
 		Vector2Pool.recycle(velocity);
 		Debug.d(this.toString());
 	}
@@ -165,8 +168,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
 		}
-		Resources.getMautoParallaxBackground().setParallaxChangePerSecond(-2);
-
+ 
 		Vector2Pool.recycle(velocity);
 	}
 
@@ -182,8 +184,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
 		}
-		Resources.getMautoParallaxBackground().setParallaxChangePerSecond(2);
-
+ 
 		Vector2Pool.recycle(velocity);
 	}
 
@@ -239,9 +240,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		if (!moving) {
 			moving = true;
 			this.animate(ANIMATE_IDLE, 0, 1, false);
-			Resources.getMautoParallaxBackground()
-					.setParallaxChangePerSecond(0);
-		}
+ 		}
 		return false;
 	}
 
@@ -267,13 +266,23 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	}
 
 	// When ever there is a collision this is called. optimize.
-	@Override
-	public void onManagedUpdate(final float pSecondsElapsed) {
- 		if (Resources.getExit().collidesWith(this)) {
+ 	public void updatePlayer() {
+ 		mScene.registerUpdateHandler(new IUpdateHandler() {
+		 	
+			@Override
+			public void reset() {
+			}
+			
+ 			@Override
+			public void onUpdate(final float pSecondsElapsed) {
+ 			if (Resources.getExit().collidesWith(Resources.getmPlayer())) {
 			mScene.unregisterUpdateHandler(this);
+			Resources.removePlayer(Resources.getmPlayer());
 			(Resources.getMapManger()).nextMap();
 		}
 
 	}
+ 		});
+ 	}
 
 }

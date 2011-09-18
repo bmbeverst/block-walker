@@ -50,7 +50,16 @@ public class Resources {
 	private static AutoParallaxBackground mautoParallaxBackground;
 	private static MapManager mMapManager;
 	private static Rectangle mexit;
+	private static Player mPlayer;
 	
+	public static Player getmPlayer() {
+		return mPlayer;
+	}
+
+	public static void setmPlayer(Player mPlayer) {
+		Resources.mPlayer = mPlayer;
+	}
+
 	public static Rectangle getExit() {
 		return mexit;
 	}

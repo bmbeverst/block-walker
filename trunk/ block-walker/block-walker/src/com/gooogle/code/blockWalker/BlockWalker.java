@@ -176,7 +176,7 @@ public class BlockWalker extends BaseGameActivity implements
  
 		BitmapTextureAtlas autoParallaxTexture = new BitmapTextureAtlas(1024, 1024, TextureOptions.DEFAULT);
 
- 		autoParallaxBackground = new AutoParallaxBackground(0, 0, 0, 5);
+ 		autoParallaxBackground = new AutoParallaxBackground(0, 0, 0, 3);
  		
  		TextureRegion mParallaxLayerFront = BitmapTextureAtlasTextureRegionFactory.createFromAsset(autoParallaxTexture, this,  "parallax_background_layer_front.png", 0, 0);
  		TextureRegion mParallaxLayerBack = BitmapTextureAtlasTextureRegionFactory.createFromAsset(autoParallaxTexture, this, "parallax_background_layer_back.png",  0, 188);
