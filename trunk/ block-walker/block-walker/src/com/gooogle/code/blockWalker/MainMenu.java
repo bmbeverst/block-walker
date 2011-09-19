@@ -102,13 +102,18 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
 				// Need to implement this
-				Resources.getmDBM().saveMap(mmanager.getCurrentMapNumber());
+				Resources.getmDBM().saveAll(
+						mmanager.getCurrentMapNumber(),
+						Resources.getHUD().getLifeCount(),
+						Resources.getHUD().getEnergyCount());
 				return true;
 				
 			case MENU_LOAD:
 				//goalSound = Resources.loadSound("background.ogg");
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
+				Resources.getHUD().setEnergyCount(Resources.getmDBM().loadEnergy());
+				Resources.getHUD().setLifeCount(Resources.getmDBM().loadLife());
 				if (!hasStarted)
 				{
 					init(Resources.getmDBM().loadMap());
@@ -116,6 +121,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				else{
 				mmanager.reloadMap(Resources.getmDBM().loadMap());
 				}
+				//restore life and energy 
 				//aiTest(); // A test scene Brooks is using remove it when ever.
 				return true;
 				

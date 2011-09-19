@@ -190,13 +190,15 @@ public class BlockWalker extends BaseGameActivity implements
 		mScene.setBackground(autoParallaxBackground);
 		Resources.setBackground(autoParallaxBackground);
  
-		
-		new MainMenu();
 
 		//------------------------------------------------------------------------------------
 		GameHUD hud = new GameHUD();
 		mCamera.setHUD(hud);
 		Resources.setHUD(hud);
+		//------------------------------------------------------------------------------------
+
+		new MainMenu();
+
 		
 		
 		// Engine's scene is set to this behind the scenes. No pun :)

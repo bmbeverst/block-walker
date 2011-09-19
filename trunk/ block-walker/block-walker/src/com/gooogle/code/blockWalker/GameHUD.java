@@ -13,8 +13,7 @@ public class GameHUD extends HUD{
 	private Sprite life2;
 	private Sprite life3;
  
-	
-	
+	//called by blockwalker class
 	public GameHUD(){
 		life1 = new Sprite(10, 10, 32, 32, Resources.loadTexture("heart.png", 32, 32));
 		life2 = new Sprite(30, 10, 32, 32, Resources.loadTexture("heart.png", 32, 32));
@@ -31,6 +30,61 @@ public class GameHUD extends HUD{
 	}
 	
 	
+	public int getLifeCount(){
+		return life;
+	}
+	
+	public void setLifeCount(int pLife){
+		switch(pLife){
+			case 1:
+				life1.setVisible(true);
+				life2.setVisible(false);
+				life3.setVisible(false);
+				break;
+			case 2:
+				life1.setVisible(true);
+				life2.setVisible(true);
+				life3.setVisible(false);
+				break;
+			case 3: 
+				life1.setVisible(true);
+				life2.setVisible(true);
+				life3.setVisible(true);
+				break;
+				
+		}				
+			life = pLife;
+ 	}
+	
+	public int getEnergyCount(){
+		return energy;
+	}
+	
+	public void setEnergyCount(int pEnergy){
+		energy = pEnergy;
+		energyText.setText("Energy: " + pEnergy);	
+	}
+	
+	public void increaseEnergyCount(){
+ 		energy ++;
+		energyText.setText("Energy: " + energy);
+	}
+	
+	public boolean hasEnergy(){
+		if(energy>0){
+			return true;
+		}
+		else return false;
+	}
+
+	public void decreaesEnergyCount(){
+		if(this.hasEnergy()){
+			energy--;
+	 		energyText.setText("Energy: " + energy);
+		}
+	}	
+	
+	//if return false, game is over ! do something.
 	public boolean decreaseLife(){
 		if (life==3){
 			life--;
@@ -51,20 +105,12 @@ public class GameHUD extends HUD{
 			life--;
 			life1.setVisible(false);
  			return false;
+ 			//game over
 			
 		}
 		 
 		return false;
+	
 	}
-	
-	public void restoreLife(){
-		life = 3;
-		life1.setVisible(true);
-		life2.setVisible(true);
-		life3.setVisible(true);
-
-	}
-	
-	
-
+	 
 }
