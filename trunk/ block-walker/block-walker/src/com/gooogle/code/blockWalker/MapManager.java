@@ -21,6 +21,7 @@ public class MapManager {
 	public String getCurrentMapNumber() {
 		return currentMapNumber;
 	}
+	 
 
 	public MapManager (String startLocation){
 		currentMapNumber = startLocation;
@@ -75,6 +76,7 @@ public class MapManager {
 		Resources.getmScene().detachChildren();
         System.gc();
         currentMapNumber=pMap;
+        Resources.getmScene().unregisterUpdateHandler(Resources.getmPlayer().getHandler());
 		Resources.removePlayer(Resources.getmPlayer());
 		map = new TMXMap(currentMapNumber);
 		

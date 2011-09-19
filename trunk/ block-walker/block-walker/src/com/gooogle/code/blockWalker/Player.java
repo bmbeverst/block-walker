@@ -264,8 +264,10 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
  	}
 
 	// When ever there is a collision this is called. optimize.
+	private	IUpdateHandler handler;
+
  	public void updatePlayer() {
- 		mScene.registerUpdateHandler(new IUpdateHandler() {
+ 		mScene.registerUpdateHandler( handler = new IUpdateHandler() {
 		 	
 			@Override
 			public void reset() {
@@ -274,7 +276,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
  			@Override
 			public void onUpdate(final float pSecondsElapsed) {
  			if (Resources.getExit().collidesWith(Resources.getmPlayer())) {
-			mScene.unregisterUpdateHandler(this);
+			mScene.unregisterUpdateHandler(this);			
 			Resources.removePlayer(Resources.getmPlayer());
 			(Resources.getMapManger()).nextMap();
 		}
@@ -283,14 +285,19 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
  				Resources.getmPlayer().rePosition();
  				if(!Resources.getHUD().decreaseLife()){
  					//game is over 
- 					//need to implement how ! 					
- 				
+ 					//need to implement how ! 			 
  				}
    			}
  			
 
 	}
  		});
+ 	
+ 	
+ 	}
+ 	
+ 	public IUpdateHandler getHandler(){
+ 		return handler;
  	}
 
 }

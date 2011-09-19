@@ -42,6 +42,7 @@ public class TMXMap {
 
 	// When a new TMX map is created we load in the map
 	TMXMap(String location) {
+		Resources.getHUD().setLevelText("level " + location.substring(5,6));
 		// Load the TMX map
 		mTMXTiledMap = Resources.loadTMXmap(location);
 

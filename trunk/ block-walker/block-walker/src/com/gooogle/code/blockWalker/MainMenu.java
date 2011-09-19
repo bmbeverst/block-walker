@@ -95,7 +95,15 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				mScene.detachChild(mMenuScene);
 				// Tells the menu to put every thing back
 				mMenuScene.back();
-				init("final1.tmx");
+				if (!hasStarted)
+				{
+					init("final1.tmx");
+				}
+				else{
+				mmanager.reloadMap("final1.tmx");
+				Resources.getHUD().setEnergyCount(0);
+				Resources.getHUD().setLifeCount(3);
+				}
 				return true;
 				
 			case MENU_SAVE:
@@ -138,8 +146,6 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		
 		mmanager = new MapManager(pstring);
 		Resources.setMapManager(mmanager);
-		
- 
 		Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
 		hasStarted = true;
 		// Add the random moster so we can complete the homework.

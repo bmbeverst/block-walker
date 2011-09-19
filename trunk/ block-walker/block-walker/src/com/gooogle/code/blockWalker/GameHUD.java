@@ -12,6 +12,7 @@ public class GameHUD extends HUD{
 	private Sprite life1;
 	private Sprite life2;
 	private Sprite life3;
+	private ChangeableText levelText;
  
 	//called by blockwalker class
 	public GameHUD(){
@@ -20,13 +21,16 @@ public class GameHUD extends HUD{
 		life3 = new Sprite(50, 10, 32, 32, Resources.loadTexture("heart.png", 32, 32));
 
 		energyText = new ChangeableText(150 , 10, Resources.loadFont("Zrnic.ttf"), "Energy: ", "Energy: XXXX".length());
+		levelText = new ChangeableText(350 , 10, Resources.loadFont("Zrnic.ttf"), "Level ", "Level XXXX".length());
+		levelText.setText("Level 1");
+		levelText.setColor(0, 0, 0, 0.55f);
 		energyText.setText("Energy: " + "0");
-		energyText.setColor(0, 0, 0, 0.65f);
+		energyText.setColor(0, 0, 0, 0.55f);
  		this.attachChild(life1); 
 		this.attachChild(life2);
 		this.attachChild(life3);
  		this.attachChild(energyText);
- 
+ 		this.attachChild(levelText);
 	}
 	
 	
@@ -111,6 +115,11 @@ public class GameHUD extends HUD{
 		 
 		return false;
 	
+	}
+
+
+	public void setLevelText(String pstring) {
+		levelText.setText(pstring);
 	}
 	 
 }
