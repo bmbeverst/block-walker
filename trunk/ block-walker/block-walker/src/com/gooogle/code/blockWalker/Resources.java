@@ -51,6 +51,9 @@ public class Resources {
 	private static MapManager mMapManager;
 	private static Rectangle mexit;
 	private static Player mPlayer;
+	private static Rectangle mwater;
+	private static GameHUD mHUD;
+
 	
 	public static Player getmPlayer() {
 		return mPlayer;
@@ -267,6 +270,23 @@ public class Resources {
 	public static MapManager getMapManger() {
 		return mMapManager;
 	}
+
+	public static Rectangle getWater() {
+		return mwater;
+	}
+
+	public static void setWater(Rectangle pwater) {
+		mwater = pwater;
+	}
+
+	public static void setHUD(GameHUD phud) {
+		mHUD=phud;
+	}
+	
+	public static GameHUD getHUD() {
+		return mHUD;
+	}
+
  
  
 

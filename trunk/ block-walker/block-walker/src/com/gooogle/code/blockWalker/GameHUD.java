@@ -1,0 +1,70 @@
+package com.gooogle.code.blockWalker;
+
+import org.anddev.andengine.engine.camera.hud.HUD;
+import org.anddev.andengine.entity.sprite.Sprite;
+import org.anddev.andengine.entity.text.ChangeableText;
+import org.anddev.andengine.util.HorizontalAlign;
+
+public class GameHUD extends HUD{
+	private int energy;
+	private final ChangeableText energyText;
+	private int life = 3 ;
+	private Sprite life1;
+	private Sprite life2;
+	private Sprite life3;
+ 
+	
+	
+	public GameHUD(){
+		life1 = new Sprite(10, 10, 32, 32, Resources.loadTexture("heart.png", 32, 32));
+		life2 = new Sprite(30, 10, 32, 32, Resources.loadTexture("heart.png", 32, 32));
+		life3 = new Sprite(50, 10, 32, 32, Resources.loadTexture("heart.png", 32, 32));
+
+		energyText = new ChangeableText(150 , 10, Resources.loadFont("Zrnic.ttf"), "Energy: ", "Energy: XXXX".length());
+		energyText.setText("Energy: " + "0");
+		energyText.setColor(0, 0, 0, 0.65f);
+ 		this.attachChild(life1); 
+		this.attachChild(life2);
+		this.attachChild(life3);
+ 		this.attachChild(energyText);
+ 
+	}
+	
+	
+	public boolean decreaseLife(){
+		if (life==3){
+			life--;
+			life3.setVisible(false);
+ 			return true;
+		}
+		
+		if (life==2)
+		{
+			life--;
+			life2.setVisible(false);
+ 			return true;
+			
+		}
+		
+		if (life==1)
+		{
+			life--;
+			life1.setVisible(false);
+ 			return false;
+			
+		}
+		 
+		return false;
+	}
+	
+	public void restoreLife(){
+		life = 3;
+		life1.setVisible(true);
+		life2.setVisible(true);
+		life3.setVisible(true);
+
+	}
+	
+	
+
+}

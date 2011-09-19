@@ -58,6 +58,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private boolean jumping = false;
 	private boolean flipped = false;
 	private boolean moving = true;
+	private float mPX;
+	private float mPY;
 
 	private static TiledTextureRegion mPlayerTiledRegion;
 
@@ -65,6 +67,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		super(pX, pY, PLAYER_SIZE, PLAYER_SIZE,
 				pTiledTextureRegion = mPlayerTiledRegion = Resources
 						.loadTiledTexture("Character.png", 128, 128, 4, 4));
+		mPX =pX;
+		mPY =pY;
 		ContactListener contactListener = new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {
@@ -255,15 +259,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				+ ", moving=" + moving + ", mX=" + mX + ", mY=" + mY + "]";
 	}
 
-	public void rePosition() {
-		final Vector2 currentTransform = playerBody.getTransform()
-				.getPosition();
-		final Vector2 currentPos = new Vector2(this.getX(), this.getY());
-		final Vector2 newVector = new Vector2(0.0f, 2.0f);
-		newVector.set((newVector.x * currentTransform.x) / currentPos.x,
-				(newVector.y * currentTransform.y) / currentPos.y);
-		playerBody.setTransform(newVector, 0.0f);
-	}
+	public void rePosition() { 
+		playerBody.setTransform(5, 20, 0.0f);
+ 	}
 
 	// When ever there is a collision this is called. optimize.
  	public void updatePlayer() {
@@ -280,6 +278,16 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			Resources.removePlayer(Resources.getmPlayer());
 			(Resources.getMapManger()).nextMap();
 		}
+ 			
+ 			if (Resources.getWater().collidesWith(Resources.getmPlayer())) {
+ 				Resources.getmPlayer().rePosition();
+ 				if(!Resources.getHUD().decreaseLife()){
+ 					//game is over 
+ 					//need to implement how ! 					
+ 				
+ 				}
+   			}
+ 			
 
 	}
  		});

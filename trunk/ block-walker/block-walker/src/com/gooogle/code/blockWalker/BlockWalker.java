@@ -192,6 +192,13 @@ public class BlockWalker extends BaseGameActivity implements
  
 		
 		new MainMenu();
+
+		//------------------------------------------------------------------------------------
+		GameHUD hud = new GameHUD();
+		mCamera.setHUD(hud);
+		Resources.setHUD(hud);
+		
+		
 		// Engine's scene is set to this behind the scenes. No pun :)
 		return mScene;
 	}

@@ -12,7 +12,7 @@ public class DBManager {
     private Context mcontext;
    
     private static final String SCORE_LABEL = "score";
-    private static final String MAP_LABEL = "score";
+    private static final String MAP_LABEL = "map";
 
    
     public DBManager(Context pcontext) {
@@ -49,6 +49,6 @@ public class DBManager {
         this.mDBEditor = this.mDB.edit();
         Debug.d("MAP LOADED !");
 
-        return this.mDB.getString(MAP_LABEL, "stage1.tmx");
+        return this.mDB.getString(MAP_LABEL, "final1.tmx");
     }
 }

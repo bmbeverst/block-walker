@@ -51,8 +51,7 @@ public class TMXMap {
 			final TMXLayer layer = mTMXTiledMap.getTMXLayers().get(i);
 			if (!layer.getTMXLayerProperties().containsTMXProperty("wall",
 					"true")) {
-				// layers.add(layer);
-				mScene.attachChild(layer);
+ 				mScene.attachChild(layer);
 			}
 		}
 		// Read in the unwalkable blocks from the object layer and create boxes
@@ -140,6 +139,23 @@ public class TMXMap {
 				}
 
 			}
+			
+			if (group.getTMXObjectGroupProperties().containsTMXProperty(
+					"die", "true")) {
+				for (final TMXObject object : group.getTMXObjects()) {
+					// Create the rectangle
+					Rectangle water = new Rectangle(object.getX(),
+							object.getY(), object.getWidth(),
+							object.getHeight());
+					// make it invisible
+					water.setVisible(false);
+					// add it to the scene
+					mScene.attachChild(water);
+ 					Resources.setWater(water);
+
+				}
+			}
+			
 		}
 	}
 
