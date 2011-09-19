@@ -27,10 +27,10 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	private Camera mCamera = Resources.getmCamera();
 	private MenuScene mMenuScene;
 	private Scene mScene = Resources.getmScene();
-	private Sound goalSound;
+	//private Sound goalSound;
 	private MapManager mmanager;
-	private Player player;
-	
+	private boolean hasStarted = false;
+ 	
 	public MainMenu() {
 		// creates the main menu. Ask Decy :)
 		createMenuScene();
@@ -90,12 +90,12 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		switch (pMenuItem.getID()) {
 			case MENU_START:
 				// Should be moved to goal
-				goalSound = Resources.loadSound("background.ogg");
+				//goalSound = Resources.loadSound("background.ogg");
 				// Removes the Menu so you can start playing
 				mScene.detachChild(mMenuScene);
 				// Tells the menu to put every thing back
 				mMenuScene.back();
-				init("test01.tmx");
+				init("final1.tmx");
 				return true;
 				
 			case MENU_SAVE:
@@ -106,10 +106,16 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				return true;
 				
 			case MENU_LOAD:
-				goalSound = Resources.loadSound("background.ogg");
+				//goalSound = Resources.loadSound("background.ogg");
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
+				if (!hasStarted)
+				{
+					init(Resources.getmDBM().loadMap());
+				}
+				else{
 				mmanager.reloadMap(Resources.getmDBM().loadMap());
+				}
 				//aiTest(); // A test scene Brooks is using remove it when ever.
 				return true;
 				
@@ -126,12 +132,10 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		
 		mmanager = new MapManager(pstring);
 		Resources.setMapManager(mmanager);
-
-		//player = new Player(150, 150, null);
-		// Mkae it so that no other players will be added.
-		//noPlayer = false;
-		// SetUp the AI! WOOT!
+		
+ 
 		Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
+		hasStarted = true;
 		// Add the random moster so we can complete the homework.
 		//Monster temp = new Monster(100, 1500, null);
 		// Probably should be in Monster.

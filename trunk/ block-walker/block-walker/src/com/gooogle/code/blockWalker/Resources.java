@@ -247,7 +247,7 @@ public class Resources {
 	public static void setmDBM(DBManager pDBM) {
 		Resources.mDBM = pDBM;
 	}
-
+ 
 	public static DBManager getmDBM() {
 		return mDBM;
 	}

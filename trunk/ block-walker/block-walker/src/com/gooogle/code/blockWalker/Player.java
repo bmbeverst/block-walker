@@ -224,7 +224,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			break;
 		}
 		return handeled;
-	}
+	} 
 
 	private void attack() {
 		this.animate(ANIMATE_DURATION, 4, 7, false);

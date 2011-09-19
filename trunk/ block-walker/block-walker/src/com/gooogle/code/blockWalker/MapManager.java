@@ -33,7 +33,7 @@ public class MapManager {
 		//detach all physic bodies  
 		PhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
 		mPhysicsWorld.clearPhysicsConnectors();
-		Debug.d("!! PHYSIC  !! at the end of map " + currentMapNumber);
+		//Debug.d("!! PHYSIC  !! at the end of map " + currentMapNumber);
 
 		
          Iterator<Body> iter = mPhysicsWorld.getBodies();
@@ -50,9 +50,7 @@ public class MapManager {
         } 
 
         //detach all children
-		Resources.getmScene().detachChildren();
-		//clear goal watcher lists too ? ?? 
-        
+		Resources.getmScene().detachChildren();        
         System.gc();
 		
         //make string new map file name
@@ -62,18 +60,22 @@ public class MapManager {
 		currentMapNumber = currentMapNumber.substring(0,5) + i + ".tmx";
 		
 		//create new map and map will create new player ! 
-		map = new TMXMap(currentMapNumber);
-		//Resources.getmScene().attachChild(pplayer);
-		//pplayer.rePosition();
-		//pplayer.setVisible(true);
+		map = new TMXMap(currentMapNumber); 
 	}
 
 	public void reloadMap(String pMap) {
 		PhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
 		mPhysicsWorld.clearPhysicsConnectors();
+        Iterator<Body> iter = mPhysicsWorld.getBodies();
+            while (iter.hasNext())
+           {
+           	Body temp = iter.next();
+            	mPhysicsWorld.destroyBody(temp);
+           }
 		Resources.getmScene().detachChildren();
         System.gc();
         currentMapNumber=pMap;
+		Resources.removePlayer(Resources.getmPlayer());
 		map = new TMXMap(currentMapNumber);
 		
 	}
