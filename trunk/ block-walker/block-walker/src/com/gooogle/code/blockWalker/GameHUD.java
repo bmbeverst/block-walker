@@ -6,7 +6,7 @@ import org.anddev.andengine.entity.text.ChangeableText;
 import org.anddev.andengine.util.HorizontalAlign;
 
 public class GameHUD extends HUD{
-	private int energy;
+	private int energy = 100;
 	private final ChangeableText energyText;
 	private int life = 3 ;
 	private Sprite life1;
@@ -21,10 +21,10 @@ public class GameHUD extends HUD{
 		life3 = new Sprite(50, 10, 32, 32, Resources.loadTexture("heart.png", 32, 32));
 
 		energyText = new ChangeableText(150 , 10, Resources.loadFont("Zrnic.ttf"), "Energy: ", "Energy: XXXX".length());
-		levelText = new ChangeableText(350 , 10, Resources.loadFont("Zrnic.ttf"), "Level ", "Level XXXX".length());
+		levelText = new ChangeableText(400 , 10, Resources.loadFont("Zrnic.ttf"), "Level ", "Level XXXX".length());
 		levelText.setText("Level 1");
 		levelText.setColor(0, 0, 0, 0.55f);
-		energyText.setText("Energy: " + "0");
+		energyText.setText("Energy: " + "100");
 		energyText.setColor(0, 0, 0, 0.55f);
  		this.attachChild(life1); 
 		this.attachChild(life2);

@@ -196,7 +196,7 @@ public class Resources {
 		Sound backgroundSound = null;
 		try {
 			backgroundSound = SoundFactory.createSoundFromAsset(
-					mEngine.getSoundManager(), mBaseGameActivity, "background.ogg");
+					mEngine.getSoundManager(), mBaseGameActivity, locations);
 		} catch (final IOException e) {
 			Debug.e(e);
 		} 

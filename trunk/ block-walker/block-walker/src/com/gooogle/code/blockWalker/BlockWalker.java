@@ -59,9 +59,7 @@ public class BlockWalker extends BaseGameActivity implements
 	// The camera that follow the player
 	private BoundCamera mCamera;
 	private int i = 0;
-	   private boolean isDrawing = false;
-	   
-	   Rectangle[] rec = new Rectangle[250];
+	private boolean isDrawing = false;
 	// I am using fixed step because it is easier to use in a multiplayer game
 	private FixedStepPhysicsWorld mPhysicsWorld;
 	
@@ -249,13 +247,13 @@ public class BlockWalker extends BaseGameActivity implements
             isDrawing = true;
             i = 0;
          }
-         if(pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+		else if(pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
             isDrawing = false;
          }
-         if (isDrawing = true) {
-           // rec[i] = new Rectangle(pSceneTouchEvent.getX(), pSceneTouchEvent.getY(), 1, 1);
+         if (isDrawing = true & Resources.getHUD().hasEnergy()) {
             if (i != 0) {
                new Box(pSceneTouchEvent.getX(),pSceneTouchEvent.getY(),20,20);
+               Resources.getHUD().decreaesEnergyCount();
             }
             i++;
          }

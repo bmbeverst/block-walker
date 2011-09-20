@@ -170,7 +170,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				}
 				else{
 				mmanager.reloadMap("final1.tmx");
-				Resources.getHUD().setEnergyCount(0);
+				Resources.getHUD().setEnergyCount(100);
 				Resources.getHUD().setLifeCount(3);	
 				}
 				
