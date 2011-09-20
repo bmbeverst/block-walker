@@ -65,6 +65,8 @@ public class MapManager {
 	}
 
 	public void reloadMap(String pMap) {
+        Resources.getmScene().unregisterUpdateHandler(Resources.getmPlayer().getHandler());
+		Resources.removePlayer(Resources.getmPlayer());
 		PhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
 		mPhysicsWorld.clearPhysicsConnectors();
         Iterator<Body> iter = mPhysicsWorld.getBodies();
@@ -76,8 +78,6 @@ public class MapManager {
 		Resources.getmScene().detachChildren();
         System.gc();
         currentMapNumber=pMap;
-        Resources.getmScene().unregisterUpdateHandler(Resources.getmPlayer().getHandler());
-		Resources.removePlayer(Resources.getmPlayer());
 		map = new TMXMap(currentMapNumber);
 		
 	}

@@ -55,6 +55,7 @@ public class Resources {
 	private static Player mPlayer;
 	private static Rectangle mwater;
 	private static GameHUD mHUD;
+	private static MainMenu mMenu;
 
 	
 	public static Player getmPlayer() {
@@ -298,6 +299,14 @@ public class Resources {
 	
 	public static GameHUD getHUD() {
 		return mHUD;
+	}
+
+	public static void setMenu(MainMenu pMenu) {
+		mMenu = pMenu;	
+	}
+	
+	public static MainMenu getMenu(){
+		return mMenu;
 	}
 
  

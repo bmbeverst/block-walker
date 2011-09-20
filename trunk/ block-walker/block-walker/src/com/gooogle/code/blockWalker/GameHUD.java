@@ -20,9 +20,9 @@ public class GameHUD extends HUD{
 		life2 = new Sprite(30, 10, 32, 32, Resources.loadTexture("heart.png", 32, 32));
 		life3 = new Sprite(50, 10, 32, 32, Resources.loadTexture("heart.png", 32, 32));
 
-		energyText = new ChangeableText(150 , 10, Resources.loadFont("Zrnic.ttf"), "Energy: ", "Energy: XXXX".length());
+		energyText = new ChangeableText(150 , 10, Resources.loadFont("Zrnic.ttf"), "Energy: ", "Energy: XXXXXX".length());
 		levelText = new ChangeableText(400 , 10, Resources.loadFont("Zrnic.ttf"), "Level ", "Level XXXX".length());
-		levelText.setText("Level 1");
+		levelText.setText("Level 0");
 		levelText.setColor(0, 0, 0, 0.55f);
 		energyText.setText("Energy: " + "100");
 		energyText.setColor(0, 0, 0, 0.55f);

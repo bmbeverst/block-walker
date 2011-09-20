@@ -16,6 +16,8 @@ import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
+import org.anddev.andengine.entity.text.ChangeableText;
+import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
@@ -290,13 +292,12 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				if (Resources.getWater().collidesWith(Resources.getmPlayer())) {
 					Resources.getmPlayer().rePosition();
 					if (!Resources.getHUD().decreaseLife()) {
-						// game is over
-						// need to implement how !
+						Resources.getMenu().gameOver();
+  			
 					}
-				}
-
 			}
-		});
+		}
+			});
 
 	}
 

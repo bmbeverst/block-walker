@@ -12,11 +12,13 @@ import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.TextMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
+import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.util.Debug;
 
@@ -33,20 +35,23 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	protected static final int MENU_OPTIONS = MENU_RESUME + 1;
 	private Camera mCamera = Resources.getmCamera();
 	private MenuScene mMenuScene,mResumeScene;
+	public MenuScene getmMenuScene() {
+		return mMenuScene;
+	}
 	private Scene mScene = Resources.getmScene();
 	//private Sound goalSound;
 	private MapManager mmanager;
 	private boolean hasStarted = false;
-	private Music mMusic = Resources.loadMusic("Winter_Overture.mp3"); 
- 	
+	private Music mMusic = Resources.loadMusic("Winter_Overture.mp3");
+	private Text gameOverTex; 
+ 	 
 	public MainMenu() {
 		// creates the main menu. Ask Decy :)
 		createMenuScene();
 		// Makes it so that the menu scene is overlaid on the current scene and
 		// stops all updates to engine until a item is clicked
 		mScene.setChildScene(mMenuScene, false, true, true);
-
-		
+		Resources.setMenu(this);		
 	}
 	
 	// Ask Decy
@@ -149,6 +154,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	public boolean onMenuItemClicked(final MenuScene pMenuScene,
 			final IMenuItem pMenuItem, final float pMenuItemLocalX,
 			final float pMenuItemLocalY) {
+		 mMenuScene.detachChild(gameOverTex);
 		switch (pMenuItem.getID()) {
 			case MENU_RESUME:
 				mResumeScene.back();
@@ -166,10 +172,10 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				mResumeScene.back();
 				if (!hasStarted)
 				{
-					init("final1.tmx");
+					init("final0.tmx");
 				}
 				else{
-				mmanager.reloadMap("final1.tmx");
+				mmanager.reloadMap("final0.tmx");
 				Resources.getHUD().setEnergyCount(100);
 				Resources.getHUD().setLifeCount(3);	
 				}
@@ -179,6 +185,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 			case MENU_SAVE:
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
+				mResumeScene.back();
 				// Need to implement this
 				Resources.getmDBM().saveAll(
 						mmanager.getCurrentMapNumber(),
@@ -199,6 +206,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				else{
 				mmanager.reloadMap(Resources.getmDBM().loadMap());
 				}
+				this.mMusic.getMediaPlayer().start();
 				//restore life and energy 
 				//aiTest(); // A test scene Brooks is using remove it when ever.
 				return true;
@@ -315,4 +323,14 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		
 		return handeled;
 	}
+
+	public void gameOver() {
+		 	 gameOverTex = new Text(300 , 70, Resources.loadFont("Zrnic.ttf"), "Game Over!");
+			 gameOverTex.setColor(1f, 0f, 0f);	
+			 mScene.setChildScene(Resources.getMenu().getmMenuScene(), false, true, true);
+			 mMenuScene.attachChild(gameOverTex); 
+			 mMusic.getMediaPlayer().pause();
+	   
+	}
+	
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="25" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="042-EvilCastle02" tilewidth="32" tileheight="32">
+  <image source="tmx/042-EvilCastle02.png" trans="ff00ff" width="256" height="832"/>
+ </tileset>
+ <tileset firstgid="209" name="002-Woods01" tilewidth="32" tileheight="32">
+  <image source="tmx/002-Woods01.png" trans="ff00ff" width="256" height="800"/>
+ </tileset>
+ <tileset firstgid="409" name="text" tilewidth="32" tileheight="32">
+  <image source="tmx/text.png" trans="ff00ff" width="512" height="256"/>
+ </tileset>
+ <layer name="platform" width="50" height="25">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3NuwmAUBBFwX09aPLQNrT/ztzQQJCLoTNwsv1UAQAAAHB3jLx09+u/t85u1n/auy2YX7sluPE0n/69ALCNYYiIEwAA
+  </data>
+ </layer>
+ <layer name="deco" width="50" height="25" opacity="0.63">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3U2QqBURSG4f1fFK7BnDlz5syZM2cOxbW5I+8hcsRPdtZbT1Fqf+uEUpIkSZIkSZIk/UJ2QykHnHDBDQ+8xv3vLHy3vshmPH/bzHy84UcAQYQQRuTh7cubPl2UvTHEkUASKaQ1uyPD3ixyyKOAIkqa3VFmbwVV1FBHA03N7mixt40Ouuihj4FmdwzZO8IYE0wxw/wL/zFmtmDvEiusscEWO83u2LP3gOPN7hOfz5rd8Q9dARDT4HqIEwAA
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="50" height="25">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3S6U7CQBiF4fa+8B9eJBoXVCJuKO4bboCKCwiouAtYN0AF4QJ4SSA2WBFMiEPyneRJ6VBmztegaRKJRCKRSCQSiaST4tA1rQe9uOC+j2s/BjAIJ4YwjBG4qs+NcnXr/93+K2N0GccEJjEFD6YxAy9mMYd5LGARS1hWaI4VuqxiDevwYQOb2MI2duBHAEHsYg/7Cs0RossBDnGEY4QRwQmiiCGOU5zhHInK/0uhOS7pcoVr3OAWd7hHEimk8QADj3jCM14UmuOVLhlkkcMb3vGBPAr4RBElhXp3cmy8x65f3qVh+pxDou6+FvN6u5JBtnqW+Ww7M3Tr33ukW9w/1eA744f1Zs/4axerTvVrze7daL5W9qvtY/VOrH5bBnInS6yIEwAA
+  </data>
+ </layer>
+ <objectgroup name="die" width="50" height="25">
+  <properties>
+   <property name="die" value="true"/>
+  </properties>
+  <object x="797" y="742" width="106" height="19"/>
+  <object x="412" y="746" width="73" height="23"/>
+ </objectgroup>
+ <objectgroup name="exit" width="50" height="25">
+  <properties>
+   <property name="exit" value="true"/>
+  </properties>
+  <object x="1480" y="641" width="45" height="73"/>
+ </objectgroup>
+ <objectgroup name="player" width="50" height="25">
+  <properties>
+   <property name="spawn" value="true"/>
+  </properties>
+  <object x="55" y="660" width="23" height="16"/>
+ </objectgroup>
+ <objectgroup name="wall" width="50" height="25">
+  <properties>
+   <property name="wall" value="true"/>
+  </properties>
+  <object x="-4" y="728" width="419" height="27"/>
+  <object x="-26" y="-38" width="36" height="822"/>
+  <object x="-82" y="-16" width="1780" height="26"/>
+  <object x="1590" y="-86" width="34" height="892"/>
+  <object x="903" y="727" width="698" height="23"/>
+  <object x="484" y="728" width="316" height="22"/>
+ </objectgroup>
+ <objectgroup name="monster" width="50" height="25">
+  <properties>
+   <property name="monster" value="true"/>
+  </properties>
+ </objectgroup>
+</map>

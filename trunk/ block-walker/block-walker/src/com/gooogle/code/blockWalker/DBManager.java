@@ -52,7 +52,7 @@ public class DBManager {
         this.mDB = mcontext.getSharedPreferences("DB", Context.MODE_PRIVATE);
         this.mDBEditor = this.mDB.edit();
         Debug.d("MAP LOADED !");
-        return this.mDB.getString(MAP_LABEL, "final1.tmx");
+        return this.mDB.getString(MAP_LABEL, "final0.tmx");
     }
     
 
