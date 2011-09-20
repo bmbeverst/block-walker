@@ -31,6 +31,7 @@ import org.anddev.andengine.opengl.util.GLHelper;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 import org.anddev.andengine.util.Debug;
 
+import android.content.pm.ActivityInfo;
 import android.opengl.GLU;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -146,6 +147,8 @@ public class BlockWalker extends BaseGameActivity implements
 		engineOptions.setNeedsMusic(true);
 		// without this errors are thrown when ever you touch the screen
 		engineOptions.getTouchOptions().setRunOnUpdateThread(true);
+
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		
 		// this is the final engine with all the options set.
 		return new FixedStepEngine(engineOptions, 60);
