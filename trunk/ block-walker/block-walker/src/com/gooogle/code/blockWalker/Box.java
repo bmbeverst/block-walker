@@ -16,7 +16,7 @@ final class Box extends Sprite {
 	
 	private static final float FRICTION = 1f;
 	private static final float ELASTICITY = 0f;
-	private static final float MASS = 3f;
+	private static final float MASS = 0f;
 	private Body boxBody;
 	
 	// Creates the sprite and registers it with the scene and physicsworld
@@ -27,7 +27,7 @@ final class Box extends Sprite {
 				ELASTICITY, FRICTION);
 		PhysicsWorld pPhysicsWorld = Resources.getmPhysicsWorld();
 		boxBody = PhysicsFactory.createBoxBody(pPhysicsWorld , this,
-				BodyType.DynamicBody, boxFixtureDef);
+				BodyType.StaticBody, boxFixtureDef);
 		
 		// boxBody.setLinearDamping(10);
 		// boxBody.setAngularDamping(10)
@@ -41,17 +41,21 @@ final class Box extends Sprite {
 	@Override
 	public boolean onAreaTouched(TouchEvent pSceneTouchEvent,
 			float pTouchAreaLocalX, float pTouchAreaLocalY) {
-		this.setPosition(pSceneTouchEvent.getX() - getWidth() / 2,
+	/*	this.setPosition(pSceneTouchEvent.getX() - getWidth() / 2,
 				pSceneTouchEvent.getY() - getHeight() / 2);
 		boxBody.setTransform(new Vector2(pSceneTouchEvent.getX()
 				/ PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT,
 				pSceneTouchEvent.getY()
 						/ PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT), 0);
+						 * 
+						 */
 		
 		return true;
 	}
+	
 	void remove() {
 		Resources.getmScene().detachChild(this);
+		
 	}
 	
 }

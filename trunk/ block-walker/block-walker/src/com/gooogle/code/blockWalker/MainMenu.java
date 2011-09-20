@@ -1,10 +1,12 @@
 package com.gooogle.code.blockWalker;
 
+import java.io.IOException;
 import java.util.LinkedList;
-
 import javax.microedition.khronos.opengles.GL10;
-
+import org.anddev.andengine.audio.music.Music;
+import org.anddev.andengine.audio.music.MusicFactory;
 import org.anddev.andengine.audio.sound.Sound;
+import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.camera.Camera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
@@ -16,7 +18,10 @@ import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.TextMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
 import org.anddev.andengine.opengl.font.Font;
+import org.anddev.andengine.util.Debug;
+
 import android.view.KeyEvent;
+
 
 public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	
@@ -24,12 +29,15 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	protected static final int MENU_SAVE = MENU_START + 1;
 	protected static final int MENU_LOAD = MENU_SAVE + 1;
 	protected static final int MENU_QUIT = MENU_LOAD + 1;
+	protected static final int MENU_RESUME = MENU_QUIT + 1;
+	protected static final int MENU_OPTIONS = MENU_RESUME + 1;
 	private Camera mCamera = Resources.getmCamera();
-	private MenuScene mMenuScene;
+	private MenuScene mMenuScene,mResumeScene;
 	private Scene mScene = Resources.getmScene();
 	//private Sound goalSound;
 	private MapManager mmanager;
 	private boolean hasStarted = false;
+	private Music mMusic = Resources.loadMusic("Winter_Overture.mp3"); 
  	
 	public MainMenu() {
 		// creates the main menu. Ask Decy :)
@@ -37,6 +45,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		// Makes it so that the menu scene is overlaid on the current scene and
 		// stops all updates to engine until a item is clicked
 		mScene.setChildScene(mMenuScene, false, true, true);
+
 		
 	}
 	
@@ -44,6 +53,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	private void createMenuScene() {
 		Font mMenuFont = Resources.loadFont("Daville Condensed Slanted.ttf");
 		mMenuScene = new MenuScene(mCamera);
+		mResumeScene = new MenuScene(mCamera);
 		
 		// Does not do anything
 		mMenuScene.setPosition(10, 10);
@@ -71,14 +81,66 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		quitMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
 				GL10.GL_ONE_MINUS_SRC_ALPHA);
 		
+		final IMenuItem ResumeMenuItem = new ColorMenuItemDecorator(
+				new TextMenuItem(MENU_RESUME, mMenuFont, "Resume"),
+				1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		ResumeMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		final IMenuItem Game2MenuItem = new ColorMenuItemDecorator(
+				new TextMenuItem(MENU_START, mMenuFont, "Start New Game"),
+				1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		Game1MenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		
+		final IMenuItem Save2MenuItem = new ColorMenuItemDecorator(
+				new TextMenuItem(MENU_SAVE, mMenuFont, "Save Game"), 1.0f,
+				0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		SaveMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		
+		final IMenuItem Load2MenuItem = new ColorMenuItemDecorator(
+				new TextMenuItem(MENU_LOAD, mMenuFont, "Load Game"), 1.0f,
+				0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+		LoadMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		
+		final IMenuItem quit2MenuItem = new ColorMenuItemDecorator(
+				new TextMenuItem(MENU_QUIT, mMenuFont, "Quit"), 1.0f, 0.0f,
+				0.0f, 0.0f, 0.0f, 0.0f);
+		quitMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		final IMenuItem options1MenuItem = new ColorMenuItemDecorator(
+				new TextMenuItem(MENU_OPTIONS, mMenuFont, "Options"), 1.0f, 0.0f,
+				0.0f, 0.0f, 0.0f, 0.0f);
+		quitMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		final IMenuItem options2MenuItem = new ColorMenuItemDecorator(
+				new TextMenuItem(MENU_OPTIONS, mMenuFont, "Options"), 1.0f, 0.0f,
+				0.0f, 0.0f, 0.0f, 0.0f);
+		quitMenuItem.setBlendFunction(GL10.GL_SRC_ALPHA,
+				GL10.GL_ONE_MINUS_SRC_ALPHA);
+		
+		
 		mMenuScene.addMenuItem(Game1MenuItem);
-		mMenuScene.addMenuItem(SaveMenuItem);
 		mMenuScene.addMenuItem(LoadMenuItem);
+		mMenuScene.addMenuItem(options1MenuItem);
 		mMenuScene.addMenuItem(quitMenuItem);
+		
+		mResumeScene.addMenuItem(ResumeMenuItem);
+		mResumeScene.addMenuItem(Game2MenuItem);
+		mResumeScene.addMenuItem(Load2MenuItem);
+		mResumeScene.addMenuItem(Save2MenuItem);
+		mResumeScene.addMenuItem(options2MenuItem);
+		mResumeScene.addMenuItem(quit2MenuItem);
 		mMenuScene.buildAnimations();
 		mMenuScene.setBackgroundEnabled(false);
 		mMenuScene.setOnMenuItemClickListener(this);
+		mResumeScene.buildAnimations();
+		mResumeScene.setBackgroundEnabled(false);
+		mResumeScene.setOnMenuItemClickListener(this);
 		Resources.addOnKeyDownListener(this);
+		
+		
 		
 	}
 	
@@ -88,13 +150,20 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 			final IMenuItem pMenuItem, final float pMenuItemLocalX,
 			final float pMenuItemLocalY) {
 		switch (pMenuItem.getID()) {
+			case MENU_RESUME:
+				mResumeScene.back();
+				this.mMusic.getMediaPlayer().start();
+				return true;
+				
 			case MENU_START:
 				// Should be moved to goal
 				//goalSound = Resources.loadSound("background.ogg");
 				// Removes the Menu so you can start playing
+							
 				mScene.detachChild(mMenuScene);
 				// Tells the menu to put every thing back
 				mMenuScene.back();
+				mResumeScene.back();
 				if (!hasStarted)
 				{
 					init("final1.tmx");
@@ -102,10 +171,11 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				else{
 				mmanager.reloadMap("final1.tmx");
 				Resources.getHUD().setEnergyCount(0);
-				Resources.getHUD().setLifeCount(3);
+				Resources.getHUD().setLifeCount(3);	
 				}
-				return true;
 				
+				this.mMusic.getMediaPlayer().start();
+				return true;
 			case MENU_SAVE:
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
@@ -148,6 +218,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		Resources.setMapManager(mmanager);
 		Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
 		hasStarted = true;
+		
 		// Add the random moster so we can complete the homework.
 		//Monster temp = new Monster(100, 1500, null);
 		// Probably should be in Monster.
@@ -228,17 +299,20 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		switch (pKeyCode) {
 			case KeyEvent.KEYCODE_MENU:
 				if (pEvent.getAction() == KeyEvent.ACTION_DOWN) {
+					
 					if (mScene.hasChildScene()) {
 						/* Remove the menu and reset it. */
-						mMenuScene.back();
+						mResumeScene.back();
 					} else {
 						/* Attach the menu. */
-						mScene.setChildScene(mMenuScene, false, true, true);
+						mScene.setChildScene(mResumeScene, false, true, true);
+						this.mMusic.getMediaPlayer().pause();
 					}
 				}
 				handeled = true;
 				break;
 		}
+		
 		return handeled;
 	}
 }

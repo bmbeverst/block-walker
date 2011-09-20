@@ -3,11 +3,14 @@
  */
 package com.gooogle.code.blockWalker;
 
-
 //Turn into a siglton test feild if not null new player else attach.
+
+import java.io.IOException;
 
 import java.util.LinkedList;
 
+import org.anddev.andengine.audio.sound.Sound;
+import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.entity.primitive.Rectangle;
@@ -37,10 +40,11 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 public class Player extends AnimatedSprite implements OnKeyDownListener,
 		OnKeyUpListener, IUpdateHandler {
 
-	private static final float JUMPV = -10f;
+	private static final float JUMPV = -20f;
 	private static final float ELASTICITY = 0f;
 	private static final float MASS = 1f;
 	private static final float FRICTION = 0f;
+	private Sound mExplosionSound = Resources.loadSound("punch1.wav");
 
 	private final static float PLAYER_SIZE = 64;
 	private static final long[] ANIMATE_DURATION = new long[] { 200, 200, 200,
@@ -54,7 +58,6 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private FixedStepPhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
 	private Scene mScene = Resources.getmScene();
 	private Body playerBody;
-
 	private boolean jumping = false;
 	private boolean flipped = false;
 	private boolean moving = true;
@@ -67,8 +70,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		super(pX, pY, PLAYER_SIZE, PLAYER_SIZE,
 				pTiledTextureRegion = mPlayerTiledRegion = Resources
 						.loadTiledTexture("Character.png", 128, 128, 4, 4));
-		mPX =pX;
-		mPY =pY;
+		mPX = pX;
+		mPY = pY;
 		ContactListener contactListener = new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {
@@ -95,7 +98,6 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		mPhysicsWorld.setContactListener(contactListener);
 
 		final BoundCamera mCamera = Resources.getmCamera();
-
 		final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(
 				MASS, ELASTICITY, FRICTION);
 		playerBody = PhysicsFactory.createBoxBody(mPhysicsWorld, this,
@@ -117,6 +119,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		Resources.addOnKeyUpListener(this);
 		Resources.setmPlayer(this);
 		updatePlayer();
+
 	}
 
 	private void checkSpeed(Vector2 velocity) {
@@ -124,16 +127,16 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		final Vector2 temp = playerBody.getLinearVelocity();
 		velocity.add(temp);
 		if (velocity.x >= movementSpeed) {
-			velocity.x = movementSpeed;
+			velocity.x = movementSpeed * 1.5f;
 		}
 		if (velocity.y >= movementSpeed) {
 			velocity.y = movementSpeed;
 		}
 		if (velocity.x <= -movementSpeed) {
-			velocity.x = -movementSpeed;
+			velocity.x = -movementSpeed * 1.5f;
 		}
 		if (velocity.y <= -movementSpeed) {// -2.5f
-			velocity.y = -movementSpeed;
+			velocity.y = -movementSpeed * 2.75f;
 		}
 		playerBody.setLinearVelocity(velocity);
 	}
@@ -146,7 +149,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			checkSpeed(velocity);
 			this.animate(ANIMATE_DURATION, 12, 15, false);
 		}
- 
+
 		Vector2Pool.recycle(velocity);
 	}
 
@@ -155,7 +158,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		velocity.set(0, accelration);
 		checkSpeed(velocity);
 		this.animate(ANIMATE_CHANRGE, 8, 11, false);
- 
+
 		Vector2Pool.recycle(velocity);
 		Debug.d(this.toString());
 	}
@@ -172,8 +175,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
 		}
- 
+
 		Vector2Pool.recycle(velocity);
+		velocity.x = 0;
 	}
 
 	void right() {
@@ -188,8 +192,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
 		}
- 
+
 		Vector2Pool.recycle(velocity);
+		velocity.x = 0;
 	}
 
 	void remove() {
@@ -211,7 +216,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			handeled = true;
 			break;
 		case KeyEvent.KEYCODE_DPAD_DOWN:
-			down();
+			attack();
 			handeled = true;
 			break;
 		case KeyEvent.KEYCODE_DPAD_LEFT:
@@ -228,10 +233,11 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			break;
 		}
 		return handeled;
-	} 
+	}
 
 	private void attack() {
 		this.animate(ANIMATE_DURATION, 4, 7, false);
+		Player.this.mExplosionSound.play();
 	}
 
 	@Override
@@ -244,7 +250,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		if (!moving) {
 			moving = true;
 			this.animate(ANIMATE_IDLE, 0, 1, false);
- 		}
+		}
 		return false;
 	}
 
@@ -259,45 +265,43 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				+ ", moving=" + moving + ", mX=" + mX + ", mY=" + mY + "]";
 	}
 
-	public void rePosition() { 
+	public void rePosition() {
 		playerBody.setTransform(5, 20, 0.0f);
- 	}
+	}
 
 	// When ever there is a collision this is called. optimize.
-	private	IUpdateHandler handler;
+	private IUpdateHandler handler;
 
- 	public void updatePlayer() {
- 		mScene.registerUpdateHandler( handler = new IUpdateHandler() {
-		 	
+	public void updatePlayer() {
+		mScene.registerUpdateHandler(handler = new IUpdateHandler() {
+
 			@Override
 			public void reset() {
 			}
-			
- 			@Override
+
+			@Override
 			public void onUpdate(final float pSecondsElapsed) {
- 			if (Resources.getExit().collidesWith(Resources.getmPlayer())) {
-			mScene.unregisterUpdateHandler(this);			
-			Resources.removePlayer(Resources.getmPlayer());
-			(Resources.getMapManger()).nextMap();
-		}
- 			
- 			if (Resources.getWater().collidesWith(Resources.getmPlayer())) {
- 				Resources.getmPlayer().rePosition();
- 				if(!Resources.getHUD().decreaseLife()){
- 					//game is over 
- 					//need to implement how ! 			 
- 				}
-   			}
- 			
+				if (Resources.getExit().collidesWith(Resources.getmPlayer())) {
+					mScene.unregisterUpdateHandler(this);
+					Resources.removePlayer(Resources.getmPlayer());
+					(Resources.getMapManger()).nextMap();
+				}
+
+				if (Resources.getWater().collidesWith(Resources.getmPlayer())) {
+					Resources.getmPlayer().rePosition();
+					if (!Resources.getHUD().decreaseLife()) {
+						// game is over
+						// need to implement how !
+					}
+				}
+
+			}
+		});
 
 	}
- 		});
- 	
- 	
- 	}
- 	
- 	public IUpdateHandler getHandler(){
- 		return handler;
- 	}
+
+	public IUpdateHandler getHandler() {
+		return handler;
+	}
 
 }

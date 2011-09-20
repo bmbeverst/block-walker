@@ -3,6 +3,8 @@ package com.gooogle.code.blockWalker;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import org.anddev.andengine.audio.music.Music;
+import org.anddev.andengine.audio.music.MusicFactory;
 import org.anddev.andengine.audio.sound.Sound;
 import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.Engine;
@@ -199,6 +201,17 @@ public class Resources {
 			Debug.e(e);
 		} 
 		return backgroundSound;
+	}
+	static Music loadMusic(String location) {
+		MusicFactory.setAssetBasePath("mfx/");
+		Music backgroundMusic = null;
+		try {
+			backgroundMusic = MusicFactory.createMusicFromAsset(Resources.getmEngine().getMusicManager(), Resources.getmBaseGameActivity(), location);
+			backgroundMusic.setLooping(true);
+		} catch (final IOException e) {
+			Debug.e(e);
+		}
+		return backgroundMusic;
 	}
 	
 	//manage the various listeners and goals and adding of said items

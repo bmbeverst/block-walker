@@ -1,13 +1,19 @@
 package com.gooogle.code.blockWalker;
 
+import java.io.IOException;
+
 import javax.microedition.khronos.opengles.GL10;
 
+import org.anddev.andengine.audio.music.Music;
+import org.anddev.andengine.audio.music.MusicFactory;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.FixedStepEngine;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
+import org.anddev.andengine.entity.primitive.Line;
+import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.scene.background.AutoParallaxBackground;
@@ -23,8 +29,12 @@ import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextur
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.util.GLHelper;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
+import org.anddev.andengine.util.Debug;
+
 import android.opengl.GLU;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -38,7 +48,7 @@ public class BlockWalker extends BaseGameActivity implements
 	// Constants
 	// ===========================================================
 	
-	private static final int GRAVITY = 10;
+	private static final int GRAVITY = 14;
 	private final int CAMERA_HEIGHT = 480;
 	private final int CAMERA_WIDTH = 800;
 	
@@ -48,6 +58,10 @@ public class BlockWalker extends BaseGameActivity implements
 	
 	// The camera that follow the player
 	private BoundCamera mCamera;
+	private int i = 0;
+	   private boolean isDrawing = false;
+	   
+	   Rectangle[] rec = new Rectangle[250];
 	// I am using fixed step because it is easier to use in a multiplayer game
 	private FixedStepPhysicsWorld mPhysicsWorld;
 	
@@ -131,6 +145,7 @@ public class BlockWalker extends BaseGameActivity implements
 						CAMERA_WIDTH, CAMERA_HEIGHT), mCamera);
 		// need this to play sound
 		engineOptions.setNeedsSound(true);
+		engineOptions.setNeedsMusic(true);
 		// without this errors are thrown when ever you touch the screen
 		engineOptions.getTouchOptions().setRunOnUpdateThread(true);
 		
@@ -140,7 +155,6 @@ public class BlockWalker extends BaseGameActivity implements
 	
 	@Override
 	public void onLoadResources() {
-		// This has all been moved to Resources
 	}
 	
 	@Override
@@ -156,8 +170,9 @@ public class BlockWalker extends BaseGameActivity implements
 		// Default 60, 8 and 8
 		// lol I think we really messed up here. Gravity is StepsPerSecond not
 		// gravity. I fixed this but you need to figure out how to set gravity.
-		mPhysicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, 1), false,
+		mPhysicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, GRAVITY), false,
 				8, 8);
+		
 		// makes mario physics easy. Tutorial don't ask me.
 		mPhysicsWorld.setAutoClearForces(true);
 		// makes it so the PhysicsWorld will get updated.
@@ -198,8 +213,6 @@ public class BlockWalker extends BaseGameActivity implements
 		//------------------------------------------------------------------------------------
 
 		new MainMenu();
-
-		
 		
 		// Engine's scene is set to this behind the scenes. No pun :)
 		return mScene;
@@ -232,14 +245,21 @@ public class BlockWalker extends BaseGameActivity implements
 	// Need to put this some where else. Probably in the HUD(Heads Up Display)
 	@Override
 	public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-		if (mPhysicsWorld != null) {
-			if (pSceneTouchEvent.isActionDown()) {
-				new Box(pSceneTouchEvent.getX(), pSceneTouchEvent.getY(), 64,
-						64);
-				return true;
-			}
-		}
-		return false;
+		if(pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
+            isDrawing = true;
+            i = 0;
+         }
+         if(pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+            isDrawing = false;
+         }
+         if (isDrawing = true) {
+           // rec[i] = new Rectangle(pSceneTouchEvent.getX(), pSceneTouchEvent.getY(), 1, 1);
+            if (i != 0) {
+               new Box(pSceneTouchEvent.getX(),pSceneTouchEvent.getY(),20,20);
+            }
+            i++;
+         }
+         return true;
 		
 	}
 }
