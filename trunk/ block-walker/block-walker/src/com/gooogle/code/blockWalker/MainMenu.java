@@ -224,7 +224,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		
 		mmanager = new MapManager(pstring);
 		Resources.setMapManager(mmanager);
-		Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
+		//Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
 		hasStarted = true;
 		
 		// Add the random moster so we can complete the homework.
@@ -294,10 +294,10 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		
 		new Borders(800, 400);
 		new Player(100, 100, null);
-		Resources.getmScene().registerUpdateHandler(
-				new TimerHandler(2, new AIupdate()));
+		//Resources.getmScene().registerUpdateHandler(
+		//		new TimerHandler(2, new AIupdate()));
 		Monster temp = new Monster(200, 100, null);
-		AIupdate.addMonster(temp);
+		//AIupdate.addMonster(temp);
 	}
 	//When ever a key is pressed this is called. Brings up the menu when ever menu is pressed.
 	@Override
