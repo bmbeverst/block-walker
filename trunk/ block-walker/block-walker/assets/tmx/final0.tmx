@@ -11,7 +11,7 @@
  </tileset>
  <layer name="platform" width="50" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3NuwmAUBBFwX09aPLQNrT/ztzQQJCLoTNwsv1UAQAAAHB3jLx09+u/t85u1n/auy2YX7sluPE0n/69ALCNYYiIEwAA
+   H4sIAAAAAAAAC+3NsQ2AMAxFQWeH0ERkDdh/M1xS0LgITe6k11n+EQAAAAC8XW1tf+zd2Yh9mtlZuD+yXvjxdV/dfQCOzODeiBMAAA==
   </data>
  </layer>
  <layer name="deco" width="50" height="25" opacity="0.63">
@@ -28,8 +28,7 @@
   <properties>
    <property name="die" value="true"/>
   </properties>
-  <object x="797" y="742" width="106" height="19"/>
-  <object x="412" y="746" width="73" height="23"/>
+  <object x="763" y="743" width="137" height="33"/>
  </objectgroup>
  <objectgroup name="exit" width="50" height="25">
   <properties>
@@ -47,12 +46,11 @@
   <properties>
    <property name="wall" value="true"/>
   </properties>
-  <object x="-4" y="728" width="419" height="27"/>
+  <object x="-4" y="728" width="770" height="16"/>
   <object x="-26" y="-38" width="36" height="822"/>
   <object x="-82" y="-16" width="1780" height="26"/>
   <object x="1590" y="-86" width="34" height="892"/>
-  <object x="903" y="727" width="698" height="23"/>
-  <object x="484" y="728" width="316" height="22"/>
+  <object x="895" y="728" width="698" height="23"/>
  </objectgroup>
  <objectgroup name="monster" width="50" height="25">
   <properties>

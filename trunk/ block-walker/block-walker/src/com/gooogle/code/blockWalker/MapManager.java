@@ -59,7 +59,7 @@ public class MapManager {
 		int i = Integer.parseInt(currentMapNumber.substring(5,6));
 		i++;
 		currentMapNumber = currentMapNumber.substring(0,5) + i + ".tmx";
-		
+ 		
 		//create new map and map will create new player ! 
 		map = new TMXMap(currentMapNumber); 
 	}
