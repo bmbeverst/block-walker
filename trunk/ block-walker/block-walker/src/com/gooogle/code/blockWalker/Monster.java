@@ -44,7 +44,6 @@ public class Monster extends AnimatedSprite{
 
 		private boolean jumping = false;
 		private boolean animated = false;
-		private DumbAI ai;
 		
 		/**
 		 * @param pX
@@ -55,7 +54,7 @@ public class Monster extends AnimatedSprite{
 				TiledTextureRegion pTiledTextureRegion) {
 			super(pX, pY - 20, PLAYER_SIZE, PLAYER_SIZE, Resources.loadTiledTexture("monsterO.png", 128, 128, 3, 4));
 
-			Debug.d(pX + ", " + pY + " Monster!!!!!!!!!!!");
+			//Debug.d(pX + ", " + pY + " Monster!!!!!!!!!!!");
 			
 			final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(MASS,
 					ELASTICITY, FRICTION);
@@ -64,19 +63,9 @@ public class Monster extends AnimatedSprite{
 			mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this,
 					playerBody, true, false));
 			playerBody.setLinearDamping(1);
-			ai = new DumbAI(this);
+			new DumbAI(this);
 			idle();
 			mScene.attachChild(this);
-		}
-
-		/* (non-Javadoc)
-		 * @see org.anddev.andengine.entity.Entity#onDetached()
-		 */
-		@Override
-		public void onDetached() {
-			super.onDetached();
-			ai.destroy();
-			System.gc();
 		}
 
 		public void up() {

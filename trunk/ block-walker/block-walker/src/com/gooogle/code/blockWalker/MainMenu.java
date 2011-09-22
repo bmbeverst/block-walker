@@ -174,7 +174,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				if (!hasStarted)
 				{
 					//TODO reset to 0
-					init("final1.tmx");
+					init("final0.tmx");
 				}
 				else{
 				mmanager.reloadMap("final0.tmx");

@@ -145,10 +145,9 @@ public class TMXMap {
 			if (group.getTMXObjectGroupProperties().containsTMXProperty("monster",
 					"true")) {
 				// This is our "wall" layer. Create the physical boxes from it
-				final TMXObject object = group.getTMXObjects().get(1);
-				//for (final TMXObject object : group.getTMXObjects()) {
+				for (final TMXObject object : group.getTMXObjects()) {
 					new Monster(object.getX(), object.getY(), null);
-				//}
+				}
 			}
 		}
 	}

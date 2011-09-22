@@ -13,15 +13,21 @@ import com.gooogle.code.blockWalker.Monster;
 import com.gooogle.code.blockWalker.Player;
 import com.gooogle.code.blockWalker.Resources;
 
+/**
+ * @author brooks
+ * Sep 22, 2011
+ */
 public class DumbAI implements ITimerCallback {
 	
 	float right;
 	float left;
 	Monster mMonster;
-	private TimerHandler time;
 	private static LinkedList<Rectangle> platforms =  new LinkedList<Rectangle>();
 	
 	
+	/**
+	 * @param pMonster
+	 */
 	public DumbAI(Monster pMonster) {
 		mMonster = pMonster;
 		Rectangle closest = platforms.get(0);
@@ -40,7 +46,7 @@ public class DumbAI implements ITimerCallback {
 			y = Math.abs(temp.getY());
 			x += temp.getWidth()/2;
 			y += temp.getHeight()/2;
-			Debug.d(x + " " + y + "\n");
+			//Debug.d(x + " " + y + "\n");
 			
 			diffX = Math.abs(x - monsterX);
 			diffY = Math.abs(y - monsterY);
@@ -50,10 +56,10 @@ public class DumbAI implements ITimerCallback {
 				closest = temp;
 			}
 		}
-		Debug.d("closest" + closest.getX() + "  " + closest.getY());
+		//Debug.d("closest" + closest.getX() + "  " + closest.getY());
 		left =  closest.getX()-(closest.getWidth()/4);
 		right =  closest.getX() + closest.getWidth() - (closest.getWidth()/4);
-		Resources.getmScene().registerUpdateHandler(time = new TimerHandler(1, this));
+		Resources.getmScene().registerUpdateHandler(new TimerHandler(1, this));
 	}
 	/**
 	 * @param rect
@@ -69,7 +75,7 @@ public class DumbAI implements ITimerCallback {
 		boolean lineOfSight = true;
 		for(int i = 0; i < platforms.size() && lineOfSight; i++) {
 			if(temp.collidesWith(platforms.get(i))) {
-				Debug.d(temp.collidesWith(platforms.get(i)) + "");
+				//Debug.d(temp.collidesWith(platforms.get(i)) + "");
 				lineOfSight = false;
 				break;
 			}
@@ -83,8 +89,8 @@ public class DumbAI implements ITimerCallback {
 				mMonster.left();
 			}
 		} else {
-			Debug.d("Random!!!!!!!!!!!!!!            " + (right - mMonster.getX() < mMonster.getX() - left));
-			Debug.d((right - mMonster.getX() ) + " " + (mMonster.getX() - left));
+			//Debug.d("Random!!!!!!!!!!!!!!            " + (right - mMonster.getX() < mMonster.getX() - left));
+			//Debug.d((right - mMonster.getX() ) + " " + (mMonster.getX() - left));
 			if(right - mMonster.getX() < mMonster.getX() - left) {
 				mMonster.left();
 			} else {
@@ -92,11 +98,5 @@ public class DumbAI implements ITimerCallback {
 			}
 		}
 		pTimerHandler.reset();
-	}
-	/**
-	 * 
-	 */
-	public void destroy() {
-		//Resources.getmScene().unregisterUpdateHandler(time);
 	}
 }
