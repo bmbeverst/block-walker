@@ -171,7 +171,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 
 	void left() {
 		final Vector2 velocity = Vector2Pool.obtain();
-		velocity.set(-accelration, 1);
+		velocity.set(-accelration, 0);
 		checkSpeed(velocity);
 		if (!flipped) {
 			flipped = true;
@@ -188,7 +188,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 
 	void right() {
 		final Vector2 velocity = Vector2Pool.obtain();
-		velocity.set(accelration, 1);
+		velocity.set(accelration, 0);
 		checkSpeed(velocity);
 		if (flipped) {
 			flipped = false;
