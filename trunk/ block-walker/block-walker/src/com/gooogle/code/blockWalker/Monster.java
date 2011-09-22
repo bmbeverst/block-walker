@@ -28,7 +28,7 @@ public class Monster extends AnimatedSprite{
 
 		private static final int JUMPV = -10;
 		private static final float ELASTICITY = 0f;
-		private static final int MASS = 30;
+		private static final int MASS = 10;
 		private static final float FRICTION = 0f;
 		
 		private final static float PLAYER_SIZE = 64;
@@ -36,7 +36,7 @@ public class Monster extends AnimatedSprite{
 		private static final long[] ANIMATE_CHARGE = new long[]{400, 400, 400};
 		private static final long[] ANIMATE_IDLE = new long[]{200, 200};
 		
-		private float movementSpeed = 4f;
+		private float movementSpeed = 1f;
 		private float accelration = movementSpeed;
 		private FixedStepPhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
 		private Scene mScene = Resources.getmScene();
@@ -44,6 +44,7 @@ public class Monster extends AnimatedSprite{
 
 		private boolean jumping = false;
 		private boolean animated = false;
+		private DumbAI ai;
 		
 		/**
 		 * @param pX
@@ -52,9 +53,9 @@ public class Monster extends AnimatedSprite{
 		 */
 		public Monster(float pX, float pY,
 				TiledTextureRegion pTiledTextureRegion) {
-			super(pX, pY, PLAYER_SIZE, PLAYER_SIZE, Resources.loadTiledTexture("monsterO.png", 128, 128, 3, 4));
+			super(pX, pY - 20, PLAYER_SIZE, PLAYER_SIZE, Resources.loadTiledTexture("monsterO.png", 128, 128, 3, 4));
 
-			Debug.d("Monster!!!!!!!!!!!!!!!!!!!!!!!!!");
+			Debug.d(pX + ", " + pY + " Monster!!!!!!!!!!!");
 			
 			final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(MASS,
 					ELASTICITY, FRICTION);
@@ -62,9 +63,20 @@ public class Monster extends AnimatedSprite{
 					BodyType.DynamicBody, playerFixtureDef);
 			mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this,
 					playerBody, true, false));
-			new DumbAI(this);
+			playerBody.setLinearDamping(1);
+			ai = new DumbAI(this);
 			idle();
 			mScene.attachChild(this);
+		}
+
+		/* (non-Javadoc)
+		 * @see org.anddev.andengine.entity.Entity#onDetached()
+		 */
+		@Override
+		public void onDetached() {
+			super.onDetached();
+			ai.destroy();
+			System.gc();
 		}
 
 		public void up() {
@@ -88,6 +100,7 @@ public class Monster extends AnimatedSprite{
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(-accelration, 0);
             velocity.add(playerBody.getLinearVelocity());
+            playerBody.setLinearVelocity(velocity);
 			this.animate(ANIMATE_DURATION, 3 , 5, false);
 			Vector2Pool.recycle(velocity);
 		}
@@ -95,6 +108,7 @@ public class Monster extends AnimatedSprite{
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(accelration, 0);
             velocity.add(playerBody.getLinearVelocity());
+            playerBody.setLinearVelocity(velocity);
 			this.animate(ANIMATE_DURATION, 6 , 8, false);
 			Vector2Pool.recycle(velocity);
 		}

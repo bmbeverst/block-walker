@@ -58,6 +58,7 @@ public class TMXMap {
 		// Read in the unwalkable blocks from the object layer and create boxes
 		// for each. This also sets up the goals
 		createUnwalkableObjects(mTMXTiledMap);
+		generateMonsters(mTMXTiledMap);
 		
 		// Make the camera not exceed the bounds of the TMXEntity.
 		final TMXLayer tmxLayer = mTMXTiledMap.getTMXLayers().get(0);
@@ -141,12 +142,13 @@ public class TMXMap {
 	}//end method
 	private void generateMonsters(final TMXTiledMap map) {
 		for (final TMXObjectGroup group : mTMXTiledMap.getTMXObjectGroups()) {
-			if (group.getTMXObjectGroupProperties().containsTMXProperty("wall",
+			if (group.getTMXObjectGroupProperties().containsTMXProperty("monster",
 					"true")) {
 				// This is our "wall" layer. Create the physical boxes from it
-				for (final TMXObject object : group.getTMXObjects()) {
+				final TMXObject object = group.getTMXObjects().get(1);
+				//for (final TMXObject object : group.getTMXObjects()) {
 					new Monster(object.getX(), object.getY(), null);
-				}
+				//}
 			}
 		}
 	}
