@@ -88,7 +88,7 @@ public class Monster extends AnimatedSprite{
 		public void left() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(-accelration, 0);
-            velocity.add(playerBody.getLinearVelocity());
+            //velocity.add(playerBody.getLinearVelocity());
             playerBody.setLinearVelocity(velocity);
 			this.animate(ANIMATE_DURATION, 3 , 5, false);
 			Vector2Pool.recycle(velocity);
@@ -96,7 +96,7 @@ public class Monster extends AnimatedSprite{
 		public void right() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(accelration, 0);
-            velocity.add(playerBody.getLinearVelocity());
+           // velocity.add(playerBody.getLinearVelocity());
             playerBody.setLinearVelocity(velocity);
 			this.animate(ANIMATE_DURATION, 6 , 8, false);
 			Vector2Pool.recycle(velocity);
