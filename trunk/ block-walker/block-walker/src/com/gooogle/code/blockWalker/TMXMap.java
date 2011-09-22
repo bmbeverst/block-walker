@@ -57,6 +57,8 @@ public class TMXMap {
 		}
 		// Read in the unwalkable blocks from the object layer and create boxes
 		// for each. This also sets up the goals
+		LinkedList<Monster> m = Resources.getMonsters() ;
+		m.clear();
 		createUnwalkableObjects(mTMXTiledMap);
 		generateMonsters(mTMXTiledMap);
 		

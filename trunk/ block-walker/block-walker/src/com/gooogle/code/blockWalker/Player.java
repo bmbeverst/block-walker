@@ -13,6 +13,7 @@ import org.anddev.andengine.audio.sound.Sound;
 import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
+import org.anddev.andengine.entity.primitive.Line;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
@@ -165,6 +166,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		this.animate(ANIMATE_CHANRGE, 8, 11, false);
 		Vector2Pool.recycle(velocity);
 		Debug.d(this.toString());
+		Resources.getHUD().increaseEnergyCount();
 	}
 
 	void left() {
@@ -272,6 +274,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	public void rePosition() {
 		playerBody.setTransform(5, 20, 0.0f);
 	}
+	 
 
 	// When ever there is a collision this is called. optimize.
 	private IUpdateHandler handler;
@@ -289,7 +292,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 					mScene.unregisterUpdateHandler(this);
 					Resources.removePlayer(Resources.getmPlayer());
 					(Resources.getMapManger()).nextMap();
-				}
+				}//end if 
 
 				if (Resources.getWater().collidesWith(Resources.getmPlayer())) {
 					Resources.getmPlayer().rePosition();
@@ -297,11 +300,33 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 						Resources.getMenu().gameOver();
   			
 					}
-			}
-		}
+			}//end if
+				LinkedList<Monster> monsterList = Resources.getMonsters();
+				for (int i =0 ; i <monsterList.size(); i++){
+					Rectangle monsterRec = new Rectangle(monsterList.get(i).getX()-5,
+							monsterList.get(i).getY(), 50,
+							50);
+					if(Resources.getmPlayer().collidesWith(monsterRec))
+					{
+						Resources.getHUD().decreaesEnergyCount(); 
+					}//end if
+				}//end for
+ 		}//end inner class method 
 			});
 
 	}
+//
+//	protected boolean isHitting(Monster pmonster) {
+// 		double distance =  Math.sqrt((pmonster.getX() - this.getX())*(pmonster.getX() - this.getX())
+// 				 		+  (pmonster.getY() - this.getX()) * (pmonster.getY() - this.getX())); 
+//		Debug.d("DEBUG !!!! monster distance!!!" + distance);
+//		double minDis = 540.0;
+//		
+//		if (distance > minDis){
+//			return false;
+//		}
+//		else return true;
+// 	}
 
 	public IUpdateHandler getHandler() {
 		return handler;

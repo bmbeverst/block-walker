@@ -59,6 +59,10 @@ public class Resources {
 	private static LinkedList<Monster> monsters = new LinkedList<Monster>();
 
 	
+	public static LinkedList<Monster> getMonsters() {
+		return monsters;
+	}
+
 	//Create the Resouces and set all the needed values
 	Resources(BoundCamera pCamera, FixedStepPhysicsWorld pPhysicsWorld,
 			Scene pScene, BaseGameActivity pBaseGameActivity,
@@ -280,6 +284,7 @@ public class Resources {
 	
 	static void addMonster(Monster m) {
 		monsters.add(m);
+
 	}
 	
 	static void clearMonsters() {

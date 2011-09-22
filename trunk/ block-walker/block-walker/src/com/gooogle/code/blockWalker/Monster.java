@@ -63,8 +63,8 @@ public class Monster extends AnimatedSprite{
 			mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this,
 					playerBody, true, false));
 			playerBody.setLinearDamping(1);
-			new DumbAI(this);
 			Resources.addMonster(this);
+			new DumbAI(this);
 			idle();
 			mScene.attachChild(this);
 		}
