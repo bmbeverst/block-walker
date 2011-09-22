@@ -64,6 +64,7 @@ public class Monster extends AnimatedSprite{
 					playerBody, true, false));
 			playerBody.setLinearDamping(1);
 			new DumbAI(this);
+			Resources.addMonster(this);
 			idle();
 			mScene.attachChild(this);
 		}

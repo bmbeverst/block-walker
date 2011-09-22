@@ -52,7 +52,7 @@ public class MapManager {
 		mPhysicsWorld.clearPhysicsConnectors();
 		//Debug.d("!! PHYSIC  !! at the end of map " + currentMapNumber);
 
-		
+		Resources.clearMonsters();
          Iterator<Body> iter = mPhysicsWorld.getBodies();
      //   final PhysicsConnector playerPhysicsConnector = mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(pplayer);
         while (iter.hasNext())

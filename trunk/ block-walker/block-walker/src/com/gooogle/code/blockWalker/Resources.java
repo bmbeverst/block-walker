@@ -56,6 +56,7 @@ public class Resources {
 	private static Rectangle mwater;
 	private static GameHUD mHUD;
 	private static MainMenu mMenu;
+	private static LinkedList<Monster> monsters = new LinkedList<Monster>();
 
 	
 	//Create the Resouces and set all the needed values
@@ -275,6 +276,14 @@ public class Resources {
 
 	static void addGoal(Rectangle rect) {
 		goalWatcher.add(rect);
+	}
+	
+	static void addMonster(Monster m) {
+		monsters.add(m);
+	}
+	
+	static void clearMonsters() {
+		monsters.clear();
 	}
 
 	static boolean onKeyDownEvent(int pKeyCode, KeyEvent pEvent) {
