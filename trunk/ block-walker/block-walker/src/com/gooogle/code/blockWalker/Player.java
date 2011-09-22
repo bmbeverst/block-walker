@@ -35,6 +35,9 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.gooogle.code.blockWalker.OnKeyDownListener;
+import com.gooogle.code.blockWalker.OnKeyUpListener;
+import com.gooogle.code.blockWalker.Resources;
 
 /**
  * @author brooks Sep 5, 2011
@@ -160,7 +163,6 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		velocity.set(0, accelration);
 		checkSpeed(velocity);
 		this.animate(ANIMATE_CHANRGE, 8, 11, false);
-
 		Vector2Pool.recycle(velocity);
 		Debug.d(this.toString());
 	}
@@ -218,7 +220,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			handeled = true;
 			break;
 		case KeyEvent.KEYCODE_DPAD_DOWN:
-			attack();
+			down();
 			handeled = true;
 			break;
 		case KeyEvent.KEYCODE_DPAD_LEFT:

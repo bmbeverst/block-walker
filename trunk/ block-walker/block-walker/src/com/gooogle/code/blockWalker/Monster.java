@@ -7,11 +7,14 @@ package com.gooogle.code.blockWalker;
 	import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 	import org.anddev.andengine.extension.physics.box2d.util.Vector2Pool;
 	import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
+import org.anddev.andengine.util.Debug;
 
 	import com.badlogic.gdx.math.Vector2;
 	import com.badlogic.gdx.physics.box2d.Body;
 	import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-	import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.gooogle.code.blockWalker.Resources;
+import com.gooogle.code.blockWalker.AI.DumbAI;
 
 /**
  * @author brooks
@@ -41,8 +44,6 @@ public class Monster extends AnimatedSprite{
 
 		private boolean jumping = false;
 		private boolean animated = false;
-
-		private static TiledTextureRegion mPlayerTiledRegion;
 		
 		/**
 		 * @param pX
@@ -51,8 +52,9 @@ public class Monster extends AnimatedSprite{
 		 */
 		public Monster(float pX, float pY,
 				TiledTextureRegion pTiledTextureRegion) {
-			super(pX, pY, PLAYER_SIZE, PLAYER_SIZE, mPlayerTiledRegion = Resources.loadTiledTexture("monsterO.png", 128, 128, 3, 4));
-			
+			super(pX, pY, PLAYER_SIZE, PLAYER_SIZE, Resources.loadTiledTexture("monsterO.png", 128, 128, 3, 4));
+
+			Debug.d("Monster!!!!!!!!!!!!!!!!!!!!!!!!!");
 			
 			final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(MASS,
 					ELASTICITY, FRICTION);
@@ -60,11 +62,12 @@ public class Monster extends AnimatedSprite{
 					BodyType.DynamicBody, playerFixtureDef);
 			mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this,
 					playerBody, true, false));
+			new DumbAI(this);
 			idle();
 			mScene.attachChild(this);
 		}
 
-		void up() {
+		public void up() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			if(!jumping){
 	            jumping = true;
@@ -74,21 +77,21 @@ public class Monster extends AnimatedSprite{
 			this.animate(ANIMATE_DURATION, 9 ,11, false);
 			Vector2Pool.recycle(velocity);
 		}
-		void down() {
+		public void down() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(0, accelration);
             velocity.add(playerBody.getLinearVelocity());
 			this.animate(ANIMATE_CHARGE,  0, 2, false);
 			Vector2Pool.recycle(velocity);
 		}
-		void left() {
+		public void left() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(-accelration, 0);
             velocity.add(playerBody.getLinearVelocity());
 			this.animate(ANIMATE_DURATION, 3 , 5, false);
 			Vector2Pool.recycle(velocity);
 		}
-		void right() {
+		public void right() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(accelration, 0);
             velocity.add(playerBody.getLinearVelocity());

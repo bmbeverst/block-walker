@@ -11,6 +11,7 @@ import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.gooogle.code.blockWalker.Resources;
 
 /**
  * @author brooks Sep 5, 2011

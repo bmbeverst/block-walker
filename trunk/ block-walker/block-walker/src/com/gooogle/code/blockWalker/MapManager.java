@@ -9,25 +9,41 @@ import org.anddev.andengine.util.Debug;
 import com.badlogic.gdx.physics.box2d.Body;
 
 
+/**
+ * @author brooks
+ * Sep 21, 2011
+ */
 public class MapManager {
 	private String currentMapNumber;
 
 	private TMXMap map;
 	
+	/**
+	 * @return
+	 */
 	public TMXMap getMap() {
 		return map;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getCurrentMapNumber() {
 		return currentMapNumber;
 	}
 	 
 
+	/**
+	 * @param startLocation
+	 */
 	public MapManager (String startLocation){
 		currentMapNumber = startLocation;
 		map = new TMXMap(startLocation);
 	}
 	
+	/**
+	 * 
+	 */
 	public void nextMap(){ 
  
 
@@ -51,7 +67,7 @@ public class MapManager {
         } 
 
         //detach all children
-		Resources.getmScene().detachChildren();        
+		Resources.getmScene().detachChildren();
         System.gc();
 		
         //make string new map file name
@@ -64,6 +80,9 @@ public class MapManager {
 		map = new TMXMap(currentMapNumber); 
 	}
 
+	/**
+	 * @param pMap
+	 */
 	public void reloadMap(String pMap) {
         Resources.getmScene().unregisterUpdateHandler(Resources.getmPlayer().getHandler());
 		Resources.removePlayer(Resources.getmPlayer());

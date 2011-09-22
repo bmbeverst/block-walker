@@ -58,22 +58,6 @@ public class Resources {
 	private static MainMenu mMenu;
 
 	
-	public static Player getmPlayer() {
-		return mPlayer;
-	}
-
-	public static void setmPlayer(Player mPlayer) {
-		Resources.mPlayer = mPlayer;
-	}
-
-	public static Rectangle getExit() {
-		return mexit;
-	}
-
-	public static void setExit(Rectangle pexit) {
-		mexit = pexit;
-	}
-
 	//Create the Resouces and set all the needed values
 	Resources(BoundCamera pCamera, FixedStepPhysicsWorld pPhysicsWorld,
 			Scene pScene, BaseGameActivity pBaseGameActivity,
@@ -83,6 +67,14 @@ public class Resources {
 		mScene = pScene;
 		mBaseGameActivity = pBaseGameActivity;
 		mEngine = pEngine;
+	}
+
+	public static Player getmPlayer() {
+		return mPlayer;
+	}
+
+	public static Rectangle getExit() {
+		return mexit;
 	}
 
 	/**
@@ -102,14 +94,14 @@ public class Resources {
 	/**
 	 * @return the mPhysicsWorld
 	 */
-	static final FixedStepPhysicsWorld getmPhysicsWorld() {
+	public static final FixedStepPhysicsWorld getmPhysicsWorld() {
 		return mPhysicsWorld;
 	}
 	
 	/**
 	 * @return the mScene
 	 */
-	static final Scene getmScene() {
+	public static final Scene getmScene() {
 		return mScene;
 	}
 	
@@ -119,6 +111,66 @@ public class Resources {
 	static final Engine getmEngine() {
 		return mEngine;
 	}
+	static LinkedList<Rectangle> getGoals() {
+		return goalWatcher;
+	}
+	
+	public static DBManager getmDBM() {
+		return mDBM;
+	}
+
+	public static AutoParallaxBackground getMautoParallaxBackground() {
+		return mautoParallaxBackground;
+	}
+
+	public static MapManager getMapManger() {
+		return mMapManager;
+	}
+
+	public static Rectangle getWater() {
+		return mwater;
+	}
+
+	public static GameHUD getHUD() {
+		return mHUD;
+	}
+
+	public static MainMenu getMenu(){
+		return mMenu;
+	}
+
+	public static void setmPlayer(Player mPlayer) {
+		Resources.mPlayer = mPlayer;
+	}
+
+	public static void setExit(Rectangle pexit) {
+		mexit = pexit;
+	}
+
+	public static void setmDBM(DBManager pDBM) {
+		Resources.mDBM = pDBM;
+	}
+ 
+	public static void setBackground(AutoParallaxBackground pautoParallaxBackground) {
+		mautoParallaxBackground= pautoParallaxBackground;
+	}
+
+	public static void setMapManager(MapManager pmapManager) {
+		mMapManager = pmapManager;
+	}
+
+	public static void setWater(Rectangle pwater) {
+		mwater = pwater;
+	}
+
+	public static void setHUD(GameHUD phud) {
+		mHUD=phud;
+	}
+
+	public static void setMenu(MainMenu pMenu) {
+		mMenu = pMenu;	
+	}
+
 	// loads a font from assets/font/
 	static Font loadFont(String location) {
 		BitmapTextureAtlas mMenuFontTexture = new BitmapTextureAtlas(256, 256,
@@ -147,23 +199,19 @@ public class Resources {
 		mEngine.getTextureManager().loadTexture(mBitmapTexture);
 		return mTextureRegion;
 	}
-	
-	
+
 	//test for parallax background
 	static BitmapTextureAtlas loadParallax(String locationfront, String locationback, String locationmid, int sizeX, int sizeY){
 	BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-
+	
 	BitmapTextureAtlas parallaxTexture = new BitmapTextureAtlas(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-
+	
 	autoParallaxTexture = new BitmapTextureAtlas(1024, 1024, TextureOptions.DEFAULT);
 	return autoParallaxTexture;
-
-
+	
+	
 	}
-	
-	
-	
-	
+
 	// loads a tiled texture from assets/gfx/ the size values are from 1 not 0.
 	static TiledTextureRegion loadTiledTexture(String location, int sizeX, int sizeY, int tileX, int tileY) {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
@@ -173,7 +221,7 @@ public class Resources {
 		TiledTextureRegion mTiledRegion = BitmapTextureAtlasTextureRegionFactory
 					.createTiledFromAsset(mTiledTexture, mBaseGameActivity, location, 0,
 							0, tileX, tileY);
-
+	
 			mEngine.getTextureManager().loadTextures(mTiledTexture);
 		return mTiledRegion;
 	}
@@ -203,6 +251,7 @@ public class Resources {
 		} 
 		return backgroundSound;
 	}
+
 	static Music loadMusic(String location) {
 		MusicFactory.setAssetBasePath("mfx/");
 		Music backgroundMusic = null;
@@ -214,11 +263,20 @@ public class Resources {
 		}
 		return backgroundMusic;
 	}
-	
+
 	//manage the various listeners and goals and adding of said items
 	static void addOnKeyDownListener(OnKeyDownListener listener) {
 		downListeners.add(listener);
 	}
+
+	static void addOnKeyUpListener(OnKeyUpListener listener) {
+		upListeners.add(listener);
+	}
+
+	static void addGoal(Rectangle rect) {
+		goalWatcher.add(rect);
+	}
+
 	static boolean onKeyDownEvent(int pKeyCode, KeyEvent pEvent) {
 		boolean handled = false;
 		
@@ -227,9 +285,7 @@ public class Resources {
 		}
 		return handled;
 	}
-	static void addOnKeyUpListener(OnKeyUpListener listener) {
-		upListeners.add(listener);
-	}
+
 	static boolean onKeyUpEvent(int pKeyCode, KeyEvent pEvent) {
 		boolean handled = false;
 		
@@ -238,18 +294,12 @@ public class Resources {
 		}
 		return handled;
 	}
-	
+
 	static void removePlayer(Player p) {
 		upListeners.remove(p);
 		downListeners.remove(p);
 	}
-	static void addGoal(Rectangle rect) {
-		goalWatcher.add(rect);
-	}
-	static LinkedList<Rectangle> getGoals() {
-		return goalWatcher;
-	}
-	
+
 	//Set every thing to null so that the Garbage collector can take it.
 	static void finish() {
 		mCamera = null;
@@ -258,55 +308,6 @@ public class Resources {
 		mEngine = null;
 		// Nuke the whole thing
 		mBaseGameActivity.finish();
-	}
- 
-
-	public static void setmDBM(DBManager pDBM) {
-		Resources.mDBM = pDBM;
-	}
- 
-	public static DBManager getmDBM() {
-		return mDBM;
-	}
-
-	public static void setBackground(AutoParallaxBackground pautoParallaxBackground) {
-		mautoParallaxBackground= pautoParallaxBackground;
-	}
-
-	public static AutoParallaxBackground getMautoParallaxBackground() {
-		return mautoParallaxBackground;
-	}
-
-	public static void setMapManager(MapManager pmapManager) {
-		mMapManager = pmapManager;
-	}
-
-	public static MapManager getMapManger() {
-		return mMapManager;
-	}
-
-	public static Rectangle getWater() {
-		return mwater;
-	}
-
-	public static void setWater(Rectangle pwater) {
-		mwater = pwater;
-	}
-
-	public static void setHUD(GameHUD phud) {
-		mHUD=phud;
-	}
-	
-	public static GameHUD getHUD() {
-		return mHUD;
-	}
-
-	public static void setMenu(MainMenu pMenu) {
-		mMenu = pMenu;	
-	}
-	
-	public static MainMenu getMenu(){
-		return mMenu;
 	}
 
  
