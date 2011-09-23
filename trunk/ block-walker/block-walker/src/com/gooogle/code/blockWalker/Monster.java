@@ -44,6 +44,7 @@ public class Monster extends AnimatedSprite{
 
 		private boolean jumping = false;
 		private boolean animated = false;
+		private DumbAI ai;
 		
 		/**
 		 * @param pX
@@ -64,7 +65,7 @@ public class Monster extends AnimatedSprite{
 					playerBody, true, false));
 			playerBody.setLinearDamping(1);
 			Resources.addMonster(this);
-			new DumbAI(this);
+			ai = new DumbAI(this);
 			idle();
 			mScene.attachChild(this);
 		}
@@ -104,8 +105,11 @@ public class Monster extends AnimatedSprite{
 		}
 		void remove() {
 			Resources.getMonsters().remove(this);
+			this.detachChildren();
+			this.onDetached();
 			Resources.getmScene().detachChild(this);
 			mPhysicsWorld.destroyBody(playerBody);
+			ai.stop();
 			System.gc();
   		}
 		/* (non-Javadoc)

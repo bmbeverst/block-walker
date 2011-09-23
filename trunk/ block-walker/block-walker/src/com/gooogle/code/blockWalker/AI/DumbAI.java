@@ -22,6 +22,8 @@ public class DumbAI implements ITimerCallback {
 	float right;
 	float left;
 	Monster mMonster;
+	private boolean running;
+	private TimerHandler time;
 	private static LinkedList<Rectangle> platforms =  new LinkedList<Rectangle>();
 	
 	
@@ -59,7 +61,7 @@ public class DumbAI implements ITimerCallback {
 		//Debug.d("closest" + closest.getX() + "  " + closest.getY());
 		left =  closest.getX()-(closest.getWidth()/4);
 		right =  closest.getX() + closest.getWidth() - (closest.getWidth()/4);
-		Resources.getmScene().registerUpdateHandler(new TimerHandler(1, this));
+		Resources.getmScene().registerUpdateHandler(time = new TimerHandler(1, this));
 	}
 	/**
 	 * @param rect
@@ -97,6 +99,12 @@ public class DumbAI implements ITimerCallback {
 				mMonster.right();
 			}
 		}
-		pTimerHandler.reset();
+		if(running) {
+			pTimerHandler.reset();
+		}
+	}
+	public void stop() {
+		Resources.getmScene().unregisterUpdateHandler(time);
+		running = false;
 	}
 }
