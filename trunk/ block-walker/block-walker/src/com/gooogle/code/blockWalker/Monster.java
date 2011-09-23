@@ -103,15 +103,43 @@ public class Monster extends AnimatedSprite{
 			Vector2Pool.recycle(velocity);
 		}
 		void remove() {
- 	//		final PhysicsConnector monsterPhysicsConnector = mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this);
-	//		mPhysicsWorld.destroyBody(monsterPhysicsConnector.getBody());
+			Resources.getMonsters().remove(this);
+			Resources.getmScene().detachChild(this);
+ 			final PhysicsConnector monsterPhysicsConnector = mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this);
+			mPhysicsWorld.destroyBody(monsterPhysicsConnector.getBody());
 			playerBody.setTransform(2, 0, 0.0f);
   		}
+		/* (non-Javadoc)
+		 * @see java.lang.Object#equals(java.lang.Object)
+		 */
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			Monster other = (Monster) obj;
+			if (Float.floatToIntBits(accelration) != Float
+					.floatToIntBits(other.accelration))
+				return false;
+			if (animated != other.animated)
+				return false;
+			if (jumping != other.jumping)
+				return false;
+			if (Float.floatToIntBits(movementSpeed) != Float
+					.floatToIntBits(other.movementSpeed))
+				return false;
+			if (playerBody == null) {
+				if (other.playerBody != null)
+					return false;
+			} else if (!playerBody.equals(other.playerBody))
+				return false;
+			return true;
+		}
+
 		void idle() {
 			this.animate(ANIMATE_IDLE, 3 , 4, true);
 		}
-		
-		
-		
-
 }
