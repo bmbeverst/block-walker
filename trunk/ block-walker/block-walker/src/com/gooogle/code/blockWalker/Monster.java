@@ -105,9 +105,8 @@ public class Monster extends AnimatedSprite{
 		void remove() {
 			Resources.getMonsters().remove(this);
 			Resources.getmScene().detachChild(this);
- 			final PhysicsConnector monsterPhysicsConnector = mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this);
-			mPhysicsWorld.destroyBody(monsterPhysicsConnector.getBody());
-			playerBody.setTransform(2, 0, 0.0f);
+			mPhysicsWorld.destroyBody(playerBody);
+			System.gc();
   		}
 		/* (non-Javadoc)
 		 * @see java.lang.Object#equals(java.lang.Object)
