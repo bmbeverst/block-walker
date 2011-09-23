@@ -3,16 +3,28 @@
  */
 package com.gooogle.code.blockWalker;
 
-//Turn into a siglton test feild if not null new player else attach.
+// Turn into a siglton test feild if not null new player else attach.
 
 import java.io.IOException;
 
 import java.util.LinkedList;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import org.anddev.andengine.audio.sound.Sound;
 import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
+import org.anddev.andengine.entity.particle.ParticleSystem;
+import org.anddev.andengine.entity.particle.emitter.PointParticleEmitter;
+import org.anddev.andengine.entity.particle.initializer.AccelerationInitializer;
+import org.anddev.andengine.entity.particle.initializer.ColorInitializer;
+import org.anddev.andengine.entity.particle.initializer.RotationInitializer;
+import org.anddev.andengine.entity.particle.initializer.VelocityInitializer;
+import org.anddev.andengine.entity.particle.modifier.AlphaModifier;
+import org.anddev.andengine.entity.particle.modifier.ColorModifier;
+import org.anddev.andengine.entity.particle.modifier.ExpireModifier;
+import org.anddev.andengine.entity.particle.modifier.ScaleModifier;
 import org.anddev.andengine.entity.primitive.Line;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
@@ -45,20 +57,23 @@ import com.gooogle.code.blockWalker.Resources;
  */
 public class Player extends AnimatedSprite implements OnKeyDownListener,
 		OnKeyUpListener, IUpdateHandler {
-
+	
 	private static final float JUMPV = -20f;
 	private static final float ELASTICITY = 0f;
 	private static final float MASS = 1f;
 	private static final float FRICTION = 0f;
 	private Sound mExplosionSound = Resources.loadSound("punch1.wav");
-
+	
 	private final static float PLAYER_SIZE = 64;
 	private static final long[] ANIMATE_DURATION = new long[] { 200, 200, 200,
 			200 };
 	private static final long[] ANIMATE_CHANRGE = new long[] { 400, 400, 400,
 			400 };
-	private static final long[] ANIMATE_IDLE = new long[] { 200, 200 };;
-
+	private static final long[] ANIMATE_IDLE = new long[] { 200, 200 };
+	private static final float RATE_MIN = 0;
+	private static final float RATE_MAX = 0;
+	private static final int PARTICLES_MAX = 0;;
+	
 	private float movementSpeed = 4f;
 	private float accelration = movementSpeed / 3;
 	private FixedStepPhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
@@ -67,42 +82,48 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private boolean jumping = false;
 	private boolean flipped = false;
 	private boolean moving = true;
-	private float mPX;
-	private float mPY;
-
+	
 	private static TiledTextureRegion mPlayerTiledRegion;
-
+	
 	public Player(float pX, float pY, TiledTextureRegion pTiledTextureRegion) {
 		super(pX, pY, PLAYER_SIZE, PLAYER_SIZE,
 				pTiledTextureRegion = mPlayerTiledRegion = Resources
 						.loadTiledTexture("Character.png", 128, 128, 4, 4));
-		mPX = pX;
-		mPY = pY;
 		ContactListener contactListener = new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {
-				jumping = false;
+				float contactA = contact.getFixtureA().getBody().getPosition().y;
+				float contactB = contact.getFixtureB().getBody().getPosition().y;
+				if (contact.getFixtureA().getBody().getType() == BodyType.StaticBody) {
+					if (contactA > contactB) {
+						jumping = false;
+					}
+				} else if (contact.getFixtureB().getBody().getType() == BodyType.StaticBody) {
+					if (contactA < contactB) {
+						jumping = false;
+					}
+				}
 			}
-
+			
 			@Override
 			public void endContact(Contact contact) {
 				// TODO Auto-generated method stub
 			}
-
+			
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
 				// TODO Auto-generated method stub
-
+				
 			}
-
+			
 			@Override
 			public void postSolve(Contact contact, ContactImpulse impulse) {
 				// TODO Auto-generated method stub
-
+				
 			}
 		};
 		mPhysicsWorld.setContactListener(contactListener);
-
+		
 		final BoundCamera mCamera = Resources.getmCamera();
 		final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(
 				MASS, ELASTICITY, FRICTION);
@@ -116,7 +137,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				mCamera.updateChaseEntity();
 			}
 		});
-
+		
 		playerBody.setLinearDamping(1);
 		// playerBody.setAngularDamping(10);
 		mCamera.setChaseEntity(this);
@@ -125,11 +146,35 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		Resources.addOnKeyUpListener(this);
 		Resources.setmPlayer(this);
 		updatePlayer();
-
+		
 	}
-
+	
+	private void setupParticals() {
+		final ParticleSystem particleSystem = new ParticleSystem(
+				new PointParticleEmitter(mX, mY), RATE_MIN, RATE_MAX,
+				PARTICLES_MAX, Resources.loadTexture("part.png", 16, 16));
+		particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
+		
+		particleSystem.addParticleInitializer(new VelocityInitializer(-35, -45,
+				0, 10));
+		particleSystem.addParticleInitializer(new AccelerationInitializer(-5,
+				11));
+		particleSystem.addParticleInitializer(new RotationInitializer(0.0f,
+				360.0f));
+		particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 0.0f,
+				0.0f));
+		
+		particleSystem.addParticleModifier(new ScaleModifier(0.5f, 2.0f, 0, 5));
+		particleSystem.addParticleModifier(new ExpireModifier(6.5f));
+		particleSystem.addParticleModifier(new ColorModifier(1.0f, 1.0f, 0.0f,
+				1.0f, 0.0f, 1.0f, 2.5f, 5.5f));
+		particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 2.5f,
+				6.5f));
+		Resources.getmScene().attachChild(particleSystem);
+	}
+	
 	private void checkSpeed(Vector2 velocity) {
-
+		
 		final Vector2 temp = playerBody.getLinearVelocity();
 		velocity.add(temp);
 		if (velocity.x >= movementSpeed) {
@@ -146,7 +191,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		}
 		playerBody.setLinearVelocity(velocity);
 	}
-
+	
 	void up() {
 		final Vector2 velocity = Vector2Pool.obtain();
 		if (!jumping) {
@@ -155,10 +200,10 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			checkSpeed(velocity);
 			this.animate(ANIMATE_DURATION, 12, 15, false);
 		}
-
+		
 		Vector2Pool.recycle(velocity);
 	}
-
+	
 	void down() {
 		final Vector2 velocity = Vector2Pool.obtain();
 		velocity.set(0, accelration);
@@ -168,7 +213,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		Debug.d(this.toString());
 		Resources.getHUD().increaseEnergyCount();
 	}
-
+	
 	void left() {
 		final Vector2 velocity = Vector2Pool.obtain();
 		velocity.set(-accelration, 0);
@@ -181,11 +226,11 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
 		}
-
+		
 		Vector2Pool.recycle(velocity);
 		velocity.x = 0;
 	}
-
+	
 	void right() {
 		final Vector2 velocity = Vector2Pool.obtain();
 		velocity.set(accelration, 0);
@@ -198,74 +243,74 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
 		}
-
+		
 		Vector2Pool.recycle(velocity);
 		velocity.x = 0;
 	}
-
+	
 	void remove() {
 		mScene.detachChild(this);
 		Resources.removePlayer(this);
 	}
-
+	
 	@Override
 	public boolean onKeyDown(int pKeyCode, KeyEvent pEvent) {
 		boolean handeled = false;
-
+		
 		switch (pKeyCode) {
-		case KeyEvent.KEYCODE_DPAD_UP:
-			up();
-			handeled = true;
-			break;
-		case KeyEvent.KEYCODE_SPACE:
-			up();
-			handeled = true;
-			break;
-		case KeyEvent.KEYCODE_DPAD_DOWN:
-			down();
-			handeled = true;
-			break;
-		case KeyEvent.KEYCODE_DPAD_LEFT:
-			left();
-			handeled = true;
-			break;
-		case KeyEvent.KEYCODE_DPAD_RIGHT:
-			right();
-			handeled = true;
-			break;
-		case KeyEvent.KEYCODE_DPAD_CENTER:
-			attack();
-			handeled = true;
-			break;
+			case KeyEvent.KEYCODE_DPAD_UP:
+				up();
+				handeled = true;
+				break;
+			case KeyEvent.KEYCODE_SPACE:
+				up();
+				handeled = true;
+				break;
+			case KeyEvent.KEYCODE_DPAD_DOWN:
+				down();
+				handeled = true;
+				break;
+			case KeyEvent.KEYCODE_DPAD_LEFT:
+				left();
+				handeled = true;
+				break;
+			case KeyEvent.KEYCODE_DPAD_RIGHT:
+				right();
+				handeled = true;
+				break;
+			case KeyEvent.KEYCODE_DPAD_CENTER:
+				attack();
+				handeled = true;
+				break;
 		}
 		return handeled;
 	}
-
+	
 	private void attack() {
 		this.animate(ANIMATE_DURATION, 4, 7, false);
 		Player.this.mExplosionSound.play();
 		
 		LinkedList<Monster> monsterList = Resources.getMonsters();
-		for (int i =0 ; i <monsterList.size(); i++){
-			//the number here will set player attack range ! 
-			Rectangle monsterRec = new Rectangle(monsterList.get(i).getX()-20,
-					monsterList.get(i).getY(), 100,
-					100);
-			if(Resources.getmPlayer().collidesWith(monsterRec))
-			{
-				Debug.d(monsterList.get(i).getX() + " " + monsterList.get(i).getY());
+		for (int i = 0; i < monsterList.size(); i++) {
+			// the number here will set player attack range !
+			Rectangle monsterRec = new Rectangle(
+					monsterList.get(i).getX() - 20, monsterList.get(i).getY(),
+					100, 100);
+			if (Resources.getmPlayer().collidesWith(monsterRec)) {
+				Debug.d(monsterList.get(i).getX() + " "
+						+ monsterList.get(i).getY());
 				monsterList.get(i).remove();
- 			}//end if
-		}//end for
-
+			}// end if
+		}// end for
+		
 	}
-
+	
 	@Override
 	public boolean onKeyUp(int pKeyCode, KeyEvent pEvent) {
 		switch (pKeyCode) {
-		case KeyEvent.KEYCODE_DPAD_UP:
-			checkSpeed(Vector2Pool.obtain(0, 5));
-			break;
+			case KeyEvent.KEYCODE_DPAD_UP:
+				checkSpeed(Vector2Pool.obtain(0, 5));
+				break;
 		}
 		if (!moving) {
 			moving = true;
@@ -273,10 +318,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		}
 		return false;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
-	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -284,66 +328,65 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		return "Player [jumping=" + jumping + ", flipped=" + flipped
 				+ ", moving=" + moving + ", mX=" + mX + ", mY=" + mY + "]";
 	}
-
+	
 	public void rePosition() {
 		playerBody.setTransform(5, 20, 0.0f);
 	}
-	 
-
+	
 	// When ever there is a collision this is called. optimize.
 	private IUpdateHandler handler;
-
+	
 	public void updatePlayer() {
 		mScene.registerUpdateHandler(handler = new IUpdateHandler() {
-
+			
 			@Override
 			public void reset() {
 			}
-
+			
 			@Override
 			public void onUpdate(final float pSecondsElapsed) {
 				if (Resources.getExit().collidesWith(Resources.getmPlayer())) {
 					mScene.unregisterUpdateHandler(this);
 					Resources.removePlayer(Resources.getmPlayer());
 					(Resources.getMapManger()).nextMap();
-				}//end if 
-
+				}// end if
+				
 				if (Resources.getWater().collidesWith(Resources.getmPlayer())) {
 					Resources.getmPlayer().rePosition();
 					if (!Resources.getHUD().decreaseLife()) {
 						Resources.getMenu().gameOver();
-  			
+						
 					}
-			}//end if
+				}// end if
 				LinkedList<Monster> monsterList = Resources.getMonsters();
-				for (int i =0 ; i <monsterList.size(); i++){
-					Rectangle monsterRec = new Rectangle(monsterList.get(i).getX()-5,
-							monsterList.get(i).getY(), 50,
-							50);
-					if(Resources.getmPlayer().collidesWith(monsterRec))
-					{
-						Resources.getHUD().decreaesEnergyCount(); 
-					}//end if
-				}//end for
- 		}//end inner class method 
-			});
-
+				for (int i = 0; i < monsterList.size(); i++) {
+					Rectangle monsterRec = new Rectangle(monsterList.get(i)
+							.getX() - 5, monsterList.get(i).getY(), 50, 50);
+					if (Resources.getmPlayer().collidesWith(monsterRec)) {
+						Resources.getHUD().decreaesEnergyCount();
+					}// end if
+				}// end for
+			}// end inner class method
+		});
+		
 	}
-//
-//	protected boolean isHitting(Monster pmonster) {
-// 		double distance =  Math.sqrt((pmonster.getX() - this.getX())*(pmonster.getX() - this.getX())
-// 				 		+  (pmonster.getY() - this.getX()) * (pmonster.getY() - this.getX())); 
-//		Debug.d("DEBUG !!!! monster distance!!!" + distance);
-//		double minDis = 540.0;
-//		
-//		if (distance > minDis){
-//			return false;
-//		}
-//		else return true;
-// 	}
-
+	
+	//
+	// protected boolean isHitting(Monster pmonster) {
+	// double distance = Math.sqrt((pmonster.getX() -
+	// this.getX())*(pmonster.getX() - this.getX())
+	// + (pmonster.getY() - this.getX()) * (pmonster.getY() - this.getX()));
+	// Debug.d("DEBUG !!!! monster distance!!!" + distance);
+	// double minDis = 540.0;
+	//
+	// if (distance > minDis){
+	// return false;
+	// }
+	// else return true;
+	// }
+	
 	public IUpdateHandler getHandler() {
 		return handler;
 	}
-
+	
 }
