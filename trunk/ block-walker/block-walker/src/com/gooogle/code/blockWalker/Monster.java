@@ -108,7 +108,7 @@ public class Monster extends AnimatedSprite{
 			this.detachChildren();
 			this.onDetached();
 			//Resources.getmScene().detachChild(this);
-			//this.setVisible(false);
+			this.setVisible(false);
 			mPhysicsWorld.destroyBody(playerBody);
 			ai.stop();
 			System.gc();
