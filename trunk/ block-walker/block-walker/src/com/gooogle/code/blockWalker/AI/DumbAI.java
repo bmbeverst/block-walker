@@ -22,7 +22,7 @@ public class DumbAI implements ITimerCallback {
 	float right;
 	float left;
 	Monster mMonster;
-	private boolean running;
+	private boolean running = true;
 	private TimerHandler time;
 	private static LinkedList<Rectangle> platforms =  new LinkedList<Rectangle>();
 	
