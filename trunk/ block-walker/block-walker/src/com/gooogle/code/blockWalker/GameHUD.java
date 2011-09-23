@@ -83,8 +83,10 @@ public class GameHUD extends HUD{
 
 	public void decreaesEnergyCount(){
 		if(this.hasEnergy()){
-			energy--;
-	 		energyText.setText("Energy: " + energy);
+			if (energy > 0) {
+				energy--;
+			}
+			energyText.setText("Energy: " + energy);
 		}
 	}	
 	
