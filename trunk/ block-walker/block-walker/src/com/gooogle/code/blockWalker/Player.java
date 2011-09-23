@@ -66,7 +66,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private static final float FRICTION = 0f;
 	private Sound mExplosionSound = Resources.loadSound("punch1.wav");
 	
-	private final static float PLAYER_SIZE = 64;
+	public final static float PLAYER_SIZE = 64;
 	private static final long[] ANIMATE_DURATION = new long[] { 200, 200, 200,
 			200 };
 	private static final long[] ANIMATE_CHANRGE = new long[] { 400, 400, 400,
@@ -85,6 +85,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private boolean flipped = false;
 	private boolean moving = true;
 	private Particels part;
+	private ParticleSystem particleSystem;
+	private PointParticleEmitter particleEmiter;
 	
 	private static TiledTextureRegion mPlayerTiledRegion;
 	
@@ -94,8 +96,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 						.loadTiledTexture("Character.png", 128, 128, 4, 4));
 		
 		
-
-		part = new Particels(this);
+		//particle();
+		//part = new Particels(this);
 		ContactListener contactListener = new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {
@@ -104,12 +106,14 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				if (contact.getFixtureA().getBody().getType() == BodyType.StaticBody) {
 					if (contactA > contactB) {
 						jumping = false;
-						part.landed();
+						//particleEmiter.setCenter(getX() + Player.PLAYER_SIZE/2, getY()+Player.PLAYER_SIZE);
+						//particleSystem.setParticlesSpawnEnabled(true);
 					}
 				} else if (contact.getFixtureB().getBody().getType() == BodyType.StaticBody) {
 					if (contactA < contactB) {
 						jumping = false;
-						part.landed();
+						//particleEmiter.setCenter(getX() + Player.PLAYER_SIZE/2, getY()+Player.PLAYER_SIZE);
+						//particleSystem.setParticlesSpawnEnabled(true);
 					}
 				}
 			}
@@ -156,6 +160,32 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		Resources.setmPlayer(this);
 		updatePlayer();
 		
+	}
+	
+	
+	private void particle() {
+		particleSystem = new ParticleSystem(
+				particleEmiter = new PointParticleEmitter(getX(), getY()+PLAYER_SIZE), RATE_MIN, RATE_MAX,
+				PARTICLES_MAX, Resources.loadTexture("part.png", 16, 16));
+		particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
+		
+		particleSystem.addParticleInitializer(new VelocityInitializer(-35, 35,
+				-10, -50));
+		particleSystem.addParticleInitializer(new AccelerationInitializer(-5,
+				11));
+		particleSystem.addParticleInitializer(new RotationInitializer(0.0f,
+				360.0f));
+		particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 0.0f,
+				0.0f));
+		
+		particleSystem.addParticleModifier(new ScaleModifier(0.5f, 2.0f, 0, 5));
+		particleSystem.addParticleModifier(new ExpireModifier(6.5f));
+		particleSystem.addParticleModifier(new ColorModifier(1.0f, 2.5f, 1.0f,
+				1.5f, 0.0f, 1.0f, 2.5f, 5.5f));
+		particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 2.5f,
+				6.5f));
+		Resources.getmScene().attachChild(particleSystem);
+		particleSystem.setParticlesSpawnEnabled(true);
 	}
 	
 	private void checkSpeed(Vector2 velocity) {
