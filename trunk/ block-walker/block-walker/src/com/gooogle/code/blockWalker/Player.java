@@ -244,6 +244,19 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private void attack() {
 		this.animate(ANIMATE_DURATION, 4, 7, false);
 		Player.this.mExplosionSound.play();
+		
+		LinkedList<Monster> monsterList = Resources.getMonsters();
+		for (int i =0 ; i <monsterList.size(); i++){
+			//the number here will set player attack range ! 
+			Rectangle monsterRec = new Rectangle(monsterList.get(i).getX()-20,
+					monsterList.get(i).getY(), 100,
+					100);
+			if(Resources.getmPlayer().collidesWith(monsterRec))
+			{
+				monsterList.get(i).remove();
+ 			}//end if
+		}//end for
+
 	}
 
 	@Override

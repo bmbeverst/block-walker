@@ -103,9 +103,15 @@ public class Monster extends AnimatedSprite{
 			Vector2Pool.recycle(velocity);
 		}
 		void remove() {
-			mScene.detachChild(this);
-		}
+ 	//		final PhysicsConnector monsterPhysicsConnector = mPhysicsWorld.getPhysicsConnectorManager().findPhysicsConnectorByShape(this);
+	//		mPhysicsWorld.destroyBody(monsterPhysicsConnector.getBody());
+			playerBody.setTransform(2, 0, 0.0f);
+  		}
 		void idle() {
 			this.animate(ANIMATE_IDLE, 3 , 4, true);
 		}
+		
+		
+		
+
 }
