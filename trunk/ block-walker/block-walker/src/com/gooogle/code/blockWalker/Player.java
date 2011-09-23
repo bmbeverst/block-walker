@@ -15,6 +15,8 @@ import org.anddev.andengine.audio.sound.Sound;
 import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
+import org.anddev.andengine.engine.handler.timer.ITimerCallback;
+import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.particle.ParticleSystem;
 import org.anddev.andengine.entity.particle.emitter.PointParticleEmitter;
 import org.anddev.andengine.entity.particle.initializer.AccelerationInitializer;
@@ -82,6 +84,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private boolean jumping = false;
 	private boolean flipped = false;
 	private boolean moving = true;
+	private Particels part;
 	
 	private static TiledTextureRegion mPlayerTiledRegion;
 	
@@ -89,6 +92,10 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		super(pX, pY, PLAYER_SIZE, PLAYER_SIZE,
 				pTiledTextureRegion = mPlayerTiledRegion = Resources
 						.loadTiledTexture("Character.png", 128, 128, 4, 4));
+		
+		
+
+		part = new Particels(this);
 		ContactListener contactListener = new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {
@@ -97,10 +104,12 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				if (contact.getFixtureA().getBody().getType() == BodyType.StaticBody) {
 					if (contactA > contactB) {
 						jumping = false;
+						part.landed();
 					}
 				} else if (contact.getFixtureB().getBody().getType() == BodyType.StaticBody) {
 					if (contactA < contactB) {
 						jumping = false;
+						part.landed();
 					}
 				}
 			}
@@ -147,30 +156,6 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		Resources.setmPlayer(this);
 		updatePlayer();
 		
-	}
-	
-	private void setupParticals() {
-		final ParticleSystem particleSystem = new ParticleSystem(
-				new PointParticleEmitter(mX, mY), RATE_MIN, RATE_MAX,
-				PARTICLES_MAX, Resources.loadTexture("part.png", 16, 16));
-		particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
-		
-		particleSystem.addParticleInitializer(new VelocityInitializer(-35, -45,
-				0, 10));
-		particleSystem.addParticleInitializer(new AccelerationInitializer(-5,
-				11));
-		particleSystem.addParticleInitializer(new RotationInitializer(0.0f,
-				360.0f));
-		particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 0.0f,
-				0.0f));
-		
-		particleSystem.addParticleModifier(new ScaleModifier(0.5f, 2.0f, 0, 5));
-		particleSystem.addParticleModifier(new ExpireModifier(6.5f));
-		particleSystem.addParticleModifier(new ColorModifier(1.0f, 1.0f, 0.0f,
-				1.0f, 0.0f, 1.0f, 2.5f, 5.5f));
-		particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 2.5f,
-				6.5f));
-		Resources.getmScene().attachChild(particleSystem);
 	}
 	
 	private void checkSpeed(Vector2 velocity) {
