@@ -39,7 +39,7 @@ public class Spin {
 		public Spin(){
 			Debug.d("new joint created!!");
 			mBoxFaceTextureRegion = Resources.loadTexture("box.png", 64, 32);
-			mCircleFaceTextureRegion = Resources.loadTexture("box.png", 64, 32);
+			mCircleFaceTextureRegion = Resources.loadTexture("rock.png", 32, 32);
 			initJoints(Resources.getmScene());
 		}
         // ===========================================================
@@ -47,8 +47,8 @@ public class Spin {
         // ===========================================================
 
         private void initJoints(final Scene pScene) {
-                final int centerX = CAMERA_WIDTH / 2;
-                final int centerY = CAMERA_HEIGHT / 2;
+                final int centerX = CAMERA_WIDTH ;
+                final int centerY = CAMERA_HEIGHT + 100;
 
                 final int spriteWidth = this.mBoxFaceTextureRegion.getWidth();
                 final int spriteHeight = this.mBoxFaceTextureRegion.getHeight();
@@ -56,7 +56,7 @@ public class Spin {
                 final FixtureDef objectFixtureDef = PhysicsFactory.createFixtureDef(10, 0.2f, 0.5f);
 
                 for(int i = 0; i < 3; i++) {
-                        final float anchorFaceX = centerX - spriteWidth * 0.5f + 220 * (i - 1);
+                        final float anchorFaceX = centerX - spriteWidth * 0.5f + 280 * (i - 1);
                         final float anchorFaceY = centerY - spriteHeight * 0.5f;
 
                         final Sprite anchorFace = new Sprite(anchorFaceX, anchorFaceY, this.mBoxFaceTextureRegion);
