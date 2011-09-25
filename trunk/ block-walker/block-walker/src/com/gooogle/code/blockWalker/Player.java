@@ -121,7 +121,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			@Override
 			public void endContact(Contact contact) {
 				// TODO Auto-generated method stub
-			}
+ 			}
 			
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
@@ -214,6 +214,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			velocity.add(0, JUMPV);
 			checkSpeed(velocity);
 			this.animate(ANIMATE_DURATION, 12, 15, false);
+			jumping = true;
 		}
 		
 		Vector2Pool.recycle(velocity);

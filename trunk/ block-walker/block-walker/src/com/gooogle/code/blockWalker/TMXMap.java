@@ -140,6 +140,13 @@ public class TMXMap {
 					
 				}
 			}//end if
+			
+			if (group.getTMXObjectGroupProperties().containsTMXProperty("spin",
+				"true")) { 
+				 new Spin();			
+			}//end if
+			
+			
 		}//end for
 	}//end method
 	private void generateMonsters(final TMXTiledMap map) {

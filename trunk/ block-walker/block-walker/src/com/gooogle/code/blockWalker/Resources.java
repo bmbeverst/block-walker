@@ -212,10 +212,12 @@ public class Resources {
 	BitmapTextureAtlas parallaxTexture = new BitmapTextureAtlas(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
 	
 	autoParallaxTexture = new BitmapTextureAtlas(1024, 1024, TextureOptions.DEFAULT);
-	return autoParallaxTexture;
-	
-	
+	return autoParallaxTexture;	
 	}
+	
+	
+	
+ 
 
 	// loads a tiled texture from assets/gfx/ the size values are from 1 not 0.
 	static TiledTextureRegion loadTiledTexture(String location, int sizeX, int sizeY, int tileX, int tileY) {

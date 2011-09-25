@@ -48,4 +48,9 @@
   </properties>
   <object x="861" y="764" width="21" height="12"/>
  </objectgroup>
+ <objectgroup name="spin" width="50" height="25">
+  <properties>
+   <property name="spin" value="true"/>
+  </properties>
+ </objectgroup>
 </map>
