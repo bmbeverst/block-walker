@@ -5,18 +5,13 @@ package com.gooogle.code.blockWalker;
 
 // Turn into a siglton test feild if not null new player else attach.
 
-import java.io.IOException;
-
 import java.util.LinkedList;
 
 import javax.microedition.khronos.opengles.GL10;
 
 import org.anddev.andengine.audio.sound.Sound;
-import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
-import org.anddev.andengine.engine.handler.timer.ITimerCallback;
-import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.particle.ParticleSystem;
 import org.anddev.andengine.entity.particle.emitter.PointParticleEmitter;
 import org.anddev.andengine.entity.particle.initializer.AccelerationInitializer;
@@ -27,12 +22,9 @@ import org.anddev.andengine.entity.particle.modifier.AlphaModifier;
 import org.anddev.andengine.entity.particle.modifier.ColorModifier;
 import org.anddev.andengine.entity.particle.modifier.ExpireModifier;
 import org.anddev.andengine.entity.particle.modifier.ScaleModifier;
-import org.anddev.andengine.entity.primitive.Line;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
-import org.anddev.andengine.entity.text.ChangeableText;
-import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
@@ -50,9 +42,6 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.gooogle.code.blockWalker.OnKeyDownListener;
-import com.gooogle.code.blockWalker.OnKeyUpListener;
-import com.gooogle.code.blockWalker.Resources;
 
 /**
  * @author brooks Sep 5, 2011
@@ -85,9 +74,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private boolean flipped = false;
 	private boolean moving = true;
 	private Particels part;
-	private ParticleSystem particleSystem;
-	private PointParticleEmitter particleEmiter;
-	
+
 	private static TiledTextureRegion mPlayerTiledRegion;
 	
 	public Player(float pX, float pY, TiledTextureRegion pTiledTextureRegion) {
@@ -96,8 +83,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 						.loadTiledTexture("Character.png", 128, 128, 4, 4));
 		
 		
-		//particle();
-		//part = new Particels(this);
+		part = new Particels(this);
 		ContactListener contactListener = new ContactListener() {
 			@Override
 			public void beginContact(Contact contact) {
@@ -106,14 +92,12 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				if (contact.getFixtureA().getBody().getType() == BodyType.StaticBody) {
 					if (contactA > contactB) {
 						jumping = false;
-						//particleEmiter.setCenter(getX() + Player.PLAYER_SIZE/2, getY()+Player.PLAYER_SIZE);
-						//particleSystem.setParticlesSpawnEnabled(true);
+						part.landed();
 					}
 				} else if (contact.getFixtureB().getBody().getType() == BodyType.StaticBody) {
 					if (contactA < contactB) {
 						jumping = false;
-						//particleEmiter.setCenter(getX() + Player.PLAYER_SIZE/2, getY()+Player.PLAYER_SIZE);
-						//particleSystem.setParticlesSpawnEnabled(true);
+						part.landed();
 					}
 				}
 			}
@@ -121,7 +105,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			@Override
 			public void endContact(Contact contact) {
 				// TODO Auto-generated method stub
- 			}
+			}
 			
 			@Override
 			public void preSolve(Contact contact, Manifold oldManifold) {
@@ -162,32 +146,6 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		
 	}
 	
-	
-	private void particle() {
-		particleSystem = new ParticleSystem(
-				particleEmiter = new PointParticleEmitter(getX(), getY()+PLAYER_SIZE), RATE_MIN, RATE_MAX,
-				PARTICLES_MAX, Resources.loadTexture("part.png", 16, 16));
-		particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
-		
-		particleSystem.addParticleInitializer(new VelocityInitializer(-35, 35,
-				-10, -50));
-		particleSystem.addParticleInitializer(new AccelerationInitializer(-5,
-				11));
-		particleSystem.addParticleInitializer(new RotationInitializer(0.0f,
-				360.0f));
-		particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 0.0f,
-				0.0f));
-		
-		particleSystem.addParticleModifier(new ScaleModifier(0.5f, 2.0f, 0, 5));
-		particleSystem.addParticleModifier(new ExpireModifier(6.5f));
-		particleSystem.addParticleModifier(new ColorModifier(1.0f, 2.5f, 1.0f,
-				1.5f, 0.0f, 1.0f, 2.5f, 5.5f));
-		particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 2.5f,
-				6.5f));
-		Resources.getmScene().attachChild(particleSystem);
-		particleSystem.setParticlesSpawnEnabled(true);
-	}
-	
 	private void checkSpeed(Vector2 velocity) {
 		
 		final Vector2 temp = playerBody.getLinearVelocity();
@@ -214,7 +172,6 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			velocity.add(0, JUMPV);
 			checkSpeed(velocity);
 			this.animate(ANIMATE_DURATION, 12, 15, false);
-			jumping = true;
 		}
 		
 		Vector2Pool.recycle(velocity);
