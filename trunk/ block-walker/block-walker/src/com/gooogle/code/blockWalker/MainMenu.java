@@ -28,6 +28,7 @@ import android.view.KeyEvent;
 
 public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	
+	private static final String FIRSTMAP = "test21.tmx";
 	protected static final int MENU_START = 0;
 	protected static final int MENU_SAVE = MENU_START + 1;
 	protected static final int MENU_LOAD = MENU_SAVE + 1;
@@ -174,10 +175,10 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				if (!hasStarted)
 				{
 					//TODO reset to 0
-					init("final0.tmx");
+					init(FIRSTMAP);
 				}
 				else{
-				mmanager.reloadMap("final0.tmx");
+				mmanager.reloadMap(FIRSTMAP);
 				Resources.getHUD().setEnergyCount(100);
 				Resources.getHUD().setLifeCount(3);	
 				}
