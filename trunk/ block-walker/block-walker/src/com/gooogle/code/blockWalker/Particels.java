@@ -17,14 +17,10 @@ import org.anddev.andengine.entity.particle.modifier.ScaleModifier;
 import org.anddev.andengine.util.Debug;
 
 /**
- * @author brooks
- * Sep 22, 2011
+ * @author brooks Sep 22, 2011
  */
 public class Particels implements ITimerCallback {
 
-	
-	
-	
 	private static final float RATE_MIN = 8;
 	private static final float RATE_MAX = 12;
 	private static final int PARTICLES_MAX = 200;
@@ -33,14 +29,15 @@ public class Particels implements ITimerCallback {
 	final ParticleSystem particleSystem;
 	private PointParticleEmitter particleEmiter;
 
-
 	Particels(Player player) {
 		mPlayer = player;
 		particleSystem = new ParticleSystem(
-				particleEmiter = new PointParticleEmitter(mPlayer.getX() + Player.PLAYER_SIZE/2, mPlayer.getY()+Player.PLAYER_SIZE), RATE_MIN, RATE_MAX,
+				particleEmiter = new PointParticleEmitter(mPlayer.getX()
+						+ Player.PLAYER_SIZE / 2, mPlayer.getY()
+						+ Player.PLAYER_SIZE), RATE_MIN, RATE_MAX,
 				PARTICLES_MAX, Resources.loadTexture("part.png", 16, 16));
 		particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
-		
+
 		particleSystem.addParticleInitializer(new VelocityInitializer(-35, 35,
 				-10, -50));
 		particleSystem.addParticleInitializer(new AccelerationInitializer(-5,
@@ -49,8 +46,8 @@ public class Particels implements ITimerCallback {
 				360.0f));
 		particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 0.0f,
 				0.0f));
-		
-		particleSystem.addParticleModifier(new ScaleModifier(0.5f, 2.0f, 0, 5));
+
+		particleSystem.addParticleModifier(new ScaleModifier(2f, .5f, 0, 5));
 		particleSystem.addParticleModifier(new ExpireModifier(6.5f));
 		particleSystem.addParticleModifier(new ColorModifier(1.0f, 2.5f, 1.0f,
 				1.5f, 0.0f, 1.0f, 2.5f, 5.5f));
@@ -58,24 +55,28 @@ public class Particels implements ITimerCallback {
 				6.5f));
 		Resources.getmScene().attachChild(particleSystem);
 
-		Resources.getmEngine().registerUpdateHandler(new TimerHandler(0.1f, this));
-		
-		
+		Resources.getmEngine().registerUpdateHandler(
+				new TimerHandler(0.5f, this));
+
 	}
+
 	@Override
 	public void onTimePassed(TimerHandler pTimerHandler) {
-	   if(landed) {
-		    particleEmiter.setCenter(mPlayer.getX() + Player.PLAYER_SIZE/2, mPlayer.getY()+Player.PLAYER_SIZE);
-	    	pTimerHandler.reset();
-	    	particleSystem.setParticlesSpawnEnabled(true);
-	    	Debug.d("land");
-	    } else {
-	    	landed= true;
-	    	particleSystem.setParticlesSpawnEnabled(false);
-	    }
+		if (landed) {
+			Debug.d("land");
+			particleEmiter.setCenter(mPlayer.getX() + Player.PLAYER_SIZE / 2,
+					mPlayer.getY() + Player.PLAYER_SIZE);
+			particleSystem.setParticlesSpawnEnabled(true);
+			landed = false;
+		} else {
+			Debug.d("off");
+			particleSystem.setParticlesSpawnEnabled(false);
+		}
+		pTimerHandler.reset();
 	}
+
 	void landed() {
-		landed = false;
-		Debug.d("false");
+		landed = true;
+		Debug.d("true");
 	}
 }
