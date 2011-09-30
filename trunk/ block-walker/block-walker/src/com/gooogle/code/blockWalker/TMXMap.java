@@ -8,6 +8,7 @@ import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLayer;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObject;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObjectGroup;
+import org.anddev.andengine.entity.layer.tiled.tmx.TMXTile;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXTiledMap;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
@@ -28,6 +29,8 @@ public class TMXMap {
 	// Physics for the platforms
 	private static final float ELASTICITY = 0f;
 	private static final float FRICTION = 0.5f;
+	private static final int TILE_WIDTH = 32;
+	private static final int TILE_HEIGHT = 32;
 	
 	// the TMX map we load
 	private TMXTiledMap mTMXTiledMap;
@@ -35,6 +38,7 @@ public class TMXMap {
 	private final PhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
 	private final Scene mScene = Resources.getmScene();
 	private final BoundCamera mCamera = Resources.getmCamera();
+	private TMXLayer TMXMapLayer;
 	
 	// ArrayList<TMXLayer> layers = new ArrayList<TMXLayer>();
 	// ArrayList<Body> walls = new ArrayList<Body>();
@@ -57,17 +61,15 @@ public class TMXMap {
 		}
 		// Read in the unwalkable blocks from the object layer and create boxes
 		// for each. This also sets up the goals
-		LinkedList<Monster> m = Resources.getMonsters() ;
-		m.clear();
+		Resources.getMonsters().clear();
+		TMXMapLayer = mTMXTiledMap.getTMXLayers().get(0);
 		createUnwalkableObjects(mTMXTiledMap);
 		generateMonsters(mTMXTiledMap);
 		
-		// Make the camera not exceed the bounds of the TMXEntity.
-		final TMXLayer tmxLayer = mTMXTiledMap.getTMXLayers().get(0);
-		mCamera.setBounds(0, tmxLayer.getWidth(), 0, tmxLayer.getHeight());
+		mCamera.setBounds(0, TMXMapLayer.getWidth(), 0, TMXMapLayer.getHeight());
 		// add borders to the world so that the player can walk off. Brooks
 		// would like to do this in the map.
-		new Borders(tmxLayer.getWidth(), tmxLayer.getHeight());
+		new Borders(TMXMapLayer.getWidth(), TMXMapLayer.getHeight());
 		mCamera.setBoundsEnabled(true);
 		
 	}
@@ -89,6 +91,24 @@ public class TMXMap {
 					// connect the body to the physics engine.
 					Body tempbody = PhysicsFactory.createBoxBody(mPhysicsWorld,
 							rect, BodyType.StaticBody, boxFixtureDef);
+					
+					float ObjectX = object.getX() + TILE_WIDTH / 2;
+					float ObjectY = object.getY() + TILE_HEIGHT / 2;
+					// Gets the number of rows and columns in the
+					// object
+					int ObjectHeight = object.getHeight() / TILE_HEIGHT;
+					int ObjectWidth = object.getWidth() / TILE_WIDTH;
+
+					// Gets the tiles the object covers and puts it
+					// into the Arraylist CollideTiles
+					for (int TileRow = 0; TileRow < ObjectHeight; TileRow++) {
+						for (int TileColumn = 0; TileColumn < ObjectWidth; TileColumn++) {
+							TMXTile tempTile = TMXMapLayer.getTMXTileAt(ObjectX + TileColumn * TILE_WIDTH, ObjectY
+									+ TileRow * TILE_HEIGHT);
+							Resources.addCollideTile(tempTile);
+						}
+					}
+					
 					
 					// make it invisible
 					rect.setVisible(false);
@@ -120,7 +140,7 @@ public class TMXMap {
 			if (group.getTMXObjectGroupProperties().containsTMXProperty(
 					"spawn", "true")) {
 				for (final TMXObject object : group.getTMXObjects()) {
-					new Player(object.getX(), object.getY(), null);
+					new Player(object.getX(), object.getY());
 				}
 				
 			}
@@ -155,7 +175,7 @@ public class TMXMap {
 					"true")) {
 				// This is our "wall" layer. Create the physical boxes from it
 				for (final TMXObject object : group.getTMXObjects()) {
-					new Monster(object.getX(), object.getY(), null);
+					new Monster(object.getX(), object.getY());
 				}
 			}
 		}

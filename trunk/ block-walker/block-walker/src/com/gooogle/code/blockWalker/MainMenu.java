@@ -296,10 +296,10 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	private void aiTest() {
 		
 		new Borders(800, 400);
-		new Player(100, 100, null);
+		new Player(100, 100);
 		//Resources.getmScene().registerUpdateHandler(
 		//		new TimerHandler(2, new AIupdate()));
-		Monster temp = new Monster(200, 100, null);
+		Monster temp = new Monster(200, 100);
 		//AIupdate.addMonster(temp);
 	}
 	//When ever a key is pressed this is called. Brings up the menu when ever menu is pressed.

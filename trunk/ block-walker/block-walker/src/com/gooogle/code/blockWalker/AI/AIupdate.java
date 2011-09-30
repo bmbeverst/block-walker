@@ -20,12 +20,9 @@ import com.gooogle.code.blockWalker.Resources;
 public class AIupdate implements ITimerCallback {
 	
 	Random rand = new Random(System.nanoTime());
-	private static LinkedList<Body> platforms = new LinkedList<Body>();
-	private static HashMap<IEntity, Monster> brain = new HashMap<IEntity, Monster>();
-	private static AImap map;
 	
 	AIupdate() {
-		
+		Boss boss = new Boss(100, 100);
 	}
 	
 	@Override
@@ -34,11 +31,4 @@ public class AIupdate implements ITimerCallback {
 		//update
 	}
 	
-	static void addMonster(Monster mon) {
-		brain.put(null, mon);
-	}
-	
-	static void setMap(AImap pMap) {
-		
-	}
 }

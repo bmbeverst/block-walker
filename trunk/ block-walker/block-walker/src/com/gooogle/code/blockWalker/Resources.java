@@ -1,6 +1,7 @@
 package com.gooogle.code.blockWalker;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.anddev.andengine.audio.music.Music;
@@ -10,6 +11,7 @@ import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLoader;
+import org.anddev.andengine.entity.layer.tiled.tmx.TMXTile;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXTiledMap;
 import org.anddev.andengine.entity.layer.tiled.tmx.util.exception.TMXLoadException;
 import org.anddev.andengine.entity.primitive.Rectangle;
@@ -57,7 +59,7 @@ public class Resources {
 	private static GameHUD mHUD;
 	private static MainMenu mMenu;
 	private static LinkedList<Monster> monsters = new LinkedList<Monster>();
-
+	private static ArrayList<TMXTile> collideTiles = new ArrayList<TMXTile>();
 	
 	public static LinkedList<Monster> getMonsters() {
 		return monsters;
@@ -220,7 +222,7 @@ public class Resources {
  
 
 	// loads a tiled texture from assets/gfx/ the size values are from 1 not 0.
-	static TiledTextureRegion loadTiledTexture(String location, int sizeX, int sizeY, int tileX, int tileY) {
+	public static TiledTextureRegion loadTiledTexture(String location, int sizeX, int sizeY, int tileX, int tileY) {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
 		
 		BitmapTextureAtlas mTiledTexture = new BitmapTextureAtlas(sizeX, sizeY,
@@ -326,7 +328,16 @@ public class Resources {
 		mBaseGameActivity.finish();
 	}
 
- 
+	static void addCollideTile(TMXTile tempTile) {
+		collideTiles.add(tempTile);
+		
+	}
+
+	public static ArrayList<TMXTile> getCollideTile() {
+		return collideTiles;
+		
+	}
+
  
 
 }
