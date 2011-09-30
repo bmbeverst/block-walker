@@ -6,7 +6,6 @@ package com.gooogle.code.blockWalker;
 	import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 	import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 	import org.anddev.andengine.extension.physics.box2d.util.Vector2Pool;
-	import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.util.Debug;
 
 	import com.badlogic.gdx.math.Vector2;
@@ -49,10 +48,8 @@ public class Monster extends AnimatedSprite{
 		/**
 		 * @param pX
 		 * @param pY
-		 * @param pTiledTextureRegion pass null
 		 */
-		public Monster(float pX, float pY,
-				TiledTextureRegion pTiledTextureRegion) {
+		public Monster(float pX, float pY) {
 			super(pX, pY - 20, PLAYER_SIZE, PLAYER_SIZE, Resources.loadTiledTexture("monsterO.png", 128, 128, 3, 4));
 
 			//Debug.d(pX + ", " + pY + " Monster!!!!!!!!!!!");

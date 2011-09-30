@@ -77,9 +77,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 
 	private static TiledTextureRegion mPlayerTiledRegion;
 	
-	public Player(float pX, float pY, TiledTextureRegion pTiledTextureRegion) {
+	public Player(float pX, float pY) {
 		super(pX, pY, PLAYER_SIZE, PLAYER_SIZE,
-				pTiledTextureRegion = mPlayerTiledRegion = Resources
+				mPlayerTiledRegion = Resources
 						.loadTiledTexture("Character.png", 128, 128, 4, 4));
 		
 		
