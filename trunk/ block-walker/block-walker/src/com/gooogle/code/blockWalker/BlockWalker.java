@@ -263,4 +263,11 @@ public class BlockWalker extends BaseGameActivity implements
          return true;
 		
 	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Resources.getMenu().getmMusic().getMediaPlayer().pause();
+	}
+	 
 }

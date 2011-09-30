@@ -73,7 +73,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private boolean jumping = false;
 	private boolean flipped = false;
 	private boolean moving = true;
-	private Particels part;
+	private Particels part; 
 
 	private static TiledTextureRegion mPlayerTiledRegion;
 	
@@ -177,14 +177,16 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		Vector2Pool.recycle(velocity);
 	}
 	
-	void down() {
+	void down() { 
+
 		final Vector2 velocity = Vector2Pool.obtain();
 		velocity.set(0, accelration);
 		checkSpeed(velocity);
 		this.animate(ANIMATE_CHANRGE, 8, 11, false);
 		Vector2Pool.recycle(velocity);
-		Debug.d(this.toString());
-		Resources.getHUD().increaseEnergyCount();
+		Debug.d(this.toString()); 
+		Resources.getHUD().increaseHalfEnergy();
+
 	}
 	
 	void left() {
@@ -336,7 +338,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 					Rectangle monsterRec = new Rectangle(monsterList.get(i)
 							.getX() - 5, monsterList.get(i).getY(), 50, 50);
 					if (Resources.getmPlayer().collidesWith(monsterRec)) {
-						Resources.getHUD().decreaesEnergyCount();
+						Resources.getHUD().decreaesHalfEnergyCount();
 					}// end if
 				}// end for
 			}// end inner class method

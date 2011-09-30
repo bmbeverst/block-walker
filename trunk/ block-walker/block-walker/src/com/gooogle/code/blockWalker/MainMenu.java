@@ -160,7 +160,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		switch (pMenuItem.getID()) {
 			case MENU_RESUME:
 				mResumeScene.back();
-				this.mMusic.getMediaPlayer().start();
+				this.getmMusic().getMediaPlayer().start();
 				return true;
 				
 			case MENU_START:
@@ -183,23 +183,24 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				Resources.getHUD().setLifeCount(3);	
 				}
 				
-				this.mMusic.getMediaPlayer().start();
+				this.getmMusic().getMediaPlayer().start();
 				return true;
 			case MENU_SAVE:
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
 				mResumeScene.back();
-				// Need to implement this
-				Resources.getmDBM().saveAll(
+ 				Resources.getmDBM().saveAll(
 						mmanager.getCurrentMapNumber(),
 						Resources.getHUD().getLifeCount(),
 						Resources.getHUD().getEnergyCount());
+				this.getmMusic().getMediaPlayer().start();
 				return true;
 				
 			case MENU_LOAD:
 				//goalSound = Resources.loadSound("background.ogg");
 				mScene.detachChild(mMenuScene);
 				mMenuScene.back();
+				mResumeScene.back();
 				Resources.getHUD().setEnergyCount(Resources.getmDBM().loadEnergy());
 				Resources.getHUD().setLifeCount(Resources.getmDBM().loadLife());
 				if (!hasStarted)
@@ -209,9 +210,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				else{
 				mmanager.reloadMap(Resources.getmDBM().loadMap());
 				}
-				this.mMusic.getMediaPlayer().start();
-				//restore life and energy 
-				//aiTest(); // A test scene Brooks is using remove it when ever.
+				this.getmMusic().getMediaPlayer().start(); 
 				return true;
 				
 			case MENU_QUIT:
@@ -219,6 +218,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				Resources.finish();
 				return true;
 			default:
+				this.getmMusic().getMediaPlayer().start(); 
 				return false;
 		}
 	}
@@ -230,66 +230,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		//Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
 		hasStarted = true;
 		
-		// Add the random moster so we can complete the homework.
-		//Monster temp = new Monster(100, 1500, null);
-		// Probably should be in Monster.
-		//AIupdate.addMonster(temp);
-		/*
-		 * Need to get coords for these monsters temp = new Monster(100, 1500,
-		 * null); temp = new Monster(100, 1500, null); temp = new Monster(100,
-		 * 1500, null); temp = new Monster(100, 1500, null);
-		 */
-		
-		/* The actual collision-checking. */
-//		mScene.registerUpdateHandler(new IUpdateHandler() {
-//			private boolean playing = false;
-//			private int index;
-//			
-//			@Override
-//			public void reset() {
-//			}
-//			
-//			// When ever there is a collision this is called. Shoud optimize.
-//			@Override
-//			public void onUpdate(final float pSecondsElapsed) {
-//				// this is random junk that makes it so that the goal sound will
-//				// only play is the play is in one of the goals. I don't know
-//				// why it works, only because I did not know why it wasn't
-//				// working.
-//				LinkedList<Rectangle> goals = Resources.getGoals();
-//				if (!playing) {
-//					for (index = 0; !playing && index < goals.size(); index++) {
-//						// Debug.d("GOAL!");
-//						if (goals.get(index).collidesWith(player)) {
-//							if (!playing) {
-//								playing = true;
-//								goalSound.play();
-//								break; // i KNOW THIS IS BAD BUT IT IS THE ONLY
-//										// WAY!
-//							}
-//						}
-//					}
-//				} else if (!goals.get(index).collidesWith(player)) {
-//					goalSound.stop();
-//					playing = false;
-//				}
-//				
-//				
-//				if (mmanager.getMap().getExit().collidesWith(player))
-//				{
-//					// a test by decy to do map change! 
-//					mmanager.nextMap(player);
-//				}
-//				
-//				
-//				
-//			}
-			//This was suppose to be a bit of text saying "You Win" but never got around to it.
-//			private Scene win() {
-//				
-//				return mMenuScene;
-//			}
-//		});
+ 
 		
 	}
 	// The temp scene Brooks is using to test his AI.
@@ -313,15 +254,17 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 					
 					if (mScene.hasChildScene()) {
 						/* Remove the menu and reset it. */
+						this.getmMusic().getMediaPlayer().start(); 
 						mResumeScene.back();
 					} else {
 						/* Attach the menu. */
 						mScene.setChildScene(mResumeScene, false, true, true);
-						this.mMusic.getMediaPlayer().pause();
+						this.getmMusic().getMediaPlayer().pause();
 					}
 				}
 				handeled = true;
 				break;
+				 
 		}
 		
 		return handeled;
@@ -332,8 +275,12 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 			 gameOverTex.setColor(1f, 0f, 0f);	
 			 mScene.setChildScene(Resources.getMenu().getmMenuScene(), false, true, true);
 			 mMenuScene.attachChild(gameOverTex); 
-			 mMusic.getMediaPlayer().pause();
+			 getmMusic().getMediaPlayer().pause();
 	   
+	}
+ 
+	public Music getmMusic() {
+		return mMusic;
 	}
 	
 }

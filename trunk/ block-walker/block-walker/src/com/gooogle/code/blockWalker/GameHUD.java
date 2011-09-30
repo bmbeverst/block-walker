@@ -13,6 +13,8 @@ public class GameHUD extends HUD{
 	private Sprite life2;
 	private Sprite life3;
 	private ChangeableText levelText;
+	static private int halfStepIncrease;
+	static private int halfStepDecrease;
  
 	//called by blockwalker class
 	public GameHUD(){
@@ -70,8 +72,20 @@ public class GameHUD extends HUD{
 	}
 	
 	public void increaseEnergyCount(){
+		//energy cap is at 200.
+		if ( energy<200){
  		energy ++;
+		}
 		energyText.setText("Energy: " + energy);
+	}
+	
+
+	public void increaseHalfEnergy() { 
+		halfStepIncrease ++  ; 
+		if ( halfStepIncrease == 10){
+			this.increaseEnergyCount();
+			halfStepIncrease = 0; // reset
+		}
 	}
 	
 	public boolean hasEnergy(){
@@ -82,13 +96,23 @@ public class GameHUD extends HUD{
 	}
 
 	public void decreaesEnergyCount(){
-		if(this.hasEnergy()){
-			if (energy > 0) {
-				energy--;
-			}
+		if(this.hasEnergy()){ 
+				energy--;			
 			energyText.setText("Energy: " + energy);
 		}
 	}	
+	
+
+	public void decreaesHalfEnergyCount() {
+		// for every x hit, decrease one energy. try to make it slower. 
+		halfStepDecrease ++ ; 
+		if (halfStepDecrease == 40 )
+		{
+			this.decreaesEnergyCount();
+			halfStepDecrease = 0; //reset 			
+		}
+		
+	}
 	
 	//if return false, game is over ! do something.
 	public boolean decreaseLife(){
@@ -123,5 +147,9 @@ public class GameHUD extends HUD{
 	public void setLevelText(String pstring) {
 		levelText.setText(pstring);
 	}
+
+
+
+
 	 
 }
