@@ -53,9 +53,9 @@ public class UI{
 
 	private static List<TMXTile> CollideTiles = Resources.getCollideTile();
 	
-	public UI(Boss pBoss) {	
+	public UI(Boss pBoss, TMXTiledMap pTMXTiledMap) {	
 		player = pBoss;
-		
+		mTMXTiledMap = pTMXTiledMap;
 		
 	}
 	

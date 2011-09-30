@@ -28,7 +28,7 @@ import android.view.KeyEvent;
 
 public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	
-	private static final String FIRSTMAP = "test21.tmx";
+	private static final String FIRSTMAP = "final0.tmx";
 	protected static final int MENU_START = 0;
 	protected static final int MENU_SAVE = MENU_START + 1;
 	protected static final int MENU_LOAD = MENU_SAVE + 1;
