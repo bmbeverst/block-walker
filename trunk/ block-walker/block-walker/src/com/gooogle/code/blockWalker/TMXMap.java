@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
+import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLayer;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObject;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObjectGroup;
@@ -13,6 +14,7 @@ import org.anddev.andengine.entity.layer.tiled.tmx.TMXTiledMap;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.shape.IShape;
+import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 
@@ -40,6 +42,8 @@ public class TMXMap {
 	private final Scene mScene = Resources.getmScene();
 	private final BoundCamera mCamera = Resources.getmCamera();
 	private TMXLayer TMXMapLayer;
+	private TMXLayer mbosslockLayer = null;
+	private Body mlock = null;
 	
 	// ArrayList<TMXLayer> layers = new ArrayList<TMXLayer>();
 	// ArrayList<Body> walls = new ArrayList<Body>();
@@ -50,11 +54,16 @@ public class TMXMap {
 		Resources.getHUD().setLevelText("level " + location.substring(5, 6));
 		// Load the TMX map
 		mTMXTiledMap = Resources.loadTMXmap(location);
+		AstartPathing.setTMXTiledMap(mTMXTiledMap);
 		
 		// Add the non-object layers to the scene. This means get all the tiles.
 		// Not the Objects.
 		for (int i = 0; i < mTMXTiledMap.getTMXLayers().size(); i++) {
 			final TMXLayer layer = mTMXTiledMap.getTMXLayers().get(i);
+			if (layer.getTMXLayerProperties().containsTMXProperty("bosslock", "true"))
+			{
+				mbosslockLayer  = layer;
+			}
 			if (!layer.getTMXLayerProperties().containsTMXProperty("wall",
 					"true")) {
 				mScene.attachChild(layer);
@@ -62,8 +71,6 @@ public class TMXMap {
 		}
 		// Read in the unwalkable blocks from the object layer and create boxes
 		// for each. This also sets up the goals
-
-		AstartPathing.setTMXTiledMap(mTMXTiledMap);
 		Resources.getMonsters().clear();
 		TMXMapLayer = mTMXTiledMap.getTMXLayers().get(0);
 		createUnwalkableObjects(mTMXTiledMap);
@@ -78,7 +85,6 @@ public class TMXMap {
 	}
 	
 	private void createUnwalkableObjects(final TMXTiledMap map) {
-		DumbAI.clearPlatform();
 		// Loop through the object groups
 		for (final TMXObjectGroup group : mTMXTiledMap.getTMXObjectGroups()) {
 			if (group.getTMXObjectGroupProperties().containsTMXProperty("wall",
@@ -95,6 +101,24 @@ public class TMXMap {
 					// connect the body to the physics engine.
 					Body tempbody = PhysicsFactory.createBoxBody(mPhysicsWorld,
 							rect, BodyType.StaticBody, boxFixtureDef);
+					
+					float ObjectX = object.getX() + TILE_WIDTH / 2;
+					float ObjectY = object.getY() + TILE_HEIGHT / 2;
+					// Gets the number of rows and columns in the
+					// object
+					int ObjectHeight = object.getHeight() / TILE_HEIGHT;
+					int ObjectWidth = object.getWidth() / TILE_WIDTH;
+
+					// Gets the tiles the object covers and puts it
+					// into the Arraylist CollideTiles
+					for (int TileRow = 0; TileRow < ObjectHeight; TileRow++) {
+						for (int TileColumn = 0; TileColumn < ObjectWidth; TileColumn++) {
+							TMXTile tempTile = TMXMapLayer.getTMXTileAt(ObjectX + TileColumn * TILE_WIDTH, ObjectY
+									+ TileRow * TILE_HEIGHT);
+							Resources.addCollideTile(tempTile);
+						}
+					}
+					
 					
 					// make it invisible
 					rect.setVisible(false);
@@ -152,9 +176,24 @@ public class TMXMap {
 				 new Spin();			
 			}//end if
 			
-			
+			if (group.getTMXObjectGroupProperties().containsTMXProperty("boss", "true"))
+				{
+
+				for (final TMXObject object : group.getTMXObjects()) {
+					// Create the rectangle
+					Rectangle bosslock = new Rectangle(object.getX(),
+							object.getY(), object.getWidth(),
+							object.getHeight());
+					final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, ELASTICITY, FRICTION);
+ 					Body lock = PhysicsFactory.createBoxBody(mPhysicsWorld,	bosslock, BodyType.StaticBody, boxFixtureDef);
+					bosslock.setVisible(false);
+					mScene.attachChild(bosslock); 
+					mlock = lock;
+				}//end for
+				}//end if 
 		}//end for
 	}//end method
+	
 	private void generateMonsters(final TMXTiledMap map) {
 		for (final TMXObjectGroup group : mTMXTiledMap.getTMXObjectGroups()) {
 			if (group.getTMXObjectGroupProperties().containsTMXProperty("monster",
@@ -165,5 +204,13 @@ public class TMXMap {
 				}
 			}
 		}
+	}
+
+	public IEntity getBossLayer() {
+		return mbosslockLayer;
+	}
+	
+	public Body getmLock(){
+		return mlock;
 	}
 }
