@@ -71,17 +71,26 @@ public class DumbAI implements ITimerCallback {
 	public static void addPlatform(Rectangle rect) {
 		platforms.add(rect);
 	}
-
+	/**
+	 */
+	public static void clearPlatform() {
+		platforms.clear();
+	}
 	@Override
 	public void onTimePassed(TimerHandler pTimerHandler) {
 		Player player = Resources.getmPlayer();
-		Line temp = new Line(mMonster.getX()+widthOffset, mMonster.getY(), player.getX(), player.getY(), 8);
-		boolean lineOfSight = true;
-		for(int i = 0; i < platforms.size() && lineOfSight; i++) {
-			if(temp.collidesWith(platforms.get(i))) {
-				//Debug.d(temp.collidesWith(platforms.get(i)) + "");
-				lineOfSight = false;
-				break;
+		boolean lineOfSight = false;
+		
+		if (lineOfSight) {
+			Line temp = new Line(mMonster.getX() + widthOffset,
+					mMonster.getY(), player.getX(), player.getY(), 8);
+			lineOfSight = true;
+			for (int i = 0; i < platforms.size() && lineOfSight; i++) {
+				if (temp.collidesWith(platforms.get(i))) {
+					//Debug.d(temp.collidesWith(platforms.get(i)) + "");
+					lineOfSight = false;
+					break;
+				}
 			}
 		}
 		if(lineOfSight) {

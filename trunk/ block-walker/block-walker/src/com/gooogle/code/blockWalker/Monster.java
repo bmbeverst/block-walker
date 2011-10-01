@@ -38,12 +38,12 @@ public class Monster extends AnimatedSprite{
 		private float movementSpeed = 1f;
 		private float accelration = movementSpeed;
 		private FixedStepPhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
-		private Scene mScene = Resources.getmScene();
 		private Body playerBody;
-
+		private DumbAI ai;
+		
+		
 		private boolean jumping = false;
 		private boolean animated = false;
-		private DumbAI ai;
 		
 		/**
 		 * @param pX
@@ -64,7 +64,7 @@ public class Monster extends AnimatedSprite{
 			Resources.addMonster(this);
 			ai = new DumbAI(this);
 			idle();
-			mScene.attachChild(this);
+			Resources.getmScene().attachChild(this);
 		}
 
 		public void up() {
