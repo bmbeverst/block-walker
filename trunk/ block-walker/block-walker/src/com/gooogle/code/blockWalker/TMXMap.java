@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.gooogle.code.blockWalker.AI.DumbAI;
+import com.gooogle.code.blockWalker.AI.AstartPathing;
 
 /**
  * @author Decy Sep 5, 2011
@@ -49,6 +50,7 @@ public class TMXMap {
 		Resources.getHUD().setLevelText("level " + location.substring(5, 6));
 		// Load the TMX map
 		mTMXTiledMap = Resources.loadTMXmap(location);
+		AstartPathing.setTMXTiledMap(mTMXTiledMap);
 		
 		// Add the non-object layers to the scene. This means get all the tiles.
 		// Not the Objects.

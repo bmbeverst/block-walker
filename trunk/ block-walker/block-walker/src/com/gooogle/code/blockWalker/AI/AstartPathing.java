@@ -22,7 +22,7 @@ import org.anddev.andengine.util.path.ITiledMap;
 import org.anddev.andengine.util.path.astar.AStarPathFinder;
 
 // This class is used primarily for organization
-public class UI {
+public class AstartPathing {
 	
 	protected static final float TILE_WIDTH = 32;
 	protected static final float TILE_HEIGHT = 32;
@@ -85,7 +85,7 @@ public class UI {
 		}
 	}
 	
-	public UI() {
+	public AstartPathing() {
 		
 	}
 	
