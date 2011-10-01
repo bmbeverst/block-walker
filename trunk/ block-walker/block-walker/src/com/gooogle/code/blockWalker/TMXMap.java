@@ -1,10 +1,6 @@
 package com.gooogle.code.blockWalker;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 import org.anddev.andengine.engine.camera.BoundCamera;
-import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLayer;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObject;
@@ -13,16 +9,14 @@ import org.anddev.andengine.entity.layer.tiled.tmx.TMXTile;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXTiledMap;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
-import org.anddev.andengine.entity.shape.IShape;
-import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.gooogle.code.blockWalker.AI.DumbAI;
 import com.gooogle.code.blockWalker.AI.AstartPathing;
+import com.gooogle.code.blockWalker.AI.DumbAI;
 
 /**
  * @author Decy Sep 5, 2011
@@ -54,7 +48,6 @@ public class TMXMap {
 		Resources.getHUD().setLevelText("level " + location.substring(5, 6));
 		// Load the TMX map
 		mTMXTiledMap = Resources.loadTMXmap(location);
-		AstartPathing.setTMXTiledMap(mTMXTiledMap);
 		
 		// Add the non-object layers to the scene. This means get all the tiles.
 		// Not the Objects.
@@ -71,6 +64,7 @@ public class TMXMap {
 		}
 		// Read in the unwalkable blocks from the object layer and create boxes
 		// for each. This also sets up the goals
+		AstartPathing.setTMXTiledMap(mTMXTiledMap);
 		Resources.getMonsters().clear();
 		TMXMapLayer = mTMXTiledMap.getTMXLayers().get(0);
 		createUnwalkableObjects(mTMXTiledMap);
@@ -85,6 +79,7 @@ public class TMXMap {
 	}
 	
 	private void createUnwalkableObjects(final TMXTiledMap map) {
+		DumbAI.clearPlatform();
 		// Loop through the object groups
 		for (final TMXObjectGroup group : mTMXTiledMap.getTMXObjectGroups()) {
 			if (group.getTMXObjectGroupProperties().containsTMXProperty("wall",
@@ -102,24 +97,7 @@ public class TMXMap {
 					Body tempbody = PhysicsFactory.createBoxBody(mPhysicsWorld,
 							rect, BodyType.StaticBody, boxFixtureDef);
 					
-					float ObjectX = object.getX() + TILE_WIDTH / 2;
-					float ObjectY = object.getY() + TILE_HEIGHT / 2;
-					// Gets the number of rows and columns in the
-					// object
-					int ObjectHeight = object.getHeight() / TILE_HEIGHT;
-					int ObjectWidth = object.getWidth() / TILE_WIDTH;
-
-					// Gets the tiles the object covers and puts it
-					// into the Arraylist CollideTiles
-					for (int TileRow = 0; TileRow < ObjectHeight; TileRow++) {
-						for (int TileColumn = 0; TileColumn < ObjectWidth; TileColumn++) {
-							TMXTile tempTile = TMXMapLayer.getTMXTileAt(ObjectX + TileColumn * TILE_WIDTH, ObjectY
-									+ TileRow * TILE_HEIGHT);
-							Resources.addCollideTile(tempTile);
-						}
-					}
-					
-					
+										
 					// make it invisible
 					rect.setVisible(false);
 					// add it to the scene
