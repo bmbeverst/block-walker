@@ -255,7 +255,7 @@ public class BlockWalker extends BaseGameActivity implements
          }
          if (isDrawing = true & Resources.getHUD().hasEnergy()) {
             if (i != 0) {
-               new Box(pSceneTouchEvent.getX(),pSceneTouchEvent.getY(),30,30);
+               new Box(pSceneTouchEvent.getX(),pSceneTouchEvent.getY(),50,30);
                Resources.getHUD().decreaesEnergyCount();
             }
             i++;
