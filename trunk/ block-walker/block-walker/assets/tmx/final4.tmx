@@ -59,9 +59,4 @@
   <object x="206" y="560" width="20" height="28"/>
   <object x="911" y="429" width="19" height="19"/>
  </objectgroup>
- <objectgroup name="spin" width="50" height="25">
-  <properties>
-   <property name="spin" value="true"/>
-  </properties>
- </objectgroup>
 </map>
