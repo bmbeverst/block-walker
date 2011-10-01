@@ -16,7 +16,7 @@ public class Boss extends AnimatedSprite {
 	
 	public Boss(float pX, float pY) {
 		super(pX, pY, Resources.loadTiledTexture("boss.png", 512, 512, 7, 7));
-		
+		Resources.getmScene().attachChild(this);
 	}
 	
 	

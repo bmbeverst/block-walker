@@ -22,6 +22,8 @@ import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.util.Debug;
 
+import com.gooogle.code.blockWalker.AI.AIupdate;
+
 
 import android.view.KeyEvent;
 
@@ -229,7 +231,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		Resources.setMapManager(mmanager);
 		//Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
 		hasStarted = true;
-		
+		new AIupdate();
  
 		
 	}

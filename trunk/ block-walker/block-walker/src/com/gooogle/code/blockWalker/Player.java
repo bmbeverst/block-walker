@@ -278,6 +278,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				Debug.d(monsterList.get(i).getX() + " "
 						+ monsterList.get(i).getY());
 				monsterList.get(i).remove();
+				return;
 			}// end if
 		}// end for
 		

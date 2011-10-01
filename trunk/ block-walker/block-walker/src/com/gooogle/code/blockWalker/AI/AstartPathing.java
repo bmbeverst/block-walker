@@ -38,14 +38,18 @@ public class AstartPathing {
 	private static int mWaypointIndex;
 	private static TMXTiledMap mTMXTiledMap;
 	private static TMXLayer TMXMapLayer;
-	public static Boss player;
+	public static Boss boss;
+	
+	public static void setBoss(Boss pBoss) {
+		boss = pBoss;
+	}
 	
 	/**
 	 * @param map
+	 * @param pPlayer 
 	 */
 	public static void setTMXTiledMap(TMXTiledMap map) {
 		CollideTiles.clear();
-		player = new Boss(0,0);
 		mTMXTiledMap = map;
 		TMXMapLayer = mTMXTiledMap.getTMXLayers().get(0);
 		for (final TMXObjectGroup group : mTMXTiledMap.getTMXObjectGroups()) {
@@ -85,9 +89,7 @@ public class AstartPathing {
 		}
 	}
 	
-	public AstartPathing() {
-		
-	}
+	
 	
 	// **********************************************************************************************************************
 	
@@ -103,7 +105,7 @@ public class AstartPathing {
 		// Third Param: allow diagonal movement or not
 		// Fourth Param: Heuristics you want to use in the A*
 		// algorithm(optional)
-		finder = new AStarPathFinder<TMXLayer>(new AImap(), 15, false);
+		finder = new AStarPathFinder<TMXLayer>(new AImap(), 30, false);
 		
 		// TODO: Make sure this doesn't cause memory leaks, because it is called
 		// multiple times and is never removed
@@ -136,7 +138,7 @@ public class AstartPathing {
 		} else if (A_path == null) {
 			// Sets the A* path from the player location to the touched
 			// location.
-			float[] playerFootCordinates = player
+			float[] playerFootCordinates = boss
 					.convertLocalToSceneCoordinates(16, 16);
 			TMXTile playerLocationTile = TMXMapLayer.getTMXTileAt(
 					playerFootCordinates[Constants.VERTEX_INDEX_X],
@@ -160,30 +162,29 @@ public class AstartPathing {
 	private static void walkToNextWayPoint(final float pX, final float pY,
 			final Scene pScene) {
 		
-		player.unregisterEntityModifier(mMoveModifier);
+		boss.unregisterEntityModifier(mMoveModifier);
 		
 		// mPathTemp is another global PathModifier
-		player.unregisterEntityModifier(mPathTemp);
+		boss.unregisterEntityModifier(mPathTemp);
 		
 		final Path lPath = mCurrentPath.deepCopy();
 		// create a new path with length 2 from current sprite position to next
 		// original path waypoint
 		final Path path = new Path(2);
-		path.to(player.getX(), player.getY()).to(
+		path.to(boss.getX(), boss.getY()).to(
 				lPath.getCoordinatesX()[mWaypointIndex + 1],
 				lPath.getCoordinatesY()[mWaypointIndex + 1]);
 		
 		// recalculate the speed.TILE_WIDTH is the tmx tile width, use yours
 		// Adjust the speed for different control options
-		float TileSpeed = 0;
-		TileSpeed = (path.getLength() * SPEED) / (TILE_WIDTH);
+		float TileSpeed = (path.getLength() * SPEED) / (TILE_WIDTH);
 		
 		// Create the modifier of this subpath
 		mPathTemp = new PathModifier(TileSpeed, path,
 				new IEntityModifierListenerImplementation(), new FinishedMod(
 						pY, pScene, pX));
 		
-		player.registerEntityModifier(mPathTemp);
+		boss.registerEntityModifier(mPathTemp);
 	}
 	
 	// ***********************************************************************************************************************
@@ -215,7 +216,7 @@ public class AstartPathing {
 				mCurrentPath, new IEntityModifierListenerImplementation(),
 				new Animator(), EaseLinear.getInstance());
 		
-		player.registerEntityModifier(mMoveModifier);
+		boss.registerEntityModifier(mMoveModifier);
 	}
 	
 	private static class IEntityModifierListenerImplementation implements
@@ -310,7 +311,7 @@ public class AstartPathing {
 		
 		@Override
 		public void onPathFinished(PathModifier pPathModifier, IEntity pEntity) {
-			player.idle();
+			boss.idle();
 			A_path = null;
 			walkTo(mX, mY, mScene);
 		}
@@ -324,19 +325,19 @@ public class AstartPathing {
 			
 			switch (A_path.getDirectionToNextStep(pWaypointIndex)) {
 				case DOWN:
-					player.down();
+					boss.down();
 					break;
 				
 				case RIGHT:
-					player.right();
+					boss.right();
 					break;
 				
 				case UP:
-					player.up();
+					boss.up();
 					break;
 				
 				case LEFT:
-					player.left();
+					boss.left();
 					break;
 				
 				default:
@@ -364,7 +365,7 @@ public class AstartPathing {
 			// Stop walking and set A_path to null
 			isWalking = false;
 			A_path = null;
-			player.idle();
+			boss.idle();
 		}
 	}
 }

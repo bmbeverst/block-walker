@@ -50,7 +50,6 @@ public class TMXMap {
 		Resources.getHUD().setLevelText("level " + location.substring(5, 6));
 		// Load the TMX map
 		mTMXTiledMap = Resources.loadTMXmap(location);
-		AstartPathing.setTMXTiledMap(mTMXTiledMap);
 		
 		// Add the non-object layers to the scene. This means get all the tiles.
 		// Not the Objects.
@@ -63,6 +62,8 @@ public class TMXMap {
 		}
 		// Read in the unwalkable blocks from the object layer and create boxes
 		// for each. This also sets up the goals
+
+		AstartPathing.setTMXTiledMap(mTMXTiledMap);
 		Resources.getMonsters().clear();
 		TMXMapLayer = mTMXTiledMap.getTMXLayers().get(0);
 		createUnwalkableObjects(mTMXTiledMap);
@@ -77,6 +78,7 @@ public class TMXMap {
 	}
 	
 	private void createUnwalkableObjects(final TMXTiledMap map) {
+		DumbAI.clearPlatform();
 		// Loop through the object groups
 		for (final TMXObjectGroup group : mTMXTiledMap.getTMXObjectGroups()) {
 			if (group.getTMXObjectGroupProperties().containsTMXProperty("wall",
@@ -93,24 +95,6 @@ public class TMXMap {
 					// connect the body to the physics engine.
 					Body tempbody = PhysicsFactory.createBoxBody(mPhysicsWorld,
 							rect, BodyType.StaticBody, boxFixtureDef);
-					
-					float ObjectX = object.getX() + TILE_WIDTH / 2;
-					float ObjectY = object.getY() + TILE_HEIGHT / 2;
-					// Gets the number of rows and columns in the
-					// object
-					int ObjectHeight = object.getHeight() / TILE_HEIGHT;
-					int ObjectWidth = object.getWidth() / TILE_WIDTH;
-
-					// Gets the tiles the object covers and puts it
-					// into the Arraylist CollideTiles
-					for (int TileRow = 0; TileRow < ObjectHeight; TileRow++) {
-						for (int TileColumn = 0; TileColumn < ObjectWidth; TileColumn++) {
-							TMXTile tempTile = TMXMapLayer.getTMXTileAt(ObjectX + TileColumn * TILE_WIDTH, ObjectY
-									+ TileRow * TILE_HEIGHT);
-							Resources.addCollideTile(tempTile);
-						}
-					}
-					
 					
 					// make it invisible
 					rect.setVisible(false);

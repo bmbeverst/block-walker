@@ -63,13 +63,11 @@ public class Particels implements ITimerCallback {
 	@Override
 	public void onTimePassed(TimerHandler pTimerHandler) {
 		if (landed) {
-			Debug.d("land");
 			particleEmiter.setCenter(mPlayer.getX() + Player.PLAYER_SIZE / 2,
 					mPlayer.getY() + Player.PLAYER_SIZE);
 			particleSystem.setParticlesSpawnEnabled(true);
 			landed = false;
 		} else {
-			Debug.d("off");
 			particleSystem.setParticlesSpawnEnabled(false);
 		}
 		pTimerHandler.reset();
@@ -77,6 +75,5 @@ public class Particels implements ITimerCallback {
 
 	void landed() {
 		landed = true;
-		Debug.d("true");
 	}
 }
