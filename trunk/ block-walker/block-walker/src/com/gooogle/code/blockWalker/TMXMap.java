@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
+import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLayer;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObject;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObjectGroup;
@@ -13,6 +14,7 @@ import org.anddev.andengine.entity.layer.tiled.tmx.TMXTiledMap;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.shape.IShape;
+import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 
@@ -40,6 +42,8 @@ public class TMXMap {
 	private final Scene mScene = Resources.getmScene();
 	private final BoundCamera mCamera = Resources.getmCamera();
 	private TMXLayer TMXMapLayer;
+	private TMXLayer mbosslockLayer = null;
+	private Body mlock = null;
 	
 	// ArrayList<TMXLayer> layers = new ArrayList<TMXLayer>();
 	// ArrayList<Body> walls = new ArrayList<Body>();
@@ -56,6 +60,10 @@ public class TMXMap {
 		// Not the Objects.
 		for (int i = 0; i < mTMXTiledMap.getTMXLayers().size(); i++) {
 			final TMXLayer layer = mTMXTiledMap.getTMXLayers().get(i);
+			if (layer.getTMXLayerProperties().containsTMXProperty("bosslock", "true"))
+			{
+				mbosslockLayer  = layer;
+			}
 			if (!layer.getTMXLayerProperties().containsTMXProperty("wall",
 					"true")) {
 				mScene.attachChild(layer);
@@ -168,9 +176,24 @@ public class TMXMap {
 				 new Spin();			
 			}//end if
 			
-			
+			if (group.getTMXObjectGroupProperties().containsTMXProperty("boss", "true"))
+				{
+
+				for (final TMXObject object : group.getTMXObjects()) {
+					// Create the rectangle
+					Rectangle bosslock = new Rectangle(object.getX(),
+							object.getY(), object.getWidth(),
+							object.getHeight());
+					final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, ELASTICITY, FRICTION);
+ 					Body lock = PhysicsFactory.createBoxBody(mPhysicsWorld,	bosslock, BodyType.StaticBody, boxFixtureDef);
+					bosslock.setVisible(false);
+					mScene.attachChild(bosslock); 
+					mlock = lock;
+				}//end for
+				}//end if 
 		}//end for
 	}//end method
+	
 	private void generateMonsters(final TMXTiledMap map) {
 		for (final TMXObjectGroup group : mTMXTiledMap.getTMXObjectGroups()) {
 			if (group.getTMXObjectGroupProperties().containsTMXProperty("monster",
@@ -181,5 +204,13 @@ public class TMXMap {
 				}
 			}
 		}
+	}
+
+	public IEntity getBossLayer() {
+		return mbosslockLayer;
+	}
+	
+	public Body getmLock(){
+		return mlock;
 	}
 }

@@ -24,7 +24,10 @@
    H4sIAAAAAAAAC+3UUQqAIAyAYb1Xna0LVNfrueixQyREJOFEi9Ly/0CwTacMSSkAAAAAQI4qrVStU9/iOwYzFuu7Nb3rzOj1lgMAIFeNY0i5q/G/O/cgZi7VKYnvPUlz3t/hiTdXSv9K+//N1nwRV8E2Ra4fPblZiIeecfcuqc93xUJr+voaU2+v4+qFb+/b569RW8GNQB8AAA==
   </data>
  </layer>
- <layer name="boss lock" width="80" height="25">
+ <layer name="boss lock" width="80" height="25"> 
+  <properties>
+   <property name="bosslock" value="true"/>
+  </properties>
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC+3TSwrCQBCE4c7OpYeO3kHjK2qMmyy8lqewFhnsdB4gKCL+HxQDmSySotsM+KzKnTHoi3017oxBX+zLd4hpqaPUV5w/TEsdDc3f7Vsf9UPizLG7r4kzx+4OW2Vma6VQNtnz+dj8oWurznbKXjm4/sbmD12lOjsqJ+Xc9jdz9743P3+53l0oS9f5P6r0/xelVq5tF3N3fzf2FgAAAAAAvMcDPKuqA0AfAAA=
   </data>

@@ -5,6 +5,8 @@ import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.text.ChangeableText;
 import org.anddev.andengine.util.HorizontalAlign;
 
+import android.widget.Toast;
+
 public class GameHUD extends HUD{
 	private int energy = 100;
 	private final ChangeableText energyText;
@@ -95,7 +97,7 @@ public class GameHUD extends HUD{
 	public void decreaesEnergyCount(){
 		if(this.hasEnergy()){ 
 				energy--;			
-			energyText.setText("Energy: " + energy);
+			energyText.setText("Energy: " + energy); 
 		}
 	}	
 	

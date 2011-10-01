@@ -100,5 +100,11 @@ public class MapManager {
 		map = new TMXMap(currentMapNumber);
 		
 	}
+	
+	//to be called when boss is killed . 
+	public void detachBossLockLayer(){
+		Resources.getmScene().detachChild(map.getBossLayer());
+		Resources.getmPhysicsWorld().destroyBody(  map.getmLock());
+	}
  
 }

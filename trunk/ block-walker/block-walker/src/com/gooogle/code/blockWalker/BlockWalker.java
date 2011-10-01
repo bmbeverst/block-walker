@@ -36,6 +36,7 @@ import android.opengl.GLU;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -121,11 +122,9 @@ public class BlockWalker extends BaseGameActivity implements
 	}
 	
 	@Override
-	public Engine onLoadEngine() {
-		// saving ? decy 
+	public Engine onLoadEngine() { 
 		this.mDBM = new DBManager(getBaseContext());
-		Resources.setmDBM(mDBM);
-
+		Resources.setmDBM(mDBM); 
 		// create the camera. It is not bound or following any thing yet.
 		mCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT) {
 			// Forces the camera to move in integer steps. Helps prevent
@@ -269,5 +268,5 @@ public class BlockWalker extends BaseGameActivity implements
 		super.onPause();
 		Resources.getMenu().getmMusic().getMediaPlayer().pause();
 	}
-	 
+	
 }
