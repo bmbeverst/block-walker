@@ -89,10 +89,7 @@ public class GameHUD extends HUD{
 	}
 	
 	public boolean hasEnergy(){
-		if(energy>0){
-			return true;
-		}
-		else return false;
+		return energy > 0;
 	}
 
 	public void decreaesEnergyCount(){

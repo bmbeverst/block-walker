@@ -38,14 +38,14 @@ public class Particels implements ITimerCallback {
 				PARTICLES_MAX, Resources.loadTexture("part.png", 16, 16));
 		particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
 
-		particleSystem.addParticleInitializer(new VelocityInitializer(-35, 35,
+		particleSystem.addParticleInitializer(new VelocityInitializer(-25, 25,
 				-10, -50));
 		particleSystem.addParticleInitializer(new AccelerationInitializer(-5,
-				11));
+				-11));
 		particleSystem.addParticleInitializer(new RotationInitializer(0.0f,
 				360.0f));
-		particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 0.0f,
-				0.0f));
+		particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 0.5f,
+				0.5f));
 
 		particleSystem.addParticleModifier(new ScaleModifier(2f, .5f, 0, 5));
 		particleSystem.addParticleModifier(new ExpireModifier(6.5f));
@@ -56,7 +56,7 @@ public class Particels implements ITimerCallback {
 		Resources.getmScene().attachChild(particleSystem);
 
 		Resources.getmEngine().registerUpdateHandler(
-				new TimerHandler(0.5f, this));
+				new TimerHandler(0.1f, this));
 
 	}
 

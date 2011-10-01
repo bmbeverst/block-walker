@@ -284,7 +284,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	public boolean onKeyUp(int pKeyCode, KeyEvent pEvent) {
 		switch (pKeyCode) {
 			case KeyEvent.KEYCODE_DPAD_UP:
-				checkSpeed(Vector2Pool.obtain(0, 5));
+				//checkSpeed(Vector2Pool.obtain(0, 5));
 				break;
 		}
 		if (!moving) {

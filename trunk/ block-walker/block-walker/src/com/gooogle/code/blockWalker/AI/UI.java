@@ -44,6 +44,8 @@ public class UI {
 	 * @param map
 	 */
 	public static void setTMXTiledMap(TMXTiledMap map) {
+		CollideTiles.clear();
+		player = new Boss(0,0);
 		mTMXTiledMap = map;
 		TMXMapLayer = mTMXTiledMap.getTMXLayers().get(0);
 		for (final TMXObjectGroup group : mTMXTiledMap.getTMXObjectGroups()) {
