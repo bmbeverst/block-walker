@@ -23,6 +23,7 @@ import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.util.Debug;
 
 import com.gooogle.code.blockWalker.AI.AIupdate;
+import com.gooogle.code.blockWalker.AI.Monster;
 
 
 import android.view.KeyEvent;
@@ -221,6 +222,9 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				Resources.getHUD().setLifeCount(3);	
 				}
 				
+				Music find = Resources.loadMusic("find.mp3");
+				find.getMediaPlayer().setLooping(false);
+				find.getMediaPlayer().start();
 				this.getmMusic().getMediaPlayer().start();
 				return true;
 				

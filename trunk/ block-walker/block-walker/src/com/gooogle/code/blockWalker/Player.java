@@ -282,7 +282,6 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				return;
 			}// end if
 		}// end for
-		
 	}
 	
 	@Override
