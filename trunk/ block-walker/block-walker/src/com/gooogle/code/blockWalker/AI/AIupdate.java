@@ -19,10 +19,30 @@ import com.gooogle.code.blockWalker.Resources;
  */
 public class AIupdate implements ITimerCallback {
 	
-	Random rand = new Random(System.nanoTime());
+	int health = 10;
+	boolean attacked = false;
+	enum States{
+		RUN,
+		ATTACK,
+		ROAM,	
+	}
+	
+	States currentStates = States.ROAM;
+	
 	
 	AIupdate() {
-		Boss boss = new Boss(100, 100);
+		switch(currentStates) {
+			case ROAM:
+				
+			break;
+		
+		
+		
+		}
+		
+		
+		Resources.getmEngine().registerUpdateHandler(
+				new TimerHandler(0.5f, this));
 	}
 	
 	@Override

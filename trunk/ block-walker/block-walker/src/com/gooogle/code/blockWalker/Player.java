@@ -73,7 +73,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private boolean jumping = false;
 	private boolean flipped = false;
 	private boolean moving = true;
-	private Particels part; 
+	private Particels part;
+	private boolean attacking; 
 
 	private static TiledTextureRegion mPlayerTiledRegion;
 	
@@ -263,8 +264,10 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	
 	private void attack() {
 		this.animate(ANIMATE_DURATION, 4, 7, false);
-		Player.this.mExplosionSound.play();
-		
+		if (!attacking) {
+			attacking = true;
+			Player.this.mExplosionSound.play();
+		}
 		LinkedList<Monster> monsterList = Resources.getMonsters();
 		for (int i = 0; i < monsterList.size(); i++) {
 			// the number here will set player attack range !
@@ -285,6 +288,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		switch (pKeyCode) {
 			case KeyEvent.KEYCODE_DPAD_UP:
 				//checkSpeed(Vector2Pool.obtain(0, 5));
+				break;
+			case KeyEvent.KEYCODE_DPAD_CENTER:
+				attacking = false;
 				break;
 		}
 		if (!moving) {

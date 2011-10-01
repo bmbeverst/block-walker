@@ -24,6 +24,7 @@ public class DumbAI implements ITimerCallback {
 	Monster mMonster;
 	private boolean running = true;
 	private TimerHandler time;
+	private int widthOffset;
 	private static LinkedList<Rectangle> platforms =  new LinkedList<Rectangle>();
 	
 	
@@ -37,6 +38,7 @@ public class DumbAI implements ITimerCallback {
 		float monsterY = Math.abs(mMonster.getY());
 		float closeX = Float.MAX_VALUE;
 		float closeY = Float.MAX_VALUE;
+		widthOffset = (int) (pMonster.getWidth()/2);
 		Rectangle temp;
 		float x;
 		float y;
@@ -73,7 +75,7 @@ public class DumbAI implements ITimerCallback {
 	@Override
 	public void onTimePassed(TimerHandler pTimerHandler) {
 		Player player = Resources.getmPlayer();
-		Line temp = new Line(mMonster.getX(), mMonster.getY(), player.getX(), player.getY(), 16);
+		Line temp = new Line(mMonster.getX()+widthOffset, mMonster.getY(), player.getX(), player.getY(), 8);
 		boolean lineOfSight = true;
 		for(int i = 0; i < platforms.size() && lineOfSight; i++) {
 			if(temp.collidesWith(platforms.get(i))) {

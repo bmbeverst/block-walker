@@ -115,7 +115,7 @@ public class Resources {
 	/**
 	 * @return the mEngine
 	 */
-	static final Engine getmEngine() {
+	public static final Engine getmEngine() {
 		return mEngine;
 	}
 	static LinkedList<Rectangle> getGoals() {
