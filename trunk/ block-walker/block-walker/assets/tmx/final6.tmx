@@ -8,7 +8,7 @@
  </tileset>
  <layer name="platform" width="50" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3VMQ4AEAyF4fYOLMI1uP/NGA0kOgn9v+RtDR2aVgQAAAC/q2pL09sd45bdTAAz9gU8OLmXL0iOUkayoT6OBMMbq3rrvx2s7PSaiBMAAA==
+   H4sIAAAAAAAAC+3VsQkAIAxEUbODNqJr6P6bmQEsEkRE/Q+uC3dlQgAAAMApTdbSZc+OtRcAgFdZ/uUN8kepmuK4T5ro6Jjde3cHdpltAIgTAAA=
   </data>
  </layer>
  <layer name="deco" width="50" height="25" opacity="0.59">
@@ -18,7 +18,7 @@
  </layer>
  <layer name="Tile Layer 3" width="50" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2RwQqAIAyG53vVrd7/aOCp8FQ9RB4SxHRoQTX5PxiMOef/OyIAAAAAAPCEThH16msVPFOQry42F9rFHtQH52E8fejXlAGPKaxJwNBVu2QvrRDvRbI3ydpDWvHRGtxebJDv2a5/slT2z8yZzdRL37irJaUprpXO5vzVzPNzUn+SunsAC5wL8ogTAAA=
+   H4sIAAAAAAAAC+2RzwqAIAzG53vVrd7/aOCp6FQ+RAYGo6akHkr5fjAc0/35HBEAAAAAACihU0S9ysud/GmYL2Hyyj/6nGzOdmfamWXxwWkYvQ5d2A+kI+24dO9fYeg5e81aWuG+l5q11Tw7pxUdrRHby8p8G3z1T5bE93Pkbg3E3/bInUWa6R57WzumL6XeVUf6Eyn3ANT9/OKIEwAA
   </data>
  </layer>
  <objectgroup name="die" width="50" height="25">
@@ -48,16 +48,15 @@
   <object x="-82" y="-16" width="1780" height="26"/>
   <object x="1590" y="-86" width="34" height="892"/>
   <object x="1187" y="402" width="410" height="21"/>
-  <object x="449" y="597" width="125" height="9"/>
-  <object x="835" y="502" width="188" height="8"/>
+  <object x="350" y="402" width="546" height="12"/>
  </objectgroup>
  <objectgroup name="monster" width="50" height="25">
   <properties>
    <property name="monster" value="true"/>
   </properties>
-  <object x="521" y="523" width="14" height="16"/>
+  <object x="464" y="298" width="14" height="16"/>
   <object x="206" y="560" width="20" height="28"/>
-  <object x="911" y="429" width="19" height="19"/>
+  <object x="606" y="302" width="28" height="26"/>
  </objectgroup>
  <objectgroup name="spin" width="50" height="25">
   <properties>

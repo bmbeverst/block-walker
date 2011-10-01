@@ -8,7 +8,7 @@
  </tileset>
  <layer name="platform" width="50" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3OMQqAMAxA0fQOdhG9Rnv/m5mxQ0GyCb4HfwtJIgAAAABYjfbeF39am9kZ/+nOrsJ8z47Cjt189e4Dj7Rh+IgTAAA=
+   H4sIAAAAAAAAC+2S0Q7CIAxF6z+4F6O/4d78rOHT2KeLCU3qTTslG9HEe5IbWkqhUEQIIYQQQggh5DdIgT9V2/p29Ow7zGOul7cXOfCnalsfa3h3D9zLy9uTJK9vb8/a0g8b8/buQdT7tX7MEF/7V15vexDdQ2uZYRQTT3V+MfYTrFvX9rwH1qdvrbVkkCUHNr6BxvGsT7getuv2pVzVWHSS/9Gl6Nywfig6NuzhrW899wEa3BKDiBMAAA==
   </data>
  </layer>
  <layer name="deco" width="50" height="25" opacity="0.63">
@@ -18,21 +18,9 @@
  </layer>
  <layer name="Tile Layer 3" width="50" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3QwQqAIAyA4fledav3P3ouPFUP0Q4GImtp0Kn/g4FMnZsiAAAAAAAA/zYEkTH4Z1KxPj7t5tmmsWvEqpdJZ5jzHLHIr531F2cv3eRb33jbi9VTnWut7c3XU++qY/2JdfcEsePGrIgTAAA=
+   H4sIAAAAAAAAC+3QMQ6AIAxA0XIv3fT+o7OGST2EHSBpEBswcfK/hAQKtAURAAAAAACAfxuCyBj8M9HMTx1Lsc5s/Cu7jiPVsrUnfcMc7n1snflXZy8+xFtrvO2l1lMZa83tva8nX85T+5Pa3QtyzfOmiBMAAA==
   </data>
  </layer>
- <objectgroup name="die" width="50" height="25">
-  <properties>
-   <property name="die" value="true"/>
-  </properties>
-  <object x="283" y="741" width="923" height="31"/>
- </objectgroup>
- <objectgroup name="exit" width="50" height="25">
-  <properties>
-   <property name="exit" value="true"/>
-  </properties>
-  <object x="1480" y="641" width="45" height="73"/>
- </objectgroup>
  <objectgroup name="player" width="50" height="25">
   <properties>
    <property name="spawn" value="true"/>
@@ -43,23 +31,21 @@
   <properties>
    <property name="wall" value="true"/>
   </properties>
-  <object x="-4" y="728" width="292" height="14"/>
+  <object x="-4" y="728" width="1595" height="19"/>
   <object x="-26" y="-38" width="36" height="822"/>
   <object x="-82" y="-16" width="1780" height="26"/>
   <object x="1590" y="-86" width="34" height="892"/>
-  <object x="1187" y="730" width="410" height="21"/>
  </objectgroup>
- <objectgroup name="monster" width="50" height="25">
+ <objectgroup name="exit" width="50" height="25">
   <properties>
-   <property name="monster" value="true"/>
+   <property name="exit" value="true"/>
   </properties>
-  <object x="554" y="192" width="14" height="16"/>
-  <object x="828" y="184" width="20" height="28"/>
-  <object x="300" y="164" width="28" height="26"/>
+  <object x="788" y="768" width="21" height="12"/>
  </objectgroup>
- <objectgroup name="spin" width="50" height="25">
+ <objectgroup name="die" width="50" height="25">
   <properties>
-   <property name="spin" value="true"/>
+   <property name="die" value="true"/>
   </properties>
+  <object x="861" y="764" width="21" height="12"/>
  </objectgroup>
 </map>
