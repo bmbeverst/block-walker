@@ -17,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.gooogle.code.blockWalker.AI.AstartPathing;
 import com.gooogle.code.blockWalker.AI.DumbAI;
+import com.gooogle.code.blockWalker.AI.Monster;
 
 /**
  * @author Decy Sep 5, 2011

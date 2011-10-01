@@ -9,7 +9,6 @@ import org.anddev.andengine.entity.primitive.Line;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.util.Debug;
 
-import com.gooogle.code.blockWalker.Monster;
 import com.gooogle.code.blockWalker.Player;
 import com.gooogle.code.blockWalker.Resources;
 

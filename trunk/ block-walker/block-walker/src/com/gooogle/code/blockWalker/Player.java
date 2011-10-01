@@ -42,6 +42,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.gooogle.code.blockWalker.AI.Monster;
 
 /**
  * @author brooks Sep 5, 2011

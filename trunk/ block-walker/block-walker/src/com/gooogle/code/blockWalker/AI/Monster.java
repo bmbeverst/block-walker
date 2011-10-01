@@ -1,4 +1,4 @@
-package com.gooogle.code.blockWalker;
+package com.gooogle.code.blockWalker.AI;
 
 	import org.anddev.andengine.entity.scene.Scene;
 	import org.anddev.andengine.entity.sprite.AnimatedSprite;
@@ -13,7 +13,6 @@ import org.anddev.andengine.util.Debug;
 	import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.gooogle.code.blockWalker.Resources;
-import com.gooogle.code.blockWalker.AI.DumbAI;
 
 /**
  * @author brooks
@@ -100,7 +99,7 @@ public class Monster extends AnimatedSprite{
 			this.animate(ANIMATE_DURATION, 6 , 8, true);
 			Vector2Pool.recycle(velocity);
 		}
-		void remove() {
+		public void remove() {
 			Resources.getMonsters().remove(this);
 			this.detachChildren();
 			this.onDetached();

@@ -28,6 +28,8 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 import org.anddev.andengine.util.Debug;
 
+import com.gooogle.code.blockWalker.AI.Monster;
+
 import android.graphics.Color;
 import android.view.KeyEvent;
 
@@ -286,7 +288,7 @@ public class Resources {
 		goalWatcher.add(rect);
 	}
 	
-	static void addMonster(Monster m) {
+	public static void addMonster(Monster m) {
 		monsters.add(m);
 
 	}

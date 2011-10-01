@@ -23,6 +23,7 @@ import org.anddev.andengine.opengl.font.Font;
 import org.anddev.andengine.util.Debug;
 
 import com.gooogle.code.blockWalker.AI.AIupdate;
+import com.gooogle.code.blockWalker.AI.Monster;
 
 
 import android.view.KeyEvent;

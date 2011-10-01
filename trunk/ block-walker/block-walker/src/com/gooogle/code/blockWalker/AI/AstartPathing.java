@@ -15,6 +15,7 @@ import org.anddev.andengine.entity.modifier.PathModifier;
 import org.anddev.andengine.entity.modifier.PathModifier.IPathModifierListener;
 import org.anddev.andengine.entity.modifier.PathModifier.Path;
 import org.anddev.andengine.entity.scene.Scene;
+import org.anddev.andengine.util.Debug;
 import org.anddev.andengine.util.constants.Constants;
 import org.anddev.andengine.util.modifier.IModifier;
 import org.anddev.andengine.util.modifier.ease.EaseLinear;
@@ -87,17 +88,7 @@ public class AstartPathing {
 				}
 			}
 		}
-	}
-	
-	
-	
-	// **********************************************************************************************************************
-	
-	/**
-	 * 
-	 */
-	public static void GeneralUI() {
-		
+
 		// Declare the AStarPathFinder
 		// First Param: above ITiledMap
 		// Second Param: Max Search Depth - Care, if this is too
@@ -105,12 +96,8 @@ public class AstartPathing {
 		// Third Param: allow diagonal movement or not
 		// Fourth Param: Heuristics you want to use in the A*
 		// algorithm(optional)
+		
 		finder = new AStarPathFinder<TMXLayer>(new AImap(), 30, false);
-		
-		// TODO: Make sure this doesn't cause memory leaks, because it is called
-		// multiple times and is never removed
-		// Allows the screen to be touched every second by reseting a boolean
-		
 	}
 	
 	// ***********************************************************************************************************************
@@ -143,15 +130,17 @@ public class AstartPathing {
 			TMXTile playerLocationTile = TMXMapLayer.getTMXTileAt(
 					playerFootCordinates[Constants.VERTEX_INDEX_X],
 					playerFootCordinates[Constants.VERTEX_INDEX_Y]);
-			A_path = finder.findPath(TMXMapLayer,
-					20,
-					// Sprite's initial tile location
-					playerLocationTile.getTileColumn(),
-					playerLocationTile.getTileRow(),
-					// Sprite's final tile location
-					tmxTilePlayerTo.getTileColumn(),
-					tmxTilePlayerTo.getTileRow());
 			
+			if (tmxTilePlayerTo != null) {
+				A_path = finder.findPath(TMXMapLayer,
+						20,
+						// Sprite's initial tile location
+						playerLocationTile.getTileColumn(),
+						playerLocationTile.getTileRow(),
+						// Sprite's final tile location
+						tmxTilePlayerTo.getTileColumn(),
+						tmxTilePlayerTo.getTileRow());
+			}
 			// The path with the above parameters should be saved
 			loadPathFound();
 		}

@@ -39,4 +39,7 @@ public class Boss extends AnimatedSprite {
 	void idle() {
 		animate(ANIMATE_DURATION, 18, 23, true);
 	}
+	public void attack() {
+		animate(ANIMATE_DURATION, 18, 23, true);
+	}
 }

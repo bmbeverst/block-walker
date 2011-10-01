@@ -7,6 +7,8 @@ import org.anddev.andengine.extension.physics.box2d.PhysicsWorld;
 import org.anddev.andengine.util.Debug;
 
 import com.badlogic.gdx.physics.box2d.Body;
+import com.gooogle.code.blockWalker.Resources;
+import com.gooogle.code.blockWalker.TMXMap;
 
 
 /**
