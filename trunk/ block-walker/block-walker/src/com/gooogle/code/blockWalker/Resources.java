@@ -89,14 +89,14 @@ public class Resources {
 	/**
 	 * @return the mBaseGameActivity
 	 */
-	static final BaseGameActivity getmBaseGameActivity() {
+	public static final BaseGameActivity getmBaseGameActivity() {
 		return mBaseGameActivity;
 	}
 	
 	/**
 	 * @return the mCamera
 	 */
-	static final BoundCamera getmCamera() {
+	public static final BoundCamera getmCamera() {
 		return mCamera;
 	}
 	

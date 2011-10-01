@@ -38,8 +38,8 @@ public class Particels implements ITimerCallback {
 				PARTICLES_MAX, Resources.loadTexture("part.png", 16, 16));
 		particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
 
-		particleSystem.addParticleInitializer(new VelocityInitializer(-25, 25,
-				-10, -50));
+		particleSystem.addParticleInitializer(new VelocityInitializer(-30, 30,
+				-1, -20));
 		particleSystem.addParticleInitializer(new AccelerationInitializer(-5,
 				-11));
 		particleSystem.addParticleInitializer(new RotationInitializer(0.0f,
@@ -48,7 +48,7 @@ public class Particels implements ITimerCallback {
 				0.5f));
 
 		particleSystem.addParticleModifier(new ScaleModifier(2f, .5f, 0, 5));
-		particleSystem.addParticleModifier(new ExpireModifier(6.5f));
+		particleSystem.addParticleModifier(new ExpireModifier(3.5f));
 		particleSystem.addParticleModifier(new ColorModifier(1.0f, 2.5f, 1.0f,
 				1.5f, 0.0f, 1.0f, 2.5f, 5.5f));
 		particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 2.5f,

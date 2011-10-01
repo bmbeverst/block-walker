@@ -13,7 +13,7 @@ import com.gooogle.code.blockWalker.Resources;
  */
 public class AIupdate implements ITimerCallback {
 
-	private static final double SIGHT = 500;
+	private static final double SIGHT = 1000;
 	private int health = 10;
 	private boolean attacked = false;
 
@@ -39,17 +39,18 @@ public class AIupdate implements ITimerCallback {
 		pTimerHandler.reset();
 		switch (currentStates) {
 		case ROAM:
-			AstartPathing.walkTo(boss.getX() + rand.nextInt(1000), boss.getY()
-					+ rand.nextInt(1000), Resources.getmScene());
+			AstartPathing.walkTo(boss.getX() + rand.nextInt(500) - 250, boss.getY()
+					+ rand.nextInt(500) - 250, Resources.getmScene());
 			if(Math.sqrt(Math.pow((player.getX() - boss.getX()), 2)
 					+ (player.getY() - boss.getY())) < SIGHT) {
 				currentStates = States.ATTACK;
 			}
 			break;
 		case ATTACK:
+			boss.attack();
 			if(Math.sqrt(Math.pow((player.getX() - boss.getX()), 2)
-					+ (player.getY() - boss.getY())) < SIGHT) {
-				currentStates = States.ATTACK;
+					+ (player.getY() - boss.getY())) < 500) {
+				currentStates = States.ROAM;
 			}
 			break;
 		case RUN:
