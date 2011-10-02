@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.gooogle.code.blockWalker.Resources;
 import com.gooogle.code.blockWalker.TMXMap;
 import com.gooogle.code.blockWalker.AI.AIupdate;
+import com.gooogle.code.blockWalker.AI.Boss;
 
 
 /**
@@ -83,7 +84,7 @@ public class MapManager {
 		//create new map and map will create new player ! 
 		map = new TMXMap(currentMapNumber); 
 		if(i == FINAL_LEVEL) {
-			new AIupdate(100, 100);
+			new Boss(100, 100);
 		}
 	}
 	

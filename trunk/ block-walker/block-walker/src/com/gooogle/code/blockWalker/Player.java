@@ -42,6 +42,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.gooogle.code.blockWalker.AI.Attackable;
 import com.gooogle.code.blockWalker.AI.Monster;
 
 /**
@@ -240,7 +241,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			attacking = true;
 			Player.this.mExplosionSound.play();
 		}
-		LinkedList<Monster> monsterList = Resources.getMonsters();
+		LinkedList<Attackable> monsterList = Resources.getMonsters();
 		for (int i = 0; i < monsterList.size(); i++) {
 			// the number here will set player attack range !
 			Rectangle monsterRec = new Rectangle(
@@ -345,7 +346,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 						
 					}
 				}// end if
-				LinkedList<Monster> monsterList = Resources.getMonsters();
+				LinkedList<Attackable> monsterList = Resources.getMonsters();
 				for (int i = 0; i < monsterList.size(); i++) {
 					Rectangle monsterRec = new Rectangle(monsterList.get(i)
 							.getX() - 5, monsterList.get(i).getY(), 50, 50);

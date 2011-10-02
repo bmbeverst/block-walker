@@ -28,6 +28,7 @@ import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
 import org.anddev.andengine.util.Debug;
 
+import com.gooogle.code.blockWalker.AI.Attackable;
 import com.gooogle.code.blockWalker.AI.Monster;
 
 import android.graphics.Color;
@@ -60,10 +61,10 @@ public class Resources {
 	private static Rectangle mwater;
 	private static GameHUD mHUD;
 	private static MainMenu mMenu;
-	private static LinkedList<Monster> monsters = new LinkedList<Monster>();
+	private static LinkedList<Attackable> monsters = new LinkedList<Attackable>();
 	private static ArrayList<TMXTile> collideTiles = new ArrayList<TMXTile>();
 	
-	public static LinkedList<Monster> getMonsters() {
+	public static LinkedList<Attackable> getMonsters() {
 		return monsters;
 	}
 
@@ -288,7 +289,7 @@ public class Resources {
 		goalWatcher.add(rect);
 	}
 	
-	public static void addMonster(Monster m) {
+	public static void addMonster(Attackable m) {
 		monsters.add(m);
 
 	}

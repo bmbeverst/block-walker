@@ -15,7 +15,7 @@ public class AIupdate implements ITimerCallback {
 
 	private static final double SIGHT = 1000;
 	private int health = 10;
-	private boolean attacked = true;
+	private boolean attacked = false;
 
 	enum States {
 		RUN, ATTACK, ROAM,
@@ -26,12 +26,17 @@ public class AIupdate implements ITimerCallback {
 	private Random rand = new Random();
 	private Boss boss;
 	private Player player = Resources.getmPlayer();
+	private TimerHandler time;
 
-	public AIupdate(float pX, float pY) {
-		AstartPathing.setBoss(boss = new Boss(pX, pY));
+	/**
+	 * @param pBoss
+	 */
+	public AIupdate(Boss pBoss) {
+		AstartPathing.setBoss(pBoss);
+		boss = pBoss;
 
 		Resources.getmEngine()
-				.registerUpdateHandler(new TimerHandler(1f, this));
+				.registerUpdateHandler(time = new TimerHandler(1f, this));
 	}
 
 	@Override
@@ -61,6 +66,23 @@ public class AIupdate implements ITimerCallback {
 
 
 
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void attacked() {
+		health--;
+		attacked = true;
+		if(health < 0) {
+			Resources.getMonsters().remove(this);
+			boss.detachChildren();
+			Resources.getmScene().detachChild(boss);
+			boss.setVisible(false);
+			Resources.getmEngine().unregisterUpdateHandler(time);
+			Resources.detachBossLockLayer();
+			System.gc();
 		}
 	}
 
