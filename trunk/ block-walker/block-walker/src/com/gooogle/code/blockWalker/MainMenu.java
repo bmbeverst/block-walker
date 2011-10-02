@@ -29,7 +29,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	/**
 	 * 
 	 */
-	public static final int BOSS_LEVEL = 8;
+	public static final int BOSS_LEVEL = 0;
 	private static final String FIRSTMAP = "final8.tmx";
 	
 	private static final int MENU_START = 0;
