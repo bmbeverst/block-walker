@@ -80,21 +80,19 @@ public class AstartPathing {
 				
 				for (final TMXObject object : group.getTMXObjects()) {
 					
-					int ObjectX = Math.round(object.getX()
-							- (TILE_WIDTH / 2.0f));//remove + x to make greedy
-					int ObjectY = Math.round(object.getY()
-							- (TILE_HEIGHT / 2.0f));
+					float ObjectX = object.getX() - (TILE_WIDTH/2);
+					float ObjectY = object.getY()- TILE_WIDTH;
 					// Gets the number of rows and columns in the
 					// object
-					int ObjectHeight = Math.round((object.getHeight() + TILE_HEIGHT/2)
-							/ TILE_HEIGHT);
-					int ObjectWidth = Math
-							.round((object.getWidth() + TILE_HEIGHT/2)/ TILE_WIDTH);
+					float ObjectHeight = (object.getHeight()
+							/ TILE_HEIGHT) + 1;
+					float ObjectWidth = (object.getWidth())
+							/ TILE_WIDTH + 1;
 					
 					// Gets the tiles the object covers and puts it
 					// into the Arraylist CollideTiles
-					for (int TileRow = 0; TileRow < ObjectHeight; TileRow++) {
-						for (int TileColumn = 0; TileColumn < ObjectWidth; TileColumn++) {
+					for (float TileRow = 0; TileRow < ObjectHeight; TileRow++) {
+						for (float TileColumn = 0; TileColumn < ObjectWidth; TileColumn++) {
 							TMXTile tempTile = TMXMapLayer.getTMXTileAt(ObjectX
 									+ (TileColumn * TILE_WIDTH), ObjectY
 									+ (TileRow * TILE_HEIGHT));

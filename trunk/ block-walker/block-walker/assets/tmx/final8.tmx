@@ -74,7 +74,8 @@
   <object x="801" y="312" width="126" height="7"/>
   <object x="544" y="375" width="160" height="8"/>
   <object x="352" y="246" width="191" height="9"/>
-  <object x="256" y="632" width="93" height="8"/>
+  <object x="258" y="629" width="92" height="10"/>
+  <object x="672" y="596" width="126" height="12"/>
  </objectgroup>
  <objectgroup name="monster" width="80" height="25">
   <properties>

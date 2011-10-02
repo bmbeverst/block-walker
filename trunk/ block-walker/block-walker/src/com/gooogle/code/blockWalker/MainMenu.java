@@ -335,7 +335,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		//Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
 		hasStarted = true;
 		if(i == BOSS_LEVEL) {
-			new Boss(1000, 500);
+			new Boss(MapManager.BOSS_X, MapManager.BOSS_Y);
 		}
  
 		

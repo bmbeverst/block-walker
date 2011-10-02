@@ -19,7 +19,11 @@ import com.gooogle.code.blockWalker.AI.Boss;
  */
 public class MapManager {
 
-	private String currentMapNumber;
+	public static final int BOSS_X = 1000;
+
+	public static final int BOSS_Y = 620;
+
+	private String currentMapName;
 
 	private static TMXMap map;
 	
@@ -34,7 +38,7 @@ public class MapManager {
 	 * @return
 	 */
 	public String getCurrentMapNumber() {
-		return currentMapNumber;
+		return currentMapName;
 	}
 	 
 
@@ -42,7 +46,7 @@ public class MapManager {
 	 * @param startLocation
 	 */
 	public MapManager (String startLocation){
-		currentMapNumber = startLocation;
+		currentMapName = startLocation;
 		map = new TMXMap(startLocation);
 	}
 	
@@ -77,13 +81,13 @@ public class MapManager {
 		
         //make string new map file name
 		// works now under 10 maps. 
-		int i = Integer.parseInt(currentMapNumber.substring(5,6));
+		int i = Integer.parseInt(currentMapName.substring(5,6));
 		i++;
-		currentMapNumber = currentMapNumber.substring(0,5) + i + ".tmx";
+		currentMapName = currentMapName.substring(0,5) + i + ".tmx";
 		//create new map and map will create new player ! 
-		map = new TMXMap(currentMapNumber); 
+		map = new TMXMap(currentMapName); 
 		if(i == MainMenu.BOSS_LEVEL) {
-			new Boss(1000, 500);
+			new Boss(BOSS_X, BOSS_Y);
 		}
 	}
 	
@@ -104,8 +108,11 @@ public class MapManager {
            }
 		Resources.getmScene().detachChildren();
         System.gc();
-        currentMapNumber=pMap;
-		map = new TMXMap(currentMapNumber);
-		
+        currentMapName=pMap;
+		map = new TMXMap(currentMapName);
+		int i = Integer.parseInt(currentMapName.substring(5,6));
+		if(i == MainMenu.BOSS_LEVEL) {
+			new Boss(BOSS_Y, BOSS_X);
+		}
 	}
 }

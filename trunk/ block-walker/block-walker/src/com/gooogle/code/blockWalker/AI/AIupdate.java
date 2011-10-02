@@ -39,7 +39,7 @@ public class AIupdate implements ITimerCallback {
 		boss = pBoss;
 		
 		Resources.getmEngine().registerUpdateHandler(
-				time = new TimerHandler(0.1f, this));
+				time = new TimerHandler(0.01f, this));
 	}
 	
 	@Override
@@ -60,9 +60,10 @@ public class AIupdate implements ITimerCallback {
 				break;
 			case ATTACK:
 				AstartPathing.walkTo(player.getX(), player.getY());
-				if (playerDistance < 100) {
+				if (playerDistance < 200) {
 					boss.attack();
-					if (playerDistance < 50) {
+					if (playerDistance < 100) {
+						Resources.getHUD().decreaesHalfEnergyCount();
 						Resources.getHUD().decreaesHalfEnergyCount();
 					}
 				}
