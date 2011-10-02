@@ -156,14 +156,14 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		if (velocity.x >= movementSpeed) {
 			velocity.x = movementSpeed * 1.5f;
 		}
-		if (velocity.y >= movementSpeed) {
+		else if (velocity.y >= movementSpeed) {
 			velocity.y = movementSpeed;
 		}
-		if (velocity.x <= -movementSpeed) {
+		else if (velocity.x <= -movementSpeed) {
 			velocity.x = -movementSpeed * 1.5f;
 		}
-		if (velocity.y <= -movementSpeed) {// -2.5f
-			velocity.y = -movementSpeed * 2.75f;
+		else if (velocity.y <= -movementSpeed) {// -2.5f
+			velocity.y = -movementSpeed * 2.5f;
 		}
 		playerBody.setLinearVelocity(velocity);
 	}

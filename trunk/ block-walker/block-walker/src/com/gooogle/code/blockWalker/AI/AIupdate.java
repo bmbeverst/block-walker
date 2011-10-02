@@ -48,13 +48,15 @@ public class AIupdate implements ITimerCallback {
 			break;
 		case ATTACK:
 			boss.attack();
-			if(Math.sqrt(Math.pow((player.getX() - boss.getX()), 2)
-					+ (player.getY() - boss.getY())) < 500) {
-				currentStates = States.ROAM;
+			if(attacked) {
+				currentStates = States.RUN;
 			}
 			break;
 		case RUN:
-			
+			boss.attack();
+			if(attacked) {
+				currentStates = States.ROAM;
+			}
 			break;
 
 
