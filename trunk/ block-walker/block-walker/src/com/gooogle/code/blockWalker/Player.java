@@ -75,7 +75,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private boolean flipped = false;
 	private boolean moving = true;
 	private Particels part;
-	private boolean attacking; 
+	private boolean attacking;
+	private boolean charging; 
 
 	private static TiledTextureRegion mPlayerTiledRegion;
 	
@@ -184,7 +185,10 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		final Vector2 velocity = Vector2Pool.obtain();
 		velocity.set(0, accelration);
 		checkSpeed(velocity);
-		this.animate(ANIMATE_CHANRGE, 8, 11, false);
+		if(!charging) {
+			charging = true;
+			this.animate(ANIMATE_CHANRGE, 8, 11, true);
+		}
 		Vector2Pool.recycle(velocity);
 		Debug.d(this.toString()); 
 		Resources.getHUD().increaseHalfEnergy();
@@ -230,6 +234,25 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		Resources.removePlayer(this);
 	}
 	
+	private void attack() {
+		this.animate(ANIMATE_DURATION, 4, 7, false);
+		if (!attacking) {
+			attacking = true;
+			Player.this.mExplosionSound.play();
+		}
+		LinkedList<Monster> monsterList = Resources.getMonsters();
+		for (int i = 0; i < monsterList.size(); i++) {
+			// the number here will set player attack range !
+			Rectangle monsterRec = new Rectangle(
+					monsterList.get(i).getX() - 20, monsterList.get(i).getY(),
+					100, 100);
+			if (Resources.getmPlayer().collidesWith(monsterRec)) {
+				monsterList.get(i).attacked();
+				return;
+			}// end if
+		}// end for
+	}
+
 	@Override
 	public boolean onKeyDown(int pKeyCode, KeyEvent pEvent) {
 		boolean handeled = false;
@@ -263,27 +286,6 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		return handeled;
 	}
 	
-	private void attack() {
-		this.animate(ANIMATE_DURATION, 4, 7, false);
-		if (!attacking) {
-			attacking = true;
-			Player.this.mExplosionSound.play();
-		}
-		LinkedList<Monster> monsterList = Resources.getMonsters();
-		for (int i = 0; i < monsterList.size(); i++) {
-			// the number here will set player attack range !
-			Rectangle monsterRec = new Rectangle(
-					monsterList.get(i).getX() - 20, monsterList.get(i).getY(),
-					100, 100);
-			if (Resources.getmPlayer().collidesWith(monsterRec)) {
-				Debug.d(monsterList.get(i).getX() + " "
-						+ monsterList.get(i).getY());
-				monsterList.get(i).remove();
-				return;
-			}// end if
-		}// end for
-	}
-	
 	@Override
 	public boolean onKeyUp(int pKeyCode, KeyEvent pEvent) {
 		switch (pKeyCode) {
@@ -292,6 +294,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				break;
 			case KeyEvent.KEYCODE_DPAD_CENTER:
 				attacking = false;
+				break;
+			case KeyEvent.KEYCODE_DPAD_DOWN:
+				charging = false;
 				break;
 		}
 		if (!moving) {

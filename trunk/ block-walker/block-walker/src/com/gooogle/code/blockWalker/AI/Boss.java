@@ -15,7 +15,6 @@ public class Boss extends AnimatedSprite {
 	protected static final long[] ANIMATE_DURATION = new long[] { 200, 200, 200, 200, 200, 200 };
 	protected static final long[] ANIMATE_DURATION2 = new long[] { 200, 200, 200, 200, 200};
 	private boolean flipped;
-	private boolean moving;
 	private static TiledTextureRegion mBossTiledRegion;
 	
 	public Boss(float pX, float pY) {

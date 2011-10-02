@@ -9,6 +9,7 @@ import org.anddev.andengine.util.Debug;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.gooogle.code.blockWalker.Resources;
 import com.gooogle.code.blockWalker.TMXMap;
+import com.gooogle.code.blockWalker.AI.AIupdate;
 
 
 /**
@@ -16,6 +17,8 @@ import com.gooogle.code.blockWalker.TMXMap;
  * Sep 21, 2011
  */
 public class MapManager {
+	private static final int FINAL_LEVEL = 8;
+
 	private String currentMapNumber;
 
 	private static TMXMap map;
@@ -77,10 +80,13 @@ public class MapManager {
 		int i = Integer.parseInt(currentMapNumber.substring(5,6));
 		i++;
 		currentMapNumber = currentMapNumber.substring(0,5) + i + ".tmx";
- 		
 		//create new map and map will create new player ! 
 		map = new TMXMap(currentMapNumber); 
+		if(i == FINAL_LEVEL) {
+			new AIupdate(100, 100);
+		}
 	}
+	
 
 	/**
 	 * @param pMap
@@ -102,11 +108,4 @@ public class MapManager {
 		map = new TMXMap(currentMapNumber);
 		
 	}
-	
-	//to be called when boss is killed . 
-	public void detachBossLockLayer(){
-		Resources.getmScene().detachChild(map.getBossLayer());
-		Resources.getmPhysicsWorld().destroyBody(  map.getmLock());
-	}
- 
 }

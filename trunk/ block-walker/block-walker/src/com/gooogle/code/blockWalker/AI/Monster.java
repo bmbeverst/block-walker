@@ -18,7 +18,7 @@ import com.gooogle.code.blockWalker.Resources;
  * @author brooks
  * Sep 8, 2011
  */
-public class Monster extends AnimatedSprite{
+public class Monster extends AnimatedSprite implements Attackable{
 	/**
 	 * Brooks Beverstock bmb2gf Sep 5, 2011 Player.java
 	 */
@@ -64,6 +64,10 @@ public class Monster extends AnimatedSprite{
 			ai = new DumbAI(this);
 			idle();
 			Resources.getmScene().attachChild(this);
+		}
+		
+		public void attacked() {
+			this.remove();
 		}
 
 		public void up() {

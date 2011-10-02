@@ -15,7 +15,7 @@ public class AIupdate implements ITimerCallback {
 
 	private static final double SIGHT = 1000;
 	private int health = 10;
-	private boolean attacked = false;
+	private boolean attacked = true;
 
 	enum States {
 		RUN, ATTACK, ROAM,
@@ -27,8 +27,8 @@ public class AIupdate implements ITimerCallback {
 	private Boss boss;
 	private Player player = Resources.getmPlayer();
 
-	public AIupdate() {
-		AstartPathing.setBoss(boss = new Boss(50, 50));
+	public AIupdate(float pX, float pY) {
+		AstartPathing.setBoss(boss = new Boss(pX, pY));
 
 		Resources.getmEngine()
 				.registerUpdateHandler(new TimerHandler(1f, this));

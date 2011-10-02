@@ -329,7 +329,11 @@ public class Resources {
 		// Nuke the whole thing
 		mBaseGameActivity.finish();
 	}
-
+	public static void detachBossLockLayer() {
+		Resources.getmScene().detachChild(mMapManager.getMap().getBossLayer());
+		Resources.getmPhysicsWorld().destroyBody(mMapManager.getMap().getmLock());
+	}
+	
 	static void addCollideTile(TMXTile tempTile) {
 		collideTiles.add(tempTile);
 		

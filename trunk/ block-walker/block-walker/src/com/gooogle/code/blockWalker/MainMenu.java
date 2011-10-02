@@ -330,7 +330,6 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		Resources.setMapManager(mmanager);
 		//Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
 		hasStarted = true;
-		new AIupdate();
 
  
 		
