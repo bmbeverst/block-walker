@@ -6,6 +6,7 @@ package com.gooogle.code.blockWalker;
 // Turn into a siglton test feild if not null new player else attach.
 
 import java.util.LinkedList;
+import org.anddev.andengine.entity.sprite.AnimatedSprite.IAnimationListener;
 
 import org.anddev.andengine.audio.sound.Sound;
 import org.anddev.andengine.engine.camera.BoundCamera;
@@ -36,12 +37,11 @@ import com.gooogle.code.blockWalker.AI.Attackable;
  * @author brooks Sep 5, 2011
  */
 public class Player extends AnimatedSprite implements OnKeyDownListener,
-		OnKeyUpListener {
+		OnKeyUpListener, IAnimationListener {
 	
-
 	private static final float MOVEMENTSPEED = 4f;
 	private static final float ACCELRATION = MOVEMENTSPEED / 3;
-	private static final float JUMPSPEED = MOVEMENTSPEED * 2.5f; 
+	private static final float JUMPSPEED = MOVEMENTSPEED * 2.5f;
 	private static final float JUMPV = -20f;
 	private static final float ELASTICITY = 0f;
 	private static final float MASS = 1f;
@@ -64,7 +64,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private Particels part;
 	private boolean attacking;
 	private boolean charging;
-
+	
 	private static TiledTextureRegion mPlayerTiledRegion;
 	
 	/**
@@ -72,10 +72,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	 * @param pY
 	 */
 	public Player(float pX, float pY) {
-		super(pX, pY, PLAYER_SIZE, PLAYER_SIZE,
-				mPlayerTiledRegion = Resources
-						.loadTiledTexture("Character.png", 128, 128, 4, 4));
-		
+		super(pX, pY, PLAYER_SIZE, PLAYER_SIZE, mPlayerTiledRegion = Resources
+				.loadTiledTexture("Character.png", 128, 128, 4, 4));
 		
 		part = new Particels(this);
 		ContactListener contactListener = new ContactListener() {
@@ -171,19 +169,19 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		Vector2Pool.recycle(velocity);
 	}
 	
-	void down() { 
-
+	void down() {
+		
 		final Vector2 velocity = Vector2Pool.obtain();
 		velocity.set(0, ACCELRATION);
 		checkSpeed(velocity);
-		if(!charging) {
+		if (!charging) {
 			charging = true;
 			this.animate(ANIMATE_CHANRGE, 8, 11, true);
 		}
 		Vector2Pool.recycle(velocity);
-		Debug.d(this.toString()); 
+		// Debug.d(this.toString());
 		Resources.getHUD().increaseHalfEnergy();
-
+		
 	}
 	
 	void left() {
@@ -239,7 +237,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			}// end if
 		}// end for
 	}
-
+	
 	@Override
 	public boolean onKeyDown(int pKeyCode, KeyEvent pEvent) {
 		boolean handeled = false;
@@ -277,7 +275,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	public boolean onKeyUp(int pKeyCode, KeyEvent pEvent) {
 		switch (pKeyCode) {
 			case KeyEvent.KEYCODE_DPAD_UP:
-				//checkSpeed(Vector2Pool.obtain(0, 5));
+				// checkSpeed(Vector2Pool.obtain(0, 5));
 				break;
 			case KeyEvent.KEYCODE_DPAD_CENTER:
 				attacking = false;
@@ -320,7 +318,8 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		mScene.registerUpdateHandler(handler = new IUpdateHandler() {
 			
 			@Override
-			public void reset() {/*Not used*/}
+			public void reset() {/* Not used */
+			}
 			
 			@Override
 			public void onUpdate(final float pSecondsElapsed) {
@@ -369,6 +368,12 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	 */
 	public IUpdateHandler getHandler() {
 		return handler;
+	}
+	
+	@Override
+	public void onAnimationEnd(AnimatedSprite pAnimatedSprite) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -64,6 +64,7 @@ public class Monster extends AnimatedSprite implements Attackable{
 			monsterBody.setLinearDamping(1);
 			Resources.addMonster(this);
 			idle();
+			DumbAI.setPatrol(this);
 			Resources.getmScene().attachChild(this);
 		}
 		

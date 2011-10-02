@@ -14,6 +14,7 @@ public class Boss extends AnimatedSprite implements Attackable {
 
 	protected static final long[] ANIMATE_DURATION = new long[] { 200, 200, 200, 200, 200, 200 };
 	protected static final long[] ANIMATE_DURATION2 = new long[] { 200, 200, 200, 200, 200};
+	protected static final long[] ANIMATE_DURATION_ATTACK = new long[] { 200, 200, 200, 200, 200};
 	private boolean flipped;
 	private AIupdate AI;
 	private static TiledTextureRegion mBossTiledRegion;
@@ -76,7 +77,7 @@ public class Boss extends AnimatedSprite implements Attackable {
 	 * 
 	 */
 	public void attack() {
-		animate(ANIMATE_DURATION2, 12, 16, true);
+		animate(ANIMATE_DURATION_ATTACK, 12, 16, true);
 	}
 	@Override
 	public void attacked() {

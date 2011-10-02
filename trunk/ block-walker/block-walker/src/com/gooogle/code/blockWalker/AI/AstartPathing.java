@@ -86,10 +86,10 @@ public class AstartPathing {
 							- (TILE_HEIGHT / 2.0f));
 					// Gets the number of rows and columns in the
 					// object
-					int ObjectHeight = Math.round((object.getHeight()
-							/ TILE_HEIGHT + 0.5f));
+					int ObjectHeight = Math.round((object.getHeight() + TILE_HEIGHT/2)
+							/ TILE_HEIGHT);
 					int ObjectWidth = Math
-							.round((object.getWidth() / TILE_WIDTH + 0.5f));
+							.round((object.getWidth() + TILE_HEIGHT/2)/ TILE_WIDTH);
 					
 					// Gets the tiles the object covers and puts it
 					// into the Arraylist CollideTiles
@@ -252,7 +252,7 @@ public class AstartPathing {
 			// Returns true if the tile in the A* Path is contained in the
 			// Arraylist CollideTiles
 			if (CollideTiles.contains(blocked)) {
-				Debug.d("Blocked");
+				//Debug.d("Blocked");
 				return true;
 			}
 			

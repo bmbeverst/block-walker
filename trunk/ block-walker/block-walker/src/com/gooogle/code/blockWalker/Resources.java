@@ -331,7 +331,8 @@ public class Resources {
 		mBaseGameActivity.finish();
 	}
 	public static void detachBossLockLayer() {
-		Resources.getmScene().detachChild(mMapManager.getMap().getBossLayer());
+		mMapManager.getMap().getBossLayer().setVisible(false);
+		mMapManager.getMap().getmLock().setActive(false);
 		Resources.getmPhysicsWorld().destroyBody(mMapManager.getMap().getmLock());
 	}
 	

@@ -54,9 +54,9 @@ public class TMXMap {
 		// Not the Objects.
 		for (int i = 0; i < mTMXTiledMap.getTMXLayers().size(); i++) {
 			final TMXLayer layer = mTMXTiledMap.getTMXLayers().get(i);
-			if (layer.getTMXLayerProperties().containsTMXProperty("bosslock", "true"))
-			{
-				mbosslockLayer  = layer;
+			if (layer.getTMXLayerProperties().containsTMXProperty("bosslock",
+					"true")) {
+				mbosslockLayer = layer;
 			}
 			if (!layer.getTMXLayerProperties().containsTMXProperty("wall",
 					"true")) {
@@ -98,7 +98,6 @@ public class TMXMap {
 					Body tempbody = PhysicsFactory.createBoxBody(mPhysicsWorld,
 							rect, BodyType.StaticBody, boxFixtureDef);
 					
-										
 					// make it invisible
 					rect.setVisible(false);
 					// add it to the scene
@@ -148,35 +147,37 @@ public class TMXMap {
 					Resources.setWater(water);
 					
 				}
-			}//end if
+			}// end if
 			
 			if (group.getTMXObjectGroupProperties().containsTMXProperty("spin",
-				"true")) { 
-				 new Spin();			
-			}//end if
+					"true")) {
+				new Spin();
+			}// end if
 			
-			if (group.getTMXObjectGroupProperties().containsTMXProperty("boss", "true"))
-				{
-
+			if (group.getTMXObjectGroupProperties().containsTMXProperty("boss",
+					"true")) {
+				
 				for (final TMXObject object : group.getTMXObjects()) {
 					// Create the rectangle
 					Rectangle bosslock = new Rectangle(object.getX(),
 							object.getY(), object.getWidth(),
 							object.getHeight());
-					final FixtureDef boxFixtureDef = PhysicsFactory.createFixtureDef(0, ELASTICITY, FRICTION);
- 					Body lock = PhysicsFactory.createBoxBody(mPhysicsWorld,	bosslock, BodyType.StaticBody, boxFixtureDef);
+					final FixtureDef boxFixtureDef = PhysicsFactory
+							.createFixtureDef(0, ELASTICITY, FRICTION);
+					Body lock = PhysicsFactory.createBoxBody(mPhysicsWorld,
+							bosslock, BodyType.StaticBody, boxFixtureDef);
 					bosslock.setVisible(false);
-					mScene.attachChild(bosslock); 
+					mScene.attachChild(bosslock);
 					mlock = lock;
-				}//end for
-				}//end if 
-		}//end for
-	}//end method
+				}// end for
+			}// end if
+		}// end for
+	}// end method
 	
 	private void generateMonsters(final TMXTiledMap map) {
 		for (final TMXObjectGroup group : mTMXTiledMap.getTMXObjectGroups()) {
-			if (group.getTMXObjectGroupProperties().containsTMXProperty("monster",
-					"true")) {
+			if (group.getTMXObjectGroupProperties().containsTMXProperty(
+					"monster", "true")) {
 				// This is our "wall" layer. Create the physical boxes from it
 				for (final TMXObject object : group.getTMXObjects()) {
 					new Monster(object.getX(), object.getY());
@@ -184,12 +185,18 @@ public class TMXMap {
 			}
 		}
 	}
-
+	
+	/**
+	 * @return
+	 */
 	public IEntity getBossLayer() {
 		return mbosslockLayer;
 	}
 	
-	public Body getmLock(){
+	/**
+	 * @return
+	 */
+	public Body getmLock() {
 		return mlock;
 	}
 }

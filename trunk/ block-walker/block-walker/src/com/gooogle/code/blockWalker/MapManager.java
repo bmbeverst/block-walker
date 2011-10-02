@@ -18,7 +18,6 @@ import com.gooogle.code.blockWalker.AI.Boss;
  * Sep 21, 2011
  */
 public class MapManager {
-	private static final int FINAL_LEVEL = 8;
 
 	private String currentMapNumber;
 
@@ -83,7 +82,7 @@ public class MapManager {
 		currentMapNumber = currentMapNumber.substring(0,5) + i + ".tmx";
 		//create new map and map will create new player ! 
 		map = new TMXMap(currentMapNumber); 
-		if(i == FINAL_LEVEL) {
+		if(i == MainMenu.BOSS_LEVEL) {
 			new Boss(1000, 500);
 		}
 	}

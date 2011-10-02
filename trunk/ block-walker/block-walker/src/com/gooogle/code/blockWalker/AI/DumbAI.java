@@ -6,6 +6,7 @@ import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.primitive.Line;
 import org.anddev.andengine.entity.primitive.Rectangle;
+import org.anddev.andengine.util.Debug;
 
 import com.gooogle.code.blockWalker.Player;
 import com.gooogle.code.blockWalker.Resources;
@@ -15,7 +16,7 @@ import com.gooogle.code.blockWalker.Resources;
  */
 public class DumbAI implements ITimerCallback {
 	
-	private static final int SIGHT = 500;
+	private static final int SIGHT = 300;
 	private boolean running = true;
 	private TimerHandler time;
 	private int widthOffset;
@@ -31,7 +32,7 @@ public class DumbAI implements ITimerCallback {
 				time = new TimerHandler(1, this));
 	}
 	
-	private void setPatrol(Monster mMonster) {
+	public static void setPatrol(Monster mMonster) {
 		float monsterX = Math.abs(mMonster.getX());
 		float monsterY = Math.abs(mMonster.getY());
 		float closeX = Float.MAX_VALUE;
@@ -45,7 +46,7 @@ public class DumbAI implements ITimerCallback {
 			y = Math.abs(temp.getY());
 			x += temp.getWidth() / 2;
 			y += temp.getHeight() / 2;
-			// Debug.d(x + " " + y + "\n");
+			//Debug.d(x + " " + y + "\n");
 			
 			diffX = Math.abs(x - monsterX);
 			diffY = Math.abs(y - monsterY);
@@ -102,21 +103,17 @@ public class DumbAI implements ITimerCallback {
 				if (lineOfSight) {
 					// Debug.d("Line of sight!!!!!!!!!!!!!!!           " +
 					// (1*(mMonster.getX() - player.getX() )));
-					float direction = 1 * (mMonster.getX() - player.getX());
+					float direction = (mMonster.getX() - player.getX());
 					if (direction < 0) {
 						mMonster.right();
 					} else {
 						mMonster.left();
 					}
 				} else {
-					if (mMonster.getRight() != 0 || mMonster.getLeft() != 0) {
-						setPatrol(mMonster);
-					}
-					// Debug.d("Random!!!!!!!!!!!!!!            " + (right -
-					// mMonster.getX() < mMonster.getX() - left));
-					// Debug.d((right - mMonster.getX() ) + " " +
-					// (mMonster.getX() -
-					// left));
+					/*Debug.d("Random!!!!!!!!!!!!!!            "
+							+ (mMonster.getRight() - mMonster.getX() < mMonster.getX() - mMonster.getLeft()));
+					Debug.d((mMonster.getRight() - mMonster.getX()) + " "
+							+ (mMonster.getX() - mMonster.getLeft()));*/
 					if (mMonster.getRight() - mMonster.getX() < mMonster.getX()
 							- mMonster.getLeft()) {
 						mMonster.left();

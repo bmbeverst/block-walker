@@ -11,22 +11,22 @@
  </tileset>
  <layer name="background" width="80" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3QsQ0AIAwEsd9/05QwQVgAUYTSlm6BSwAAAP6p077E24p/E/4BAAAAEw0QvErYQB8AAA==
+   H4sIAAAAAAAAA+3QsQkAIBADwN9/QWew1AXUWhARCy3uIJAyJAIAAAAAAO601wOAY3mkLsJeCf+dSFP3H7/qHDJw+kAfAAA=
   </data>
  </layer>
  <layer name="platform" width="80" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3Y0Q2AIAxF0bqD/hhdQ+d2QxkAjVCwFO5J3h+xGKFNFAGgcUzxAPCv53v91Lu+xJte3gNj4byO4zKo+XdPrDVXUufX2dhdYja1ie9QnrfzrelV3GugrLc53tJds96Hdf2a6KvwTvP/jYisQmpnD9kS1i8hc8IzYutz6ubU0e7rBr8d7Y9AHwAA
+   H4sIAAAAAAAAA+3YwQ2AIAyFYdhBL0bX0LndULx5gAQoorT/l7yTxCqxNeocAIndxwNgfJr7OjW7cjIaLfcBW3he7Tg/qNl7Jmp7r7TCXgD/JJlV9DXQ1rOXDp8+Zr3X2Aegn9LvN8n/N+u55/7iyNvZQtaC9XPIVHCO2PqaujV1pNd1ARbeUdVAHwAA
   </data>
  </layer>
  <layer name="deco" width="80" height="25" opacity="0.87">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3XNwpCQRhF4XnLM2PGjBkzZsyYUUE36UI8pXZTCA/xHvhgyp/bjTFKqW/2dPsA9ZHHMcYLH/wIIIiQ4/Zlv1GYnSKIIoY4EkhqP6tS7JRGBlnkkEdB+1lVZKcSyqigihrq2s+qBjs10UIbHXTR035W9dlpgCFGGGOCqfazasZOcyywxAprbLSfVVt22mGPA4444az9rLqw0xW3t73uvB/aTyllmf71SimllFJK/Xcv8aAmjEAfAAA=
+   H4sIAAAAAAAAA+3XxwrCQABF0eTz7NixY8fYsGPHjgr6k36Id+lyFmpQ3oUDWQ5vMWEsSyn1zh5uH0AppZRSSv1lJ9vtEyil1GfzcM954YMfAQQR+vL996vv+jA7RRBFDHEkkNT/w6gUO6WRQRY55FHQfkYV2amEMiqoooa69jOqwU4OmmihjQ662s+oHjv1McAQI4wx0X5GTdlphjkWWGKFtfYzasNOW+ywxwFHW+83087sdMH1Za8b33ftp1zuCXxxaNFAHwAA
   </data>
  </layer>
  <layer name="Tile Layer 3" width="80" height="25">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+2ZXQ6CMAyAx72Uq3kB9XLE+GAM8S++cAdlyRortqNjDEbsl5DVAu3WtFuDxiiKEkPtxtOss1AUJQVQ3/dZZ5GWBsk3N1ZurM0vz7TTIXlFvm/XVaHf1LoUJTdsrZXFpy6V/2XV5sG6GN+uPdugf51ib8e5DHvyWH6PHRmfbds2drv22hffz+UCxKU2ej7lQtP/iDKAHOtPSkhtUr21okjZEBd3b6h+afT1ClCfUG/dGITIRqDnyGGPs/1V7LcLXz5x8hT5Z9dVun44h1hzpMi5JddvCP+2/+FapXrPMb5DSvoQ3/8ZFaM/E7qHwBcHrukDkrv91zXQ7sVzj4uv1EfsXOb2T+mkNn1xDbEHdqhY+N6d2v8bsz2f9UAfAAA=
+   H4sIAAAAAAAAA+2ZSw7CIBCG6UZ3eiH1al5AT9eFC2MaX3HTOyikTEoU6NCWQuP/JYTp0DIwYWDaCgEAGEKl63PSUQAAYkDx/Ug6irjUhnzXdanrSvzyijucKKh5lca1bV4A5IaKtV3RxiUAY6PONspfp9jbzbVMe/Icz5SxIb9UAucTALkSEpu23BoALntLcbX11U/Be8S+unIFik+Kt28fhMiCoc8ZlV8N/XbhW08uObf1l5IYa+5f/DeX/W/R0b6UZSPf47dFI7swY7XuaO8LJw/x/c8oHfqLRfdk2FKsdH0ydEomH6xlOUjfHYtGNu+7MW0QV0+by79cG0PHktq+Tcft0+fXkP6oH5svfM9Obf8DVkiRbkAfAAA=
   </data>
  </layer>
  <layer name="boss lock" width="80" height="25">
@@ -34,7 +34,7 @@
    <property name="bosslock" value="true"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAA+3TSwrCQBCE4c7OpYeO3kHjK2qMmyy8lqewFhnsdB4gKCL+HxQDmSySotsM+KzKnTHoi3017oxBX+zLd4hpqaPUV5w/TEsdDc3f7Vsf9UPizLG7r4kzx+4OW2Vma6VQNtnz+dj8oWurznbKXjm4/sbmD12lOjsqJ+Xc9jdz9743P3+53l0oS9f5P6r0/xelVq5tF3N3fzf2FgAAAAAAvMcDPKuqA0AfAAA=
+   H4sIAAAAAAAAA+3XuQqAMBCE4bWz9PW976PJOzqijYWQkCIW/wfDQqqwTJGYAQAAAADwX2v2cR448ebs3o3vxFvI7lyiO/4Z/YtD/+LQvzj0z1+pN0yl1ErzvGfon79WO+uUXhme/dE/f6N2Nimzsii50b8Q1x9kU3blUAqjf7Fc4ARSOgE5BVbVQB8AAA==
   </data>
  </layer>
  <objectgroup name="die" width="80" height="25">
@@ -47,7 +47,7 @@
   <properties>
    <property name="exit" value="true"/>
   </properties>
-  <object x="2438" y="283" width="45" height="73"/>
+  <object x="2439" y="638" width="45" height="73"/>
  </objectgroup>
  <objectgroup name="player" width="80" height="25">
   <properties>
@@ -67,13 +67,8 @@
   <object x="833" y="502" width="190" height="11"/>
   <object x="1025" y="213" width="475" height="11"/>
   <object x="1442" y="375" width="253" height="9"/>
-  <object x="2147" y="373" width="409" height="12"/>
   <object x="1570" y="86" width="186" height="8"/>
   <object x="1826" y="183" width="125" height="10"/>
-  <object x="1825" y="438" width="31" height="9"/>
-  <object x="1794" y="602" width="92" height="4"/>
-  <object x="1985" y="471" width="61" height="8"/>
-  <object x="2021" y="635" width="148" height="3"/>
   <object x="1121" y="407" width="155" height="7"/>
   <object x="1313" y="503" width="157" height="8"/>
   <object x="801" y="312" width="126" height="7"/>
@@ -85,14 +80,13 @@
   <properties>
    <property name="monster" value="true"/>
   </properties>
-  <object x="206" y="560" width="20" height="28"/>
-  <object x="915" y="441" width="19" height="19"/>
+  <object x="1384" y="440" width="20" height="28"/>
+  <object x="501" y="551" width="19" height="19"/>
  </objectgroup>
  <objectgroup name="boss" width="80" height="25">
   <properties>
    <property name="boss" value="true"/>
   </properties>
-  <object x="2183" y="0" width="96" height="372"/>
-  <object x="674" y="599" width="125" height="7"/>
+  <object x="2178" y="353" width="382" height="381"/>
  </objectgroup>
 </map>

@@ -25,16 +25,22 @@ import android.view.KeyEvent;
  */
 public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	
+
+	/**
+	 * 
+	 */
+	public static final int BOSS_LEVEL = 8;
 	private static final String FIRSTMAP = "final8.tmx";
-	protected static final int MENU_START = 0;
-	protected static final int MENU_SAVE= MENU_START + 1;
-	protected static final int MENU_SAVE1= MENU_SAVE + 1;
- 	protected static final int MENU_SAVE2 = MENU_SAVE1 + 1;
-	protected static final int MENU_LOAD = MENU_SAVE2 + 1;
-	protected static final int MENU_LOAD1 = MENU_LOAD + 1;
- 	protected static final int MENU_LOAD2 = MENU_LOAD1 + 1;
-	protected static final int MENU_QUIT = MENU_LOAD2 + 1;
-	protected static final int MENU_RESUME = MENU_QUIT + 1;
+	
+	private static final int MENU_START = 0;
+	private static final int MENU_SAVE= MENU_START + 1;
+	private static final int MENU_SAVE1= MENU_SAVE + 1;
+	private static final int MENU_SAVE2 = MENU_SAVE1 + 1;
+	private static final int MENU_LOAD = MENU_SAVE2 + 1;
+	private static final int MENU_LOAD1 = MENU_LOAD + 1;
+	private static final int MENU_LOAD2 = MENU_LOAD1 + 1;
+	private static final int MENU_QUIT = MENU_LOAD2 + 1;
+	private static final int MENU_RESUME = MENU_QUIT + 1;
  	private Camera mCamera = Resources.getmCamera();
 	private MenuScene mMenuScene,mResumeScene,mSaveScene, mLoadScene;
 	
@@ -212,7 +218,6 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				{
 					//TODO reset to 0
 					init(FIRSTMAP);
-					new Boss(300, 300);
 				}
 				else{
 				mmanager.reloadMap(FIRSTMAP);
@@ -323,13 +328,15 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	}
 	
 	private void init(String pstring) {
-		
+		int i = Integer.parseInt(pstring.substring(5,6));
 		mmanager = new MapManager(pstring);
 		Resources.setMapManager(mmanager);
 		new DumbAI();
 		//Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
 		hasStarted = true;
-
+		if(i == BOSS_LEVEL) {
+			new Boss(1000, 500);
+		}
  
 		
 	}
