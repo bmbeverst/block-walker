@@ -25,8 +25,7 @@ import org.anddev.andengine.util.path.astar.AStarPathFinder;
 import com.gooogle.code.blockWalker.Resources;
 
 /**
- * @author brooks
- * Oct 1, 2011
+ * @author brooks Oct 1, 2011
  */
 // This class is used primarily for organization
 public class AstartPathing {
@@ -46,7 +45,6 @@ public class AstartPathing {
 	private static TMXTiledMap mTMXTiledMap;
 	private static TMXLayer TMXMapLayer;
 	private static Boss boss;
-	private static Scene mScene = Resources.getmScene();
 	
 	/**
 	 * @param pBoss
@@ -75,19 +73,17 @@ public class AstartPathing {
 			// Gets the object layer with these properties. Use if
 			// you have many object layers, Otherwise this can be
 			// removed
-			if (group.getTMXObjectGroupProperties().containsTMXProperty(
-					"wall", "true")) {
+			if (group.getTMXObjectGroupProperties().containsTMXProperty("wall",
+					"true")) {
 				
 				for (final TMXObject object : group.getTMXObjects()) {
 					
-					float ObjectX = object.getX() - (TILE_WIDTH/2);
-					float ObjectY = object.getY()- TILE_WIDTH;
+					float ObjectX = object.getX() - (TILE_WIDTH / 2);
+					float ObjectY = object.getY() - TILE_WIDTH;
 					// Gets the number of rows and columns in the
 					// object
-					float ObjectHeight = (object.getHeight()
-							/ TILE_HEIGHT) + 1;
-					float ObjectWidth = (object.getWidth())
-							/ TILE_WIDTH + 1;
+					float ObjectHeight = (object.getHeight() / TILE_HEIGHT) + 1;
+					float ObjectWidth = (object.getWidth()) / TILE_WIDTH + 1;
 					
 					// Gets the tiles the object covers and puts it
 					// into the Arraylist CollideTiles
@@ -101,8 +97,8 @@ public class AstartPathing {
 					}
 					
 				}// end object for
-			}//end if
-		}//end for
+			}// end if
+		}// end for
 		Debug.d(CollideTiles.size() + " Collide Size");
 	}
 	
@@ -116,7 +112,8 @@ public class AstartPathing {
 		
 		// If the user is touching the screen Puts the touch events into an
 		// array
-		final float[] pToTiles = Resources.getmScene().convertLocalToSceneCoordinates(pX, pY);
+		final float[] pToTiles = Resources.getmScene()
+				.convertLocalToSceneCoordinates(pX, pY);
 		
 		// Gets the tile at the touched location
 		final TMXTile tmxTilePlayerTo = TMXMapLayer.getTMXTileAt(
@@ -130,8 +127,8 @@ public class AstartPathing {
 		} else if (A_path == null) {
 			// Sets the A* path from the player location to the touched
 			// location.
-			float[] playerFootCordinates = boss
-					.convertLocalToSceneCoordinates(16, 16);
+			float[] playerFootCordinates = boss.convertLocalToSceneCoordinates(
+					16, 16);
 			TMXTile playerLocationTile = TMXMapLayer.getTMXTileAt(
 					playerFootCordinates[Constants.VERTEX_INDEX_X],
 					playerFootCordinates[Constants.VERTEX_INDEX_Y]);
@@ -250,7 +247,7 @@ public class AstartPathing {
 			// Returns true if the tile in the A* Path is contained in the
 			// Arraylist CollideTiles
 			if (CollideTiles.contains(blocked)) {
-				//Debug.d("Blocked");
+				// Debug.d("Blocked");
 				return true;
 			}
 			

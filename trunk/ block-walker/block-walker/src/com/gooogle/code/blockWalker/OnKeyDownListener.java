@@ -1,22 +1,21 @@
 /**
- * Brooks Beverstock bmb2gf
- * Sep 8, 2011
- * keyBoardListener.java
+ * Brooks Beverstock bmb2gf Sep 8, 2011 keyBoardListener.java
  */
 package com.gooogle.code.blockWalker;
 
 import android.view.KeyEvent;
 
 /**
- * @author brooks
- * Sep 8, 2011
+ * @author brooks Sep 8, 2011
  */
 public interface OnKeyDownListener {
-
-	/** Used by Resource to broad cast events
+	
+	/**
+	 * Used by Resource to broad cast events
+	 * 
 	 * @param pKeyCode
 	 * @param pEvent
-	 * @return
+	 * @return boolean
 	 */
 	boolean onKeyDown(int pKeyCode, KeyEvent pEvent);
 }

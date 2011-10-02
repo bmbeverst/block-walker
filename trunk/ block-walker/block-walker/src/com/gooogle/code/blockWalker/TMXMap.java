@@ -5,7 +5,6 @@ import org.anddev.andengine.entity.IEntity;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXLayer;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObject;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXObjectGroup;
-import org.anddev.andengine.entity.layer.tiled.tmx.TMXTile;
 import org.anddev.andengine.entity.layer.tiled.tmx.TMXTiledMap;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
@@ -27,9 +26,6 @@ public class TMXMap {
 	// Physics for the platforms
 	private static final float ELASTICITY = 0f;
 	private static final float FRICTION = 0.5f;
-	private static final int TILE_WIDTH = 32;
-	private static final int TILE_HEIGHT = 32;
-	
 	// the TMX map we load
 	private TMXTiledMap mTMXTiledMap;
 	// Getting needed resouces for the Resource class
@@ -79,6 +75,10 @@ public class TMXMap {
 		
 	}
 	
+	/**
+	 * @param map
+	 *            void
+	 */
 	private void createUnwalkableObjects(final TMXTiledMap map) {
 		DumbAI.clearPlatform();
 		// Loop through the object groups
@@ -95,8 +95,8 @@ public class TMXMap {
 					final FixtureDef boxFixtureDef = PhysicsFactory
 							.createFixtureDef(0, ELASTICITY, FRICTION);
 					// connect the body to the physics engine.
-					Body tempbody = PhysicsFactory.createBoxBody(mPhysicsWorld,
-							rect, BodyType.StaticBody, boxFixtureDef);
+					PhysicsFactory.createBoxBody(mPhysicsWorld, rect,
+							BodyType.StaticBody, boxFixtureDef);
 					
 					// make it invisible
 					rect.setVisible(false);
@@ -189,12 +189,18 @@ public class TMXMap {
 	/**
 	 * @return
 	 */
+	/**
+	 * @return IEntity
+	 */
 	public IEntity getBossLayer() {
 		return mbosslockLayer;
 	}
 	
 	/**
 	 * @return
+	 */
+	/**
+	 * @return Body
 	 */
 	public Body getmLock() {
 		return mlock;

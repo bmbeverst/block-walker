@@ -6,7 +6,6 @@ import org.anddev.andengine.engine.handler.timer.ITimerCallback;
 import org.anddev.andengine.engine.handler.timer.TimerHandler;
 import org.anddev.andengine.entity.primitive.Line;
 import org.anddev.andengine.entity.primitive.Rectangle;
-import org.anddev.andengine.util.Debug;
 
 import com.gooogle.code.blockWalker.Player;
 import com.gooogle.code.blockWalker.Resources;
@@ -23,7 +22,7 @@ public class DumbAI implements ITimerCallback {
 	private static LinkedList<Rectangle> platforms = new LinkedList<Rectangle>();
 	
 	/**
-	 * @param pMonster
+	 * 
 	 */
 	public DumbAI() {
 		
@@ -32,6 +31,10 @@ public class DumbAI implements ITimerCallback {
 				time = new TimerHandler(1, this));
 	}
 	
+	/**
+	 * @param mMonster
+	 *            void
+	 */
 	public static void setPatrol(Monster mMonster) {
 		float monsterX = Math.abs(mMonster.getX());
 		float monsterY = Math.abs(mMonster.getY());
@@ -46,7 +49,7 @@ public class DumbAI implements ITimerCallback {
 			y = Math.abs(temp.getY());
 			x += temp.getWidth() / 2;
 			y += temp.getHeight() / 2;
-			//Debug.d(x + " " + y + "\n");
+			// Debug.d(x + " " + y + "\n");
 			
 			diffX = Math.abs(x - monsterX);
 			diffY = Math.abs(y - monsterY);
@@ -110,10 +113,13 @@ public class DumbAI implements ITimerCallback {
 						mMonster.left();
 					}
 				} else {
-					/*Debug.d("Random!!!!!!!!!!!!!!            "
-							+ (mMonster.getRight() - mMonster.getX() < mMonster.getX() - mMonster.getLeft()));
-					Debug.d((mMonster.getRight() - mMonster.getX()) + " "
-							+ (mMonster.getX() - mMonster.getLeft()));*/
+					/*
+					 * Debug.d("Random!!!!!!!!!!!!!!            " +
+					 * (mMonster.getRight() - mMonster.getX() < mMonster.getX()
+					 * - mMonster.getLeft())); Debug.d((mMonster.getRight() -
+					 * mMonster.getX()) + " " + (mMonster.getX() -
+					 * mMonster.getLeft()));
+					 */
 					if (mMonster.getRight() - mMonster.getX() < mMonster.getX()
 							- mMonster.getLeft()) {
 						mMonster.left();

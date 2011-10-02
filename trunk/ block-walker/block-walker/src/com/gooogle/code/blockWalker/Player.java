@@ -6,7 +6,6 @@ package com.gooogle.code.blockWalker;
 // Turn into a siglton test feild if not null new player else attach.
 
 import java.util.LinkedList;
-import org.anddev.andengine.entity.sprite.AnimatedSprite.IAnimationListener;
 
 import org.anddev.andengine.audio.sound.Sound;
 import org.anddev.andengine.engine.camera.BoundCamera;
@@ -14,12 +13,12 @@ import org.anddev.andengine.engine.handler.IUpdateHandler;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
+import org.anddev.andengine.entity.sprite.AnimatedSprite.IAnimationListener;
 import org.anddev.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.anddev.andengine.extension.physics.box2d.PhysicsConnector;
 import org.anddev.andengine.extension.physics.box2d.PhysicsFactory;
 import org.anddev.andengine.extension.physics.box2d.util.Vector2Pool;
 import org.anddev.andengine.opengl.texture.region.TiledTextureRegion;
-import org.anddev.andengine.util.Debug;
 
 import android.view.KeyEvent;
 

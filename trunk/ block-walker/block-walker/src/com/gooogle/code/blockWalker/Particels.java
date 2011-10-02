@@ -14,13 +14,12 @@ import org.anddev.andengine.entity.particle.modifier.AlphaModifier;
 import org.anddev.andengine.entity.particle.modifier.ColorModifier;
 import org.anddev.andengine.entity.particle.modifier.ExpireModifier;
 import org.anddev.andengine.entity.particle.modifier.ScaleModifier;
-import org.anddev.andengine.util.Debug;
 
 /**
  * @author brooks Sep 22, 2011
  */
 public class Particels implements ITimerCallback {
-
+	
 	private static final float RATE_MIN = 8;
 	private static final float RATE_MAX = 12;
 	private static final int PARTICLES_MAX = 200;
@@ -28,7 +27,7 @@ public class Particels implements ITimerCallback {
 	Player mPlayer;
 	final ParticleSystem particleSystem;
 	private PointParticleEmitter particleEmiter;
-
+	
 	Particels(Player player) {
 		mPlayer = player;
 		particleSystem = new ParticleSystem(
@@ -37,7 +36,7 @@ public class Particels implements ITimerCallback {
 						+ Player.PLAYER_SIZE), RATE_MIN, RATE_MAX,
 				PARTICLES_MAX, Resources.loadTexture("part.png", 16, 16));
 		particleSystem.setBlendFunction(GL10.GL_SRC_ALPHA, GL10.GL_ONE);
-
+		
 		particleSystem.addParticleInitializer(new VelocityInitializer(-30, 30,
 				-1, -20));
 		particleSystem.addParticleInitializer(new AccelerationInitializer(-5,
@@ -46,20 +45,20 @@ public class Particels implements ITimerCallback {
 				360.0f));
 		particleSystem.addParticleInitializer(new ColorInitializer(1.0f, 0.5f,
 				0.5f));
-
+		
 		particleSystem.addParticleModifier(new ScaleModifier(2f, .5f, 0, 5));
-		particleSystem.addParticleModifier(new ExpireModifier(3.5f));
+		particleSystem.addParticleModifier(new ExpireModifier(1.5f));
 		particleSystem.addParticleModifier(new ColorModifier(1.0f, 2.5f, 1.0f,
 				1.5f, 0.0f, 1.0f, 2.5f, 5.5f));
 		particleSystem.addParticleModifier(new AlphaModifier(1.0f, 0.0f, 2.5f,
 				6.5f));
 		Resources.getmScene().attachChild(particleSystem);
-
+		
 		Resources.getmEngine().registerUpdateHandler(
 				new TimerHandler(0.1f, this));
-
+		
 	}
-
+	
 	@Override
 	public void onTimePassed(TimerHandler pTimerHandler) {
 		if (landed) {
@@ -72,7 +71,7 @@ public class Particels implements ITimerCallback {
 		}
 		pTimerHandler.reset();
 	}
-
+	
 	void landed() {
 		landed = true;
 	}

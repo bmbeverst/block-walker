@@ -1,23 +1,16 @@
 package com.gooogle.code.blockWalker;
 
-import java.io.IOException;
-
 import javax.microedition.khronos.opengles.GL10;
 
-import org.anddev.andengine.audio.music.Music;
-import org.anddev.andengine.audio.music.MusicFactory;
 import org.anddev.andengine.engine.Engine;
 import org.anddev.andengine.engine.FixedStepEngine;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.options.EngineOptions;
 import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
-import org.anddev.andengine.entity.primitive.Line;
-import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.Scene.IOnSceneTouchListener;
 import org.anddev.andengine.entity.scene.background.AutoParallaxBackground;
-import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.anddev.andengine.entity.sprite.Sprite;
 import org.anddev.andengine.entity.util.FPSLogger;
@@ -29,14 +22,10 @@ import org.anddev.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextur
 import org.anddev.andengine.opengl.texture.region.TextureRegion;
 import org.anddev.andengine.opengl.util.GLHelper;
 import org.anddev.andengine.ui.activity.BaseGameActivity;
-import org.anddev.andengine.util.Debug;
 
 import android.content.pm.ActivityInfo;
 import android.opengl.GLU;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -61,7 +50,6 @@ public class BlockWalker extends BaseGameActivity implements
 	// The camera that follow the player
 	private BoundCamera mCamera;
 	private int i = 0;
-	private boolean isDrawing = false;
 	// I am using fixed step because it is easier to use in a multiplayer game
 	private FixedStepPhysicsWorld mPhysicsWorld;
 	
@@ -122,9 +110,9 @@ public class BlockWalker extends BaseGameActivity implements
 	}
 	
 	@Override
-	public Engine onLoadEngine() { 
+	public Engine onLoadEngine() {
 		this.mDBM = new DBManager(getBaseContext());
-		Resources.setmDBM(mDBM); 
+		Resources.setmDBM(mDBM);
 		// create the camera. It is not bound or following any thing yet.
 		mCamera = new BoundCamera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT) {
 			// Forces the camera to move in integer steps. Helps prevent
@@ -146,7 +134,7 @@ public class BlockWalker extends BaseGameActivity implements
 		engineOptions.setNeedsMusic(true);
 		// without this errors are thrown when ever you touch the screen
 		engineOptions.getTouchOptions().setRunOnUpdateThread(true);
-
+		
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		
 		// this is the final engine with all the options set.
@@ -154,7 +142,7 @@ public class BlockWalker extends BaseGameActivity implements
 	}
 	
 	@Override
-	public void onLoadResources() {
+	public void onLoadResources() {/* NONE */
 	}
 	
 	@Override
@@ -165,13 +153,14 @@ public class BlockWalker extends BaseGameActivity implements
 		// else where.
 		mScene.setOnSceneTouchListener(this);
 		// set the back ground color
-//		mScene.setBackground(new ColorBackground(0.09804f, 0.6274f, 0.8784f));
+		// mScene.setBackground(new ColorBackground(0.09804f, 0.6274f,
+		// 0.8784f));
 		
 		// Default 60, 8 and 8
 		// lol I think we really messed up here. Gravity is StepsPerSecond not
 		// gravity. I fixed this but you need to figure out how to set gravity.
-		mPhysicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, GRAVITY), false,
-				8, 8);
+		mPhysicsWorld = new FixedStepPhysicsWorld(60, new Vector2(0, GRAVITY),
+				false, 8, 8);
 		
 		// makes mario physics easy. Tutorial don't ask me.
 		mPhysicsWorld.setAutoClearForces(true);
@@ -183,35 +172,47 @@ public class BlockWalker extends BaseGameActivity implements
 		new Resources(mCamera, mPhysicsWorld, mScene, this, mEngine);
 		// Start the game!
 		
-		//parallax background loading ! 
-		//------------------------------------------------------------------------------------
+		// parallax background loading !
+		// ------------------------------------------------------------------------------------
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-
-		BitmapTextureAtlas parallaxTexture = new BitmapTextureAtlas(256, 128, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
- 
-		BitmapTextureAtlas autoParallaxTexture = new BitmapTextureAtlas(1024, 1024, TextureOptions.DEFAULT);
-
- 		autoParallaxBackground = new AutoParallaxBackground(0, 0, 0, 3);
- 		
- 		TextureRegion mParallaxLayerFront = BitmapTextureAtlasTextureRegionFactory.createFromAsset(autoParallaxTexture, this,  "parallax_background_layer_front.png", 0, 0);
- 		TextureRegion mParallaxLayerBack = BitmapTextureAtlasTextureRegionFactory.createFromAsset(autoParallaxTexture, this, "parallax_background_layer_back.png",  0, 188);
- 		TextureRegion mParallaxLayerMid = BitmapTextureAtlasTextureRegionFactory.createFromAsset(autoParallaxTexture, this, "parallax_background_layer_mid.png", 0, 669);
-
- 		mEngine.getTextureManager().loadTextures(parallaxTexture, autoParallaxTexture);
-   
-		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(0.0f, new Sprite(0, CAMERA_HEIGHT - mParallaxLayerBack.getHeight(), mParallaxLayerBack)));
-		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-15.0f, new Sprite(0, 20, mParallaxLayerMid)));
-		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-25.0f, new Sprite(0, 20, mParallaxLayerFront)));
+		
+		BitmapTextureAtlas parallaxTexture = new BitmapTextureAtlas(256, 128,
+				TextureOptions.BILINEAR_PREMULTIPLYALPHA);
+		
+		BitmapTextureAtlas autoParallaxTexture = new BitmapTextureAtlas(1024,
+				1024, TextureOptions.DEFAULT);
+		
+		autoParallaxBackground = new AutoParallaxBackground(0, 0, 0, 3);
+		
+		TextureRegion mParallaxLayerFront = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(autoParallaxTexture, this,
+						"parallax_background_layer_front.png", 0, 0);
+		TextureRegion mParallaxLayerBack = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(autoParallaxTexture, this,
+						"parallax_background_layer_back.png", 0, 188);
+		TextureRegion mParallaxLayerMid = BitmapTextureAtlasTextureRegionFactory
+				.createFromAsset(autoParallaxTexture, this,
+						"parallax_background_layer_mid.png", 0, 669);
+		
+		mEngine.getTextureManager().loadTextures(parallaxTexture,
+				autoParallaxTexture);
+		
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(0.0f,
+				new Sprite(0, CAMERA_HEIGHT - mParallaxLayerBack.getHeight(),
+						mParallaxLayerBack)));
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-15.0f,
+				new Sprite(0, 20, mParallaxLayerMid)));
+		autoParallaxBackground.attachParallaxEntity(new ParallaxEntity(-25.0f,
+				new Sprite(0, 20, mParallaxLayerFront)));
 		mScene.setBackground(autoParallaxBackground);
 		Resources.setBackground(autoParallaxBackground);
- 
-
-		//------------------------------------------------------------------------------------
+		
+		// ------------------------------------------------------------------------------------
 		GameHUD hud = new GameHUD();
 		mCamera.setHUD(hud);
 		Resources.setHUD(hud);
-		//------------------------------------------------------------------------------------
-
+		// ------------------------------------------------------------------------------------
+		
 		new MainMenu();
 		
 		// Engine's scene is set to this behind the scenes. No pun :)
@@ -245,21 +246,20 @@ public class BlockWalker extends BaseGameActivity implements
 	// Need to put this some where else. Probably in the HUD(Heads Up Display)
 	@Override
 	public boolean onSceneTouchEvent(Scene pScene, TouchEvent pSceneTouchEvent) {
-		if(pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
-            isDrawing = true;
-            i = 0;
-         }
-		else if(pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
-            isDrawing = false;
-         }
-         if (isDrawing = true & Resources.getHUD().hasEnergy()) {
-            if (i != 0) {
-               new Box(pSceneTouchEvent.getX(),pSceneTouchEvent.getY(),50,30);
-               Resources.getHUD().decreaesEnergyCount();
-            }
-            i++;
-         }
-         return true;
+		if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_DOWN) {
+			i = 0;
+		} else if (pSceneTouchEvent.getAction() == TouchEvent.ACTION_UP) {
+			/* NONE */
+		}
+		if (true & Resources.getHUD().hasEnergy()) {
+			if (i != 0) {
+				new Box(pSceneTouchEvent.getX(), pSceneTouchEvent.getY(), 50,
+						30);
+				Resources.getHUD().decreaesEnergyCount();
+			}
+			i++;
+		}
+		return true;
 		
 	}
 	

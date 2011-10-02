@@ -17,23 +17,20 @@ import com.gooogle.code.blockWalker.Resources;
  * @author brooks Sep 5, 2011
  */
 public class Borders {
-	//add invisible borders with around the x y.
+	// add invisible borders with around the x y.
 	Borders(float xSize, float ySize) {
 		FixedStepPhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
 		Scene mScene = Resources.getmScene();
-
-		final Shape bottomOuter = new Rectangle(0,
-				ySize - 2, xSize, 2);
+		
+		final Shape bottomOuter = new Rectangle(0, ySize - 2, xSize, 2);
 		bottomOuter.setVisible(false);
 		final Shape topOuter = new Rectangle(0, 0, xSize, 2);
 		topOuter.setVisible(false);
-		final Shape leftOuter = new Rectangle(0, 0, 2,
-				ySize);
+		final Shape leftOuter = new Rectangle(0, 0, 2, ySize);
 		leftOuter.setVisible(false);
-		final Shape rightOuter = new Rectangle(xSize - 2,
-				0, 2, ySize);
+		final Shape rightOuter = new Rectangle(xSize - 2, 0, 2, ySize);
 		rightOuter.setVisible(false);
-
+		
 		final FixtureDef wallFixtureDef = PhysicsFactory.createFixtureDef(0,
 				0f, 0.1f);
 		PhysicsFactory.createBoxBody(mPhysicsWorld, bottomOuter,
@@ -44,7 +41,7 @@ public class Borders {
 				BodyType.StaticBody, wallFixtureDef);
 		PhysicsFactory.createBoxBody(mPhysicsWorld, rightOuter,
 				BodyType.StaticBody, wallFixtureDef);
-
+		
 		mScene.attachChild(bottomOuter);
 		mScene.attachChild(topOuter);
 		mScene.attachChild(leftOuter);

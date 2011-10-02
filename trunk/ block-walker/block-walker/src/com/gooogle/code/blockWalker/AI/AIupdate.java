@@ -39,7 +39,7 @@ public class AIupdate implements ITimerCallback {
 		boss = pBoss;
 		
 		Resources.getmEngine().registerUpdateHandler(
-				time = new TimerHandler(0.01f, this));
+				time = new TimerHandler(0.1f, this));
 	}
 	
 	@Override
@@ -84,21 +84,23 @@ public class AIupdate implements ITimerCallback {
 				float toX = playerFootCordinates[Constants.VERTEX_INDEX_X];
 				float toY = playerFootCordinates[Constants.VERTEX_INDEX_Y];
 				
-				float directionX = (playerFootCordinates[Constants.VERTEX_INDEX_X] - player.getX());
+				float directionX = (playerFootCordinates[Constants.VERTEX_INDEX_X] - player
+						.getX());
 				if (directionX > 0) {
 					toX += 100;
 				} else {
 					toX -= 100;
 				}
 				
-				float directionY = (playerFootCordinates[Constants.VERTEX_INDEX_Y] - player.getY());
+				float directionY = (playerFootCordinates[Constants.VERTEX_INDEX_Y] - player
+						.getY());
 				if (directionY > 0) {
 					toY += 100;
 				} else {
 					toY -= 100;
 				}
 				
-				//Debug.d("dir " + directionX + "\nX " + toX + " Y " + toY);
+				// Debug.d("dir " + directionX + "\nX " + toX + " Y " + toY);
 				AstartPathing.walkTo(toX + rand.nextInt(200) - 100,
 						toY + rand.nextInt(200) - 100);
 				if (playerDistance > SIGHT) {
