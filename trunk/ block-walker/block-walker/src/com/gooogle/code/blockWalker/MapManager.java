@@ -84,7 +84,7 @@ public class MapManager {
 		//create new map and map will create new player ! 
 		map = new TMXMap(currentMapNumber); 
 		if(i == FINAL_LEVEL) {
-			new Boss(100, 100);
+			new Boss(1000, 500);
 		}
 	}
 	

@@ -1,18 +1,10 @@
 package com.gooogle.code.blockWalker;
 
-import java.io.IOException;
-import java.util.LinkedList;
 import javax.microedition.khronos.opengles.GL10;
+
 import org.anddev.andengine.audio.music.Music;
-import org.anddev.andengine.audio.music.MusicFactory;
-import org.anddev.andengine.audio.sound.Sound;
-import org.anddev.andengine.audio.sound.SoundFactory;
 import org.anddev.andengine.engine.camera.Camera;
-import org.anddev.andengine.engine.handler.IUpdateHandler;
-import org.anddev.andengine.engine.handler.timer.TimerHandler;
-import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
-import org.anddev.andengine.entity.scene.background.ColorBackground;
 import org.anddev.andengine.entity.scene.menu.MenuScene;
 import org.anddev.andengine.entity.scene.menu.MenuScene.IOnMenuItemClickListener;
 import org.anddev.andengine.entity.scene.menu.item.IMenuItem;
@@ -20,18 +12,20 @@ import org.anddev.andengine.entity.scene.menu.item.TextMenuItem;
 import org.anddev.andengine.entity.scene.menu.item.decorator.ColorMenuItemDecorator;
 import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.opengl.font.Font;
-import org.anddev.andengine.util.Debug;
 
-import com.gooogle.code.blockWalker.AI.AIupdate;
-import com.gooogle.code.blockWalker.AI.Monster;
-
+import com.gooogle.code.blockWalker.AI.Boss;
+import com.gooogle.code.blockWalker.AI.DumbAI;
 
 import android.view.KeyEvent;
 
 
+/**
+ * @author brooks
+ * Oct 1, 2011
+ */
 public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	
-	private static final String FIRSTMAP = "final0.tmx";
+	private static final String FIRSTMAP = "final8.tmx";
 	protected static final int MENU_START = 0;
 	protected static final int MENU_SAVE= MENU_START + 1;
 	protected static final int MENU_SAVE1= MENU_SAVE + 1;
@@ -50,6 +44,9 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 	private Music mMusic = Resources.loadMusic("Winter_Overture.mp3");
 	private Text gameOverTex; 
  	 
+	/**
+	 * 
+	 */
 	public MainMenu() {
 		// creates the main menu. Ask Decy :)
 		createMenuScene();
@@ -215,6 +212,7 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 				{
 					//TODO reset to 0
 					init(FIRSTMAP);
+					new Boss(300, 300);
 				}
 				else{
 				mmanager.reloadMap(FIRSTMAP);
@@ -328,24 +326,13 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		
 		mmanager = new MapManager(pstring);
 		Resources.setMapManager(mmanager);
+		new DumbAI();
 		//Resources.getmScene().registerUpdateHandler( new TimerHandler(5, new AIupdate()));
 		hasStarted = true;
 
  
 		
 	}
-	// The temp scene Brooks is using to test his AI.
-	private void aiTest() {
-		
-		new Borders(800, 400);
-		new Player(100, 100);
-		//Resources.getmScene().registerUpdateHandler(
-		//		new TimerHandler(2, new AIupdate()));
-		Monster temp = new Monster(200, 100);
-		//AIupdate.addMonster(temp);
-	}
-	
-	
 	//When ever a key is pressed this is called. Brings up the menu when ever menu is pressed.
 	@Override
 	public boolean onKeyDown(int pKeyCode, KeyEvent pEvent) {
@@ -373,6 +360,9 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 		return handeled;
 	}
 
+	/**
+	 * 
+	 */
 	public void gameOver() {
 		 	 gameOverTex = new Text(300 , 70, Resources.loadFont("Zrnic.ttf"), "Game Over!");
 			 gameOverTex.setColor(1f, 0f, 0f);	
@@ -381,6 +371,9 @@ public class MainMenu implements IOnMenuItemClickListener, OnKeyDownListener {
 			 getmMusic().getMediaPlayer().pause();
 	}
  
+	/**
+	 * @return mMusic
+	 */
 	public Music getmMusic() {
 		return mMusic;
 	}

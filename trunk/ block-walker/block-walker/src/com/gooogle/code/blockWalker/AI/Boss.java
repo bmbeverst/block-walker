@@ -23,7 +23,7 @@ public class Boss extends AnimatedSprite implements Attackable {
 	 * @param pY
 	 */
 	public Boss(float pX, float pY) {
-		super(pX, pY, mBossTiledRegion = Resources.loadTiledTexture("boss.png", 512, 512, 6, 4));
+		super(pX, pY, 64, 64, mBossTiledRegion = Resources.loadTiledTexture("boss.png", 512, 512, 6, 4));
 		AI =  new AIupdate(this);
 		Resources.addMonster(this);
 		Resources.getmScene().attachChild(this);
@@ -81,5 +81,9 @@ public class Boss extends AnimatedSprite implements Attackable {
 	@Override
 	public void attacked() {
 		AI.attacked();
+	}
+	@Override
+	public boolean isBoss() {
+		return true;
 	}
 }

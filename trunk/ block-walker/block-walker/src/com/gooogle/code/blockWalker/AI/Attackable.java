@@ -10,5 +10,10 @@ import org.anddev.andengine.entity.shape.IShape;
  *
  */
 public interface Attackable extends IShape {
+	/**
+	 * Entities that can be attacked.
+	 */
 	public void attacked();
+
+	public boolean isBoss();
 }

@@ -22,6 +22,12 @@ import org.anddev.andengine.util.modifier.ease.EaseLinear;
 import org.anddev.andengine.util.path.ITiledMap;
 import org.anddev.andengine.util.path.astar.AStarPathFinder;
 
+import com.gooogle.code.blockWalker.Resources;
+
+/**
+ * @author brooks
+ * Oct 1, 2011
+ */
 // This class is used primarily for organization
 public class AstartPathing {
 	
@@ -39,15 +45,26 @@ public class AstartPathing {
 	private static int mWaypointIndex;
 	private static TMXTiledMap mTMXTiledMap;
 	private static TMXLayer TMXMapLayer;
-	public static Boss boss;
+	private static Boss boss;
+	private static Scene mScene = Resources.getmScene();
 	
+	/**
+	 * @param pBoss
+	 */
 	public static void setBoss(Boss pBoss) {
 		boss = pBoss;
+		// Declare the AStarPathFinder
+		// First Param: above ITiledMap
+		// Second Param: Max Search Depth - Care, if this is too
+		// small your program will crash
+		// Third Param: allow diagonal movement or not
+		// Fourth Param: Heuristics you want to use in the A*
+		// algorithm(optional)
+		finder = new AStarPathFinder<TMXLayer>(new AImap(), 30, false);
 	}
 	
 	/**
 	 * @param map
-	 * @param pPlayer 
 	 */
 	public static void setTMXTiledMap(TMXTiledMap map) {
 		CollideTiles.clear();
@@ -59,20 +76,20 @@ public class AstartPathing {
 			// you have many object layers, Otherwise this can be
 			// removed
 			if (group.getTMXObjectGroupProperties().containsTMXProperty(
-					"Collide", "true")) {
+					"wall", "true")) {
 				
 				for (final TMXObject object : group.getTMXObjects()) {
 					
 					int ObjectX = Math.round(object.getX()
-							+ (TILE_WIDTH / 2.0f));//remove + x to make greedy
+							- (TILE_WIDTH / 2.0f));//remove + x to make greedy
 					int ObjectY = Math.round(object.getY()
-							+ (TILE_HEIGHT / 2.0f));
+							- (TILE_HEIGHT / 2.0f));
 					// Gets the number of rows and columns in the
 					// object
-					int ObjectHeight = Math.round(object.getHeight()
-							/ TILE_HEIGHT);
+					int ObjectHeight = Math.round((object.getHeight()
+							/ TILE_HEIGHT + 0.5f));
 					int ObjectWidth = Math
-							.round(object.getWidth() / TILE_WIDTH);
+							.round((object.getWidth() / TILE_WIDTH + 0.5f));
 					
 					// Gets the tiles the object covers and puts it
 					// into the Arraylist CollideTiles
@@ -85,19 +102,10 @@ public class AstartPathing {
 						}
 					}
 					
-				}
-			}
-		}
-
-		// Declare the AStarPathFinder
-		// First Param: above ITiledMap
-		// Second Param: Max Search Depth - Care, if this is too
-		// small your program will crash
-		// Third Param: allow diagonal movement or not
-		// Fourth Param: Heuristics you want to use in the A*
-		// algorithm(optional)
-		
-		finder = new AStarPathFinder<TMXLayer>(new AImap(), 30, false);
+				}// end object for
+			}//end if
+		}//end for
+		Debug.d(CollideTiles.size() + " Collide Size");
 	}
 	
 	// ***********************************************************************************************************************
@@ -105,13 +113,12 @@ public class AstartPathing {
 	/**
 	 * @param pX
 	 * @param pY
-	 * @param pScene
 	 */
-	public static void walkTo(final float pX, final float pY, Scene pScene) {
+	public static void walkTo(final float pX, final float pY) {
 		
 		// If the user is touching the screen Puts the touch events into an
 		// array
-		final float[] pToTiles = pScene.convertLocalToSceneCoordinates(pX, pY);
+		final float[] pToTiles = Resources.getmScene().convertLocalToSceneCoordinates(pX, pY);
 		
 		// Gets the tile at the touched location
 		final TMXTile tmxTilePlayerTo = TMXMapLayer.getTMXTileAt(
@@ -121,7 +128,7 @@ public class AstartPathing {
 		/*********/
 		// if is walking and there is a A_path ******************
 		if ((isWalking == true) && (A_path != null)) {
-			walkToNextWayPoint(pX, pY, pScene);
+			walkToNextWayPoint(pX, pY, Resources.getmScene());
 		} else if (A_path == null) {
 			// Sets the A* path from the player location to the touched
 			// location.
@@ -245,9 +252,10 @@ public class AstartPathing {
 			// Returns true if the tile in the A* Path is contained in the
 			// Arraylist CollideTiles
 			if (CollideTiles.contains(blocked)) {
+				Debug.d("Blocked");
 				return true;
-				
 			}
+			
 			// Return false by default = no tiles blocked
 			return false;
 		}
@@ -272,12 +280,10 @@ public class AstartPathing {
 	
 	private static final class FinishedMod implements IPathModifierListener {
 		private final float mY;
-		private final Scene mScene;
 		private final float mX;
 		
 		private FinishedMod(float pY, Scene pScene, float pX) {
 			this.mY = pY;
-			this.mScene = pScene;
 			this.mX = pX;
 		}
 		
@@ -302,7 +308,7 @@ public class AstartPathing {
 		public void onPathFinished(PathModifier pPathModifier, IEntity pEntity) {
 			boss.idle();
 			A_path = null;
-			walkTo(mX, mY, mScene);
+			walkTo(mX, mY);
 		}
 	}
 	

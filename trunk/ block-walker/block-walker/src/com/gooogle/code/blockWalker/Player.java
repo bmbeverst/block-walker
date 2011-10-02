@@ -7,21 +7,9 @@ package com.gooogle.code.blockWalker;
 
 import java.util.LinkedList;
 
-import javax.microedition.khronos.opengles.GL10;
-
 import org.anddev.andengine.audio.sound.Sound;
 import org.anddev.andengine.engine.camera.BoundCamera;
 import org.anddev.andengine.engine.handler.IUpdateHandler;
-import org.anddev.andengine.entity.particle.ParticleSystem;
-import org.anddev.andengine.entity.particle.emitter.PointParticleEmitter;
-import org.anddev.andengine.entity.particle.initializer.AccelerationInitializer;
-import org.anddev.andengine.entity.particle.initializer.ColorInitializer;
-import org.anddev.andengine.entity.particle.initializer.RotationInitializer;
-import org.anddev.andengine.entity.particle.initializer.VelocityInitializer;
-import org.anddev.andengine.entity.particle.modifier.AlphaModifier;
-import org.anddev.andengine.entity.particle.modifier.ColorModifier;
-import org.anddev.andengine.entity.particle.modifier.ExpireModifier;
-import org.anddev.andengine.entity.particle.modifier.ScaleModifier;
 import org.anddev.andengine.entity.primitive.Rectangle;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.sprite.AnimatedSprite;
@@ -43,32 +31,30 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.gooogle.code.blockWalker.AI.Attackable;
-import com.gooogle.code.blockWalker.AI.Monster;
 
 /**
  * @author brooks Sep 5, 2011
  */
 public class Player extends AnimatedSprite implements OnKeyDownListener,
-		OnKeyUpListener, IUpdateHandler {
+		OnKeyUpListener {
 	
+
+	private static final float MOVEMENTSPEED = 4f;
+	private static final float ACCELRATION = MOVEMENTSPEED / 3;
+	private static final float JUMPSPEED = MOVEMENTSPEED * 2.5f; 
 	private static final float JUMPV = -20f;
 	private static final float ELASTICITY = 0f;
 	private static final float MASS = 1f;
 	private static final float FRICTION = 0f;
 	private Sound mExplosionSound = Resources.loadSound("punch1.wav");
 	
-	public final static float PLAYER_SIZE = 64;
+	final static float PLAYER_SIZE = 64;
 	private static final long[] ANIMATE_DURATION = new long[] { 200, 200, 200,
 			200 };
 	private static final long[] ANIMATE_CHANRGE = new long[] { 400, 400, 400,
 			400 };
 	private static final long[] ANIMATE_IDLE = new long[] { 200, 200 };
-	private static final float RATE_MIN = 0;
-	private static final float RATE_MAX = 0;
-	private static final int PARTICLES_MAX = 0;;
 	
-	private float movementSpeed = 4f;
-	private float accelration = movementSpeed / 3;
 	private FixedStepPhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
 	private Scene mScene = Resources.getmScene();
 	private Body playerBody;
@@ -77,10 +63,14 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	private boolean moving = true;
 	private Particels part;
 	private boolean attacking;
-	private boolean charging; 
+	private boolean charging;
 
 	private static TiledTextureRegion mPlayerTiledRegion;
 	
+	/**
+	 * @param pX
+	 * @param pY
+	 */
 	public Player(float pX, float pY) {
 		super(pX, pY, PLAYER_SIZE, PLAYER_SIZE,
 				mPlayerTiledRegion = Resources
@@ -140,7 +130,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		});
 		
 		playerBody.setLinearDamping(1);
-		// playerBody.setAngularDamping(10);
+		playerBody.setAngularDamping(1);
 		mCamera.setChaseEntity(this);
 		mScene.attachChild(this);
 		Resources.addOnKeyDownListener(this);
@@ -154,17 +144,17 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 		
 		final Vector2 temp = playerBody.getLinearVelocity();
 		velocity.add(temp);
-		if (velocity.x >= movementSpeed) {
-			velocity.x = movementSpeed * 1.5f;
+		if (velocity.x >= MOVEMENTSPEED) {
+			velocity.x = MOVEMENTSPEED * 1.5f;
+		} else if (velocity.x <= -MOVEMENTSPEED) {
+			velocity.x = -MOVEMENTSPEED * 1.5f;
+		} else if (velocity.y >= MOVEMENTSPEED) {
+			velocity.y = MOVEMENTSPEED;
+		} else if (velocity.y <= -JUMPSPEED) {// -2.5f
+			velocity.y = -JUMPSPEED;
 		}
-		else if (velocity.y >= movementSpeed) {
-			velocity.y = movementSpeed;
-		}
-		else if (velocity.x <= -movementSpeed) {
-			velocity.x = -movementSpeed * 1.5f;
-		}
-		else if (velocity.y <= -movementSpeed) {// -2.5f
-			velocity.y = -movementSpeed * 2.5f;
+		if (velocity.y <= -JUMPSPEED) {// -2.5f
+			velocity.y = -JUMPSPEED;
 		}
 		playerBody.setLinearVelocity(velocity);
 	}
@@ -184,7 +174,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	void down() { 
 
 		final Vector2 velocity = Vector2Pool.obtain();
-		velocity.set(0, accelration);
+		velocity.set(0, ACCELRATION);
 		checkSpeed(velocity);
 		if(!charging) {
 			charging = true;
@@ -198,7 +188,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	
 	void left() {
 		final Vector2 velocity = Vector2Pool.obtain();
-		velocity.set(-accelration, 0);
+		velocity.set(-ACCELRATION, 0);
 		checkSpeed(velocity);
 		if (!flipped) {
 			flipped = true;
@@ -208,14 +198,12 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
 		}
-		
 		Vector2Pool.recycle(velocity);
-		velocity.x = 0;
 	}
 	
 	void right() {
 		final Vector2 velocity = Vector2Pool.obtain();
-		velocity.set(accelration, 0);
+		velocity.set(ACCELRATION, 0);
 		checkSpeed(velocity);
 		if (flipped) {
 			flipped = false;
@@ -225,9 +213,7 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 			moving = false;
 			this.animate(ANIMATE_DURATION, 0, 3, true);
 		}
-		
 		Vector2Pool.recycle(velocity);
-		velocity.x = 0;
 	}
 	
 	void remove() {
@@ -317,6 +303,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 				+ ", moving=" + moving + ", mX=" + mX + ", mY=" + mY + "]";
 	}
 	
+	/**
+	 * 
+	 */
 	public void rePosition() {
 		playerBody.setTransform(5, 20, 0.0f);
 	}
@@ -324,12 +313,14 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	// When ever there is a collision this is called. optimize.
 	private IUpdateHandler handler;
 	
+	/**
+	 * 
+	 */
 	public void updatePlayer() {
 		mScene.registerUpdateHandler(handler = new IUpdateHandler() {
 			
 			@Override
-			public void reset() {
-			}
+			public void reset() {/*Not used*/}
 			
 			@Override
 			public void onUpdate(final float pSecondsElapsed) {
@@ -373,6 +364,9 @@ public class Player extends AnimatedSprite implements OnKeyDownListener,
 	// else return true;
 	// }
 	
+	/**
+	 * @return handler
+	 */
 	public IUpdateHandler getHandler() {
 		return handler;
 	}

@@ -29,7 +29,7 @@ public class Monster extends AnimatedSprite implements Attackable{
 		private static final int MASS = 10;
 		private static final float FRICTION = 0f;
 		
-		private final static float PLAYER_SIZE = 64;
+		final static float MONSTER_SIZE = 64;
 		private static final long[] ANIMATE_DURATION = new long[]{200, 200, 200};
 		private static final long[] ANIMATE_CHARGE = new long[]{400, 400, 400};
 		private static final long[] ANIMATE_IDLE = new long[]{200, 200};
@@ -37,31 +37,32 @@ public class Monster extends AnimatedSprite implements Attackable{
 		private float movementSpeed = 1f;
 		private float accelration = movementSpeed;
 		private FixedStepPhysicsWorld mPhysicsWorld = Resources.getmPhysicsWorld();
-		private Body playerBody;
-		private DumbAI ai;
+		private Body monsterBody;
 		
 		
 		private boolean jumping = false;
 		private boolean animated = false;
+		
+		private float left = 0;
+		private float right = 0;
 		
 		/**
 		 * @param pX
 		 * @param pY
 		 */
 		public Monster(float pX, float pY) {
-			super(pX, pY - 20, PLAYER_SIZE, PLAYER_SIZE, Resources.loadTiledTexture("monsterO.png", 128, 128, 3, 4));
+			super(pX, pY - 20, MONSTER_SIZE, MONSTER_SIZE, Resources.loadTiledTexture("monsterO.png", 128, 128, 3, 4));
 
 			//Debug.d(pX + ", " + pY + " Monster!!!!!!!!!!!");
 			
 			final FixtureDef playerFixtureDef = PhysicsFactory.createFixtureDef(MASS,
 					ELASTICITY, FRICTION);
-			playerBody = PhysicsFactory.createBoxBody(mPhysicsWorld, this,
+			monsterBody = PhysicsFactory.createBoxBody(mPhysicsWorld, this,
 					BodyType.DynamicBody, playerFixtureDef);
 			mPhysicsWorld.registerPhysicsConnector(new PhysicsConnector(this,
-					playerBody, true, false));
-			playerBody.setLinearDamping(1);
+					monsterBody, true, false));
+			monsterBody.setLinearDamping(1);
 			Resources.addMonster(this);
-			ai = new DumbAI(this);
 			idle();
 			Resources.getmScene().attachChild(this);
 		}
@@ -75,7 +76,7 @@ public class Monster extends AnimatedSprite implements Attackable{
 			if(!jumping){
 	            jumping = true;
 	            velocity.add(0, JUMPV);
-	            velocity.add(playerBody.getLinearVelocity());
+	            velocity.add(monsterBody.getLinearVelocity());
 			}
 			this.animate(ANIMATE_DURATION, 9 ,11, false);
 			Vector2Pool.recycle(velocity);
@@ -83,7 +84,7 @@ public class Monster extends AnimatedSprite implements Attackable{
 		public void down() {
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(0, accelration);
-            velocity.add(playerBody.getLinearVelocity());
+            velocity.add(monsterBody.getLinearVelocity());
 			this.animate(ANIMATE_CHARGE,  0, 2, false);
 			Vector2Pool.recycle(velocity);
 		}
@@ -91,7 +92,7 @@ public class Monster extends AnimatedSprite implements Attackable{
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(-accelration, 0);
             //velocity.add(playerBody.getLinearVelocity());
-            playerBody.setLinearVelocity(velocity);
+            monsterBody.setLinearVelocity(velocity);
 			this.animate(ANIMATE_DURATION, 3 , 5, true);
 			Vector2Pool.recycle(velocity);
 		}
@@ -99,7 +100,7 @@ public class Monster extends AnimatedSprite implements Attackable{
 			final Vector2 velocity = Vector2Pool.obtain();
 			velocity.set(accelration, 0);
            // velocity.add(playerBody.getLinearVelocity());
-            playerBody.setLinearVelocity(velocity);
+            monsterBody.setLinearVelocity(velocity);
 			this.animate(ANIMATE_DURATION, 6 , 8, true);
 			Vector2Pool.recycle(velocity);
 		}
@@ -109,8 +110,7 @@ public class Monster extends AnimatedSprite implements Attackable{
 			this.onDetached();
 			//Resources.getmScene().detachChild(this);
 			this.setVisible(false);
-			mPhysicsWorld.destroyBody(playerBody);
-			ai.stop();
+			mPhysicsWorld.destroyBody(monsterBody);
 			System.gc();
   		}
 		/* (non-Javadoc)
@@ -135,15 +135,48 @@ public class Monster extends AnimatedSprite implements Attackable{
 			if (Float.floatToIntBits(movementSpeed) != Float
 					.floatToIntBits(other.movementSpeed))
 				return false;
-			if (playerBody == null) {
-				if (other.playerBody != null)
+			if (monsterBody == null) {
+				if (other.monsterBody != null)
 					return false;
-			} else if (!playerBody.equals(other.playerBody))
+			} else if (!monsterBody.equals(other.monsterBody))
 				return false;
 			return true;
 		}
 
 		void idle() {
 			this.animate(ANIMATE_IDLE, 3 , 4, true);
+		}
+
+		@Override
+		public boolean isBoss() {
+			return false;
+		}
+
+		/**
+		 * @return the right
+		 */
+		public float getRight() {
+			return right;
+		}
+
+		/**
+		 * @param right the right to set
+		 */
+		public void setRight(float right) {
+			this.right = right;
+		}
+
+		/**
+		 * @return the left
+		 */
+		public float getLeft() {
+			return left;
+		}
+
+		/**
+		 * @param left the left to set
+		 */
+		public void setLeft(float left) {
+			this.left = left;
 		}
 }
