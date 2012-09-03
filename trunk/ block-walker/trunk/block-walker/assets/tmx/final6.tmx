@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="50" height="25" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="042-EvilCastle02" tilewidth="32" tileheight="32">
+  <image source="tmx/042-EvilCastle02.png" trans="ff00ff" width="256" height="832"/>
+ </tileset>
+ <tileset firstgid="209" name="002-Woods01" tilewidth="32" tileheight="32">
+  <image source="tmx/002-Woods01.png" trans="ff00ff" width="256" height="800"/>
+ </tileset>
+ <layer name="platform" width="50" height="25">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3VsQkAIAxEUbODNqJr6P6bmQEsEkRE/Q+uC3dlQgAAAMApTdbSZc+OtRcAgFdZ/uUN8kepmuK4T5ro6Jjde3cHdpltAIgTAAA=
+  </data>
+ </layer>
+ <layer name="deco" width="50" height="25" opacity="0.59">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3TxwrCUBRF0ZfPs2PHjh07duzYUUG/VYcZuR0IggpmZG7IhgUZ3sMjStnZ2Vkhh6aUEy644YEXPu3flxnLz70BBBFCGBFEhe2IcW8cCSSRQhoZYTuy3JtDHgUUUUJZ2I4K91ZRQx0NNNEStqPNvR100UMfAwyF7Rhx7xgTTDHDHAthO5bcu8IaG2yxw17YjgP3HnF6ufvM98WkO664GWTmjOwxe79ukdAvW6T02KIr+TuefXsbaVllx6NPWyT3+r9YIf3fB9i9dQffSFuOiBMAAA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="50" height="25">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+2RzwqAIAzG53vVrd7/aOCp6FQ+RAYGo6akHkr5fjAc0/35HBEAAAAAACihU0S9ysud/GmYL2Hyyj/6nGzOdmfamWXxwWkYvQ5d2A+kI+24dO9fYeg5e81aWuG+l5q11Tw7pxUdrRHby8p8G3z1T5bE93Pkbg3E3/bInUWa6R57WzumL6XeVUf6Eyn3ANT9/OKIEwAA
+  </data>
+ </layer>
+ <objectgroup name="die" width="50" height="25">
+  <properties>
+   <property name="die" value="true"/>
+  </properties>
+  <object x="283" y="741" width="1333" height="37"/>
+ </objectgroup>
+ <objectgroup name="exit" width="50" height="25">
+  <properties>
+   <property name="exit" value="true"/>
+  </properties>
+  <object x="1480" y="321" width="45" height="73"/>
+ </objectgroup>
+ <objectgroup name="player" width="50" height="25">
+  <properties>
+   <property name="spawn" value="true"/>
+  </properties>
+  <object x="55" y="660" width="23" height="16"/>
+ </objectgroup>
+ <objectgroup name="wall" width="50" height="25">
+  <properties>
+   <property name="wall" value="true"/>
+  </properties>
+  <object x="-4" y="728" width="292" height="14"/>
+  <object x="-26" y="-38" width="36" height="822"/>
+  <object x="-82" y="-16" width="1780" height="26"/>
+  <object x="1590" y="-86" width="34" height="892"/>
+  <object x="1187" y="402" width="410" height="21"/>
+  <object x="350" y="402" width="546" height="12"/>
+ </objectgroup>
+ <objectgroup name="monster" width="50" height="25">
+  <properties>
+   <property name="monster" value="true"/>
+  </properties>
+  <object x="464" y="298" width="14" height="16"/>
+  <object x="206" y="560" width="20" height="28"/>
+  <object x="606" y="302" width="28" height="26"/>
+ </objectgroup>
+ <objectgroup name="spin" width="50" height="25">
+  <properties>
+   <property name="spin" value="true"/>
+  </properties>
+ </objectgroup>
+</map>
